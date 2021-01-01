@@ -36,7 +36,7 @@ monitors.queue_stories_by_page()
    for monitor in monitors:
       while more_stories:
           fetch page of results (based on last_processed_id)
-          push page + monitor details into label_stories_queue
+          push page + monitor details into classify_stories_queue
           update last_processed_id
 
 ## processor/monitors.py
@@ -46,14 +46,13 @@ monitors.queue_stories_by_page()
 
 ## processor/tasks.py
 
-**label_stories_worker**
-  pop off from the label_stories queue
+**classify_stories_worker**
+  pop off from the classify_stories_queue
   load appropriate model
   run all story text through model
   push results, story metadata, and monitor details in post_results_queue
 
 **post_results_worker**
-
   pop off from post_results queue
   post to the URL specified
    -> on failure requeue to try again
