@@ -108,3 +108,4 @@ venv.bak/
 
 # app-specific files
 config/monitors.json
+config/monitor-history.json
