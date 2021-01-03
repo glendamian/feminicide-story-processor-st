@@ -1,9 +1,0 @@
-[
-  {
-    "id": "test1",
-    "start_date": "2020-12-01 00:00:00",
-    "search_terms": "feminicide or femicide",
-    "media_collections": [38379429, 34412234],
-    "update_post_url": "https://feminicides-alert.dfdev.dataplusfeminism.mit.edu/api/users/1/update_articles"
-  }
-]
