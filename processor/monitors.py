@@ -53,11 +53,9 @@ def load_history(force_reload=False):
         with open(_path_to_history_file(), "r") as f:
             history = json.load(f)
         return history
-    except Exception as e:
-        # bail completely if we can't load the history file
-        logger.error("Can't load history file - dying ungracefully")
-        logger.exception(e)
-        sys.exit(1)
+    except FileNotFoundError as e:
+        logger.warning("No history file yet - returning empty one")
+        return {}
 
 
 def update_processing_history(monitor_id: str, last_processed_stories_id: str):
