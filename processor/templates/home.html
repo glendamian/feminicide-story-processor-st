@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<button type="button" id="update" class="btn btn-primary">Update config now!</button>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="results">
+            <pre>{{ config }}</pre>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+$(function(){
+  $("#update").click(function(){
+    // show feedback while fetching results
+    $('#results').html('<div style="text-align:center;"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+    // ask server to update config
+    $.post({
+      url: "/update-config",
+    }).done(function(response){
+      // if server responds well then display JSON
+      console.log(response);
+      var responseStr = JSON.stringify(response, null, 2);
+      $('#results').html('<pre>'+responseStr+'</pre>');
+    }).fail(function() {
+      // if server failed show error msg
+      $('#results').html('<div class="alert alert-danger" role="alert">⚠️ Something went wrong</div>');
+    });
+  })
+});
+{% endblock %}

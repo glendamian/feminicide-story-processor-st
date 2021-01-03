@@ -105,3 +105,6 @@ venv.bak/
 
 # pyCharm
 .idea
+
+# app-specific files
+config/monitors.json

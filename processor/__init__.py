@@ -9,7 +9,7 @@ load_dotenv()  # load config from .env file (local) or env vars (production)
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # set up logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(levelname)s | %(name)s | %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s | %(levelname)s | %(name)s | %(message)s')
 logger = logging.getLogger(__name__)
 logger.info("------------------------------------------------------------------------")
 logger.info("Starting up Feminicide MC Story Processor")

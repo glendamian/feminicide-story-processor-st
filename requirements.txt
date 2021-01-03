@@ -6,3 +6,4 @@ Flask==1.1.2
 mediacloud==3.12.1
 gunicorn==20.0.4
 requests==2.25.1
+dateparser==1.0.0
