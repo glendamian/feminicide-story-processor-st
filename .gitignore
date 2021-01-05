@@ -103,9 +103,13 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# MacOS
+__MACOSX
+
 # pyCharm
 .idea
 
 # app-specific files
 config/monitors.json
 config/monitor-history.json
+*.p

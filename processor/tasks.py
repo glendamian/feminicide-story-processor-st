@@ -18,13 +18,14 @@ def classify_stories_worker(self, monitor: Dict, stories: List):
     """
     try:
         logger.debug('{}: classify {} stories'.format(['id'], len(stories)))
-        for s in stories:
-            results = monitors.classify_text(monitor, s['story_text'])
-            s['confidence'] = results
+        probabilities = monitors.classify_stories(monitor, stories)
+        # TODO
+        for idx, s in enumerate(stories):
+            s['confidence'] = probabilities[idx]
             del s['story_text']  # don't keep the story text around for longer than we need to
         post_results_worker.delay(monitor, stories)
     except Exception as exc:
-        # only failure here is the classifer not loading? probably we should try again... feminicide server holds state
+        # only failure here is the classifier not loading? probably we should try again... feminicide server holds state
         # and can handle any duplicate results based on stories_id+model_id synthetic unique key
         logger.warn("{}: Failed to label {} stories".format(monitor['id'], len(stories)))
         logger.exception(exc)

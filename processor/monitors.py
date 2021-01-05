@@ -6,11 +6,13 @@ import json
 import logging
 
 from processor import base_dir
+import processor.classifiers as classifiers
 
 logger = logging.getLogger(__name__)
 
 config = None  # acts as a singleton
 history = None  # acts as a singleton
+
 
 def _path_to_config_file() -> str:
     return os.path.join(base_dir, 'config', 'monitors.json')
@@ -86,17 +88,6 @@ def update_processing_history(monitor_id: str, last_processed_stories_id: str):
         sys.exit(1)
 
 
-def classify_text(monitor: Dict, story_text: str) -> float:
-    """
-    Run a story agains the classifier for a monitor.
-    :param monitor: config object specifying the monitor
-    :param story_text:
-    :return: the score returned by the classifier
-    """
-    # TODO: implement this with the real model
-    return 0.5
-
-
 def post_results(monitor: Dict, stories: List):
     """
     Send results back to the feminicide server. Raises an exception if this post fails.
@@ -143,3 +134,18 @@ def _prep_stories_for_posting(stories: List) -> List:
         )
         prepped_stories.append(s)
     return prepped_stories
+
+
+def classify_stories(monitor: Dict, stories: List[Dict]) -> List[float]:
+    """
+    Run all the stories passed in through the appropriate classifier, based on the monitor config
+    :param monitor:
+    :param stories:
+    :return: an array of confidence probabilities for this being a story about feminicide
+    """
+    classifier = classifiers.for_monitor(monitor)
+    story_texts = [s['story_text'] for s in stories]
+    vectorized_data = classifier['tfidf_vectorizer'].transform(story_texts)
+    predictions = classifier['nb_model'].predict_proba(vectorized_data)
+    true_probs = predictions[:, 1]
+    return true_probs
