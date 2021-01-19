@@ -15,11 +15,11 @@ history = None  # acts as a singleton
 
 
 def _path_to_config_file() -> str:
-    return os.path.join(base_dir, 'config', 'monitors.json')
+    return os.path.join(base_dir, 'config', 'projects.json')
 
 
 def _path_to_history_file() -> str:
-    return os.path.join(base_dir, 'config', 'monitor-history.json')
+    return os.path.join(base_dir, 'config', 'project-history.json')
 
 
 def load_config(force_reload=False):
@@ -60,12 +60,12 @@ def load_history(force_reload=False):
         return {}
 
 
-def update_processing_history(monitor_id: str, last_processed_stories_id: str):
+def update_processing_history(project_id: str, last_processed_stories_id: str):
     """
-    Weite back updated history file. This tracks the last story we processed for each monitor. It is a lookup table,
-     from monitor_id to last_processed_stories_id. This is *not* thread safe, but should work fine for now because
+    Weite back updated history file. This tracks the last story we processed for each project. It is a lookup table,
+     from project_id to last_processed_stories_id. This is *not* thread safe, but should work fine for now because
      we will only have one cron-driven job that fetches and queues up stories to be processed by the workers.
-    :param monitor_id:
+    :param project_id:
     :param last_processed_stories_id:
     :return:
     """
@@ -75,9 +75,9 @@ def update_processing_history(monitor_id: str, last_processed_stories_id: str):
     except FileNotFoundError as e:
         logger.warning("No history file, creating a new one")
         data = dict()
-    logger.debug("  {}: updating from {} to {}".format(monitor_id, data.get(monitor_id, None),
+    logger.debug("  {}: updating from {} to {}".format(project_id, data.get(project_id, None),
                                                        last_processed_stories_id))
-    data[monitor_id] = last_processed_stories_id
+    data[project_id] = last_processed_stories_id
     try:
         with open(_path_to_history_file(), "w") as f:
             json.dump(data, f)
@@ -88,18 +88,19 @@ def update_processing_history(monitor_id: str, last_processed_stories_id: str):
         sys.exit(1)
 
 
-def post_results(monitor: Dict, stories: List):
+def post_results(project: Dict, stories: List):
     """
     Send results back to the feminicide server. Raises an exception if this post fails.
-    :param monitor:
+    :param project:
     :param stories:
     :return: whether the request worked or not (if not, raises an exception)
     """
-    stories_to_send = _remove_low_confidence_stories(monitor.get('min_confidence', 0), stories)
-    data_to_send = dict(stories=_prep_stories_for_posting(stories_to_send))
-    #with open('data.json', 'w', encoding='utf-8') as f:
-    #    json.dump(data_to_send, f, ensure_ascii=False, indent=4)
-    response = requests.post(monitor['url'], data=data_to_send)
+    stories_to_send = _remove_low_confidence_stories(project.get('min_confidence', 0), stories)
+    data_to_send = dict(project=project,  # send back project data too (even though id is in the URL) for redundancy
+                        stories=_prep_stories_for_posting(stories_to_send))
+    with open('data.json', 'w', encoding='utf-8') as f:
+       json.dump(data_to_send, f, ensure_ascii=False, indent=4)
+    response = requests.post(project['update_post_url'], data=data_to_send)
     return response.ok
 
 
@@ -139,14 +140,14 @@ def _prep_stories_for_posting(stories: List) -> List:
     return prepped_stories
 
 
-def classify_stories(monitor: Dict, stories: List[Dict]) -> List[float]:
+def classify_stories(project: Dict, stories: List[Dict]) -> List[float]:
     """
-    Run all the stories passed in through the appropriate classifier, based on the monitor config
-    :param monitor:
+    Run all the stories passed in through the appropriate classifier, based on the project config
+    :param project:
     :param stories:
     :return: an array of confidence probabilities for this being a story about feminicide
     """
-    classifier = classifiers.for_monitor(monitor)
+    classifier = classifiers.for_project(project)
     story_texts = [s['story_text'] for s in stories]
     vectorized_data = classifier['tfidf_vectorizer'].transform(story_texts)
     predictions = classifier['nb_model'].predict_proba(vectorized_data)

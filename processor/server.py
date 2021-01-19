@@ -2,7 +2,7 @@ import logging
 from flask import render_template, jsonify
 
 from processor import create_flask_app
-from processor.monitors import load_config
+from processor.projects import load_config
 
 logger = logging.getLogger(__name__)
 

@@ -110,6 +110,6 @@ __MACOSX
 .idea
 
 # app-specific files
-config/monitors.json
-config/monitor-history.json
+config/projects.json
+config/project-history.json
 *.p

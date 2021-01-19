@@ -1,4 +1,16 @@
 {
+    "project": {
+        "id": 1,
+        "title": "usa test",
+        "start_date": "2020-12-01 00:00:00",
+        "search_terms": "feminicide or femicide",
+        "media_collections": [
+            38379429,
+            34412234
+        ],
+        "min_confidence": 0.5,
+        "update_post_url": "https://feminicides-alert.dfdev.dataplusfeminism.mit.edu/api/users/1/update_articles"
+    },
     "stories": [
         {
             "stories_id": 1787715514,
