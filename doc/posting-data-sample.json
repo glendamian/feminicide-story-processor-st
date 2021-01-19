@@ -1,0 +1,3350 @@
+{
+    "stories": [
+        {
+            "stories_id": 1787715514,
+            "language": "en",
+            "media_id": 268092,
+            "media_url": "http://aldianews.com/",
+            "publish_date": "2020-12-04 05:40:00",
+            "story_tags": [
+                {
+                    "stories_id": 1787715514,
+                    "tag": "geonames_2510769",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878587
+                },
+                {
+                    "stories_id": 1787715514,
+                    "tag": "geonames_3689815",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8880676
+                },
+                {
+                    "stories_id": 1787715514,
+                    "tag": "geonames_3689899",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8937866
+                },
+                {
+                    "stories_id": 1787715514,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1787715514,
+                    "tag": "books and literature",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360844
+                },
+                {
+                    "stories_id": 1787715514,
+                    "tag": "reviews",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360921
+                },
+                {
+                    "stories_id": 1787715514,
+                    "tag": "Páginas de Espuma",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 10503684
+                },
+                {
+                    "stories_id": 1787715514,
+                    "tag": "Mónica Ojeda",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 74132497
+                },
+                {
+                    "stories_id": 1787715514,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1787715514,
+                    "tag": "Monica Ojeda",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 175737491
+                },
+                {
+                    "stories_id": 1787715514,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1787715514,
+                    "tag": "el mundo de abajo",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 194420977
+                },
+                {
+                    "stories_id": 1787715514,
+                    "tag": "El mundo de arriba",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 223044988
+                },
+                {
+                    "stories_id": 1787715514,
+                    "tag": "Librería Cálamo",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 223044989
+                }
+            ],
+            "title": "Mónica Ojeda: \"My writing is like an Andean volcano\"",
+            "url": "https://aldianews.com/articles/culture/literature/monica-ojeda-my-writing-andean-volcano/61466",
+            "confidence": 0.5814073869057552
+        },
+        {
+            "stories_id": 1787990205,
+            "language": "en",
+            "media_id": 658816,
+            "media_url": "http://www.alaska.statenews.net/",
+            "publish_date": "2020-12-04 07:18:31",
+            "story_tags": [
+                {
+                    "stories_id": 1787990205,
+                    "tag": "geonames_3932488",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878516
+                },
+                {
+                    "stories_id": 1787990205,
+                    "tag": "geonames_5909050",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878554
+                },
+                {
+                    "stories_id": 1787990205,
+                    "tag": "geonames_5881791",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8887022
+                },
+                {
+                    "stories_id": 1787990205,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1787990205,
+                    "tag": "murders and attempted murders",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360982
+                },
+                {
+                    "stories_id": 1787990205,
+                    "tag": "Corus Entertainment Inc.",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9616515
+                },
+                {
+                    "stories_id": 1787990205,
+                    "tag": "Lindsay Buziak",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 33285472
+                },
+                {
+                    "stories_id": 1787990205,
+                    "tag": "Kimberlee Kasatkin",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 65539956
+                },
+                {
+                    "stories_id": 1787990205,
+                    "tag": "Christopher Franz Bettocchi",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 65539957
+                },
+                {
+                    "stories_id": 1787990205,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1787990205,
+                    "tag": "Brianna Kinnear",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 127934830
+                },
+                {
+                    "stories_id": 1787990205,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1787990205,
+                    "tag": "Al Kasaktin",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 223016811
+                },
+                {
+                    "stories_id": 1787990205,
+                    "tag": "Kathy Kasatskin",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 223016812
+                }
+            ],
+            "title": "B.C. couple in final bid to bring children of their missing daughter back to Canada",
+            "url": "https://globalnews.ca/news/7501006/kimberlee-kasatkin-peru-children-custody/",
+            "confidence": 0.7233934795263951
+        },
+        {
+            "stories_id": 1790957808,
+            "language": "en",
+            "media_id": 661229,
+            "media_url": "http://www.brookfieldcitizen.com/",
+            "publish_date": "2020-12-07 16:37:54",
+            "story_tags": [
+                {
+                    "stories_id": 1790957808,
+                    "tag": "geonames_6252001",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878461
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "geonames_5128638",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878463
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "geonames_5318313",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8879149
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "geonames_5174095",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8884126
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "geonames_2646507",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8955226
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "geonames_5131135",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 9025693
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "violence",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9361116
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "Spike",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9398073
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "Section",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9411721
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "Bbc",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9481622
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "National Domestic Violence Hotline",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 10016126
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "Jennifer Nunez",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 28359778
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "Jami Brookes Berry",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 217638544
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "Domestic Violence National Center For Health",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 217796457
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "Organizational Chart Archives Nnedv",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 221116458
+                },
+                {
+                    "stories_id": 1790957808,
+                    "tag": "Domestic Violence Criminal Justice Training Council... Section",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 221116459
+                }
+            ],
+            "title": "domestic violence chart",
+            "url": "http://umnpsg.org/domestic-violence-chart/",
+            "confidence": 0.543098424480832
+        },
+        {
+            "stories_id": 1791726127,
+            "language": "en",
+            "media_id": 300613,
+            "media_url": "http://www.vice.com/en_us",
+            "publish_date": "2020-12-08 10:11:09",
+            "story_tags": [
+                {
+                    "stories_id": 1791726127,
+                    "tag": "geonames_4662168",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878725
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "geonames_4566966",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878740
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "geonames_4568138",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8885952
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "geonames_4568407",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8937557
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "geonames_4568408",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8937558
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "geonames_4568127",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8954861
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "computers and the internet",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360839
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "FBI",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9362961
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "Maria",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9365415
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "Nike",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9368594
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "United States Department of Justice",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9382255
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "State University of New York",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9395532
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "observatory",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9702098
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "taki",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9810653
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "Jennifer First",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 11257262
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "red Nike",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 28675137
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "Taller Salud",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 28787617
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "American Civil Liberties Union of Puerto Rico",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 53304941
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "Tania Rosario Méndez",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 135930203
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "Roberta Hurtado",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 140537243
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "Rodríguez Gomez",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 145367808
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "Rosimar Rodríguez Gómez",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 218002761
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "Gender Equity Observatory",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 223834978
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "Puerto Rican congress",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 223834979
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "Zaira Martínes",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 223834980
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "Debora Upegui Hernández",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 223834981
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "Wanda Vasquéz",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 223834982
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "Irma Lugo Nazario",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 223834983
+                },
+                {
+                    "stories_id": 1791726127,
+                    "tag": "Marangeli Gómez Ortíz",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 223834984
+                }
+            ],
+            "title": "Deadly Violence Against Women in Puerto Rico Is Surging During Lockdown",
+            "url": "https://www.vice.com/en_us/article/qjpj5d/deadly-violence-against-women-in-puerto-rico-is-surging-during-lockdown",
+            "confidence": 0.5188424884264589
+        },
+        {
+            "stories_id": 1794004290,
+            "language": "en",
+            "media_id": 1098,
+            "media_url": "http://www.newsweek.com/",
+            "publish_date": "2020-12-10 12:10:01",
+            "story_tags": [
+                {
+                    "stories_id": 1794004290,
+                    "tag": "geonames_3177401",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878633
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "geonames_3175395",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878643
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "geonames_3174618",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878644
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "geonames_3181554",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8892465
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "decisions and verdicts",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360905
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "crime and criminals",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360912
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "murders and attempted murders",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360982
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "Supreme Court",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9362719
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "Democratic Party",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9362724
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "Monica Cirinna",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 30223147
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "geonames_3169424",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 37610947
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "Valeria Valente",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 57906332
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "Olga Matei",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 79191894
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "Michele Castaldo",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 113210182
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "Antonio Gozzini",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 224070217
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "Cristina Maioli",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 224070218
+                },
+                {
+                    "stories_id": 1794004290,
+                    "tag": "Getty Images Gozzini",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 224100860
+                }
+            ],
+            "title": "Man Cleared of Killing Wife As Court Rules He Was in 'Delirium of Jealousy'",
+            "url": "https://www.newsweek.com/antonio-gozzini-acquitted-murder-wife-mental-incapacity-jealousy-delirium-1553890",
+            "confidence": 0.7372931411771482
+        },
+        {
+            "stories_id": 1794017467,
+            "language": "en",
+            "media_id": 56510,
+            "media_url": "http://newsweek.com/",
+            "publish_date": "2020-12-10 12:10:01",
+            "story_tags": [
+                {
+                    "stories_id": 1794017467,
+                    "tag": "geonames_3177401",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878633
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "geonames_3175395",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878643
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "geonames_3174618",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878644
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "geonames_3181554",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8892465
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "decisions and verdicts",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360905
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "crime and criminals",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360912
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "murders and attempted murders",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360982
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "Supreme Court",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9362719
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "Democratic Party",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9362724
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "Monica Cirinna",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 30223147
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "geonames_3169424",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 37610947
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "Valeria Valente",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 57906332
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "Olga Matei",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 79191894
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "Michele Castaldo",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 113210182
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "Antonio Gozzini",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 224070217
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "Cristina Maioli",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 224070218
+                },
+                {
+                    "stories_id": 1794017467,
+                    "tag": "Getty Images Gozzini",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 224100860
+                }
+            ],
+            "title": "Man Cleared of Killing Wife As Court Rules He Was in 'Delirium of Jealousy'",
+            "url": "https://www.newsweek.com/antonio-gozzini-acquitted-murder-wife-mental-incapacity-jealousy-delirium-1553890",
+            "confidence": 0.7372931411771482
+        },
+        {
+            "stories_id": 1796232490,
+            "language": "en",
+            "media_id": 1751,
+            "media_url": "https://www.theguardian.com/us",
+            "publish_date": "2020-12-13 02:30:00",
+            "story_tags": [
+                {
+                    "stories_id": 1796232490,
+                    "tag": "geonames_2635167",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878466
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "geonames_6269131",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878467
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "geonames_2647461",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8886679
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "privacy",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360835
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "computers and the internet",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360839
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "crime and criminals",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360912
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "murders and attempted murders",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360982
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "Susan",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9366147
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "Richard",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9366576
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "Sally",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9435598
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "Independent Press Standards Organisation",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9437982
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "Julia Pemberton",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 28761942
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "Charlotte Dewar",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 33564822
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "David Challen",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 37268142
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "Frank Mullane",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 37343244
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "Rose Louise",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 51456636
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "Janey Starling",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 70023806
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "Eystna Blunnie",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 83340951
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "Tony McLernon",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 83399267
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "AAFDA",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 87702005
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "AAFDA",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 115388690
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "Kevin Blunnie",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 152883364
+                },
+                {
+                    "stories_id": 1796232490,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                }
+            ],
+            "title": "‘We had no privacy, no respect’: demands for tighter rules on reporting of femicide",
+            "url": "https://www.theguardian.com/society/2020/dec/13/we-had-no-privacy-no-respect-demands-for-tighter-rules-on-reporting-of-femicide",
+            "confidence": 0.6182074788144692
+        },
+        {
+            "stories_id": 1799280932,
+            "language": "en",
+            "media_id": 1751,
+            "media_url": "https://www.theguardian.com/us",
+            "publish_date": "2020-12-16 03:00:29",
+            "story_tags": [
+                {
+                    "stories_id": 1799280932,
+                    "tag": "geonames_6252001",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878461
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "geonames_6254928",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878547
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "geonames_6254927",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878566
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "geonames_5206379",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878637
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "geonames_5165418",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878703
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "geonames_1085597",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8884870
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "geonames_4517009",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8885316
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "books and literature",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360844
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "reviews",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360921
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Aaron",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9369030
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Jimmy",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9376160
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Oneworld",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9381851
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Bobby",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9387563
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Addie",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9422248
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Jeremy Tiang",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9496715
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "London School of Hygiene & Tropical Medicine",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9578668
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Granta",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9622331
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Natsuki",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9781174
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Mathilda",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9781296
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Wellcome",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9792421
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Pushkin",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9937234
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Adam Kucharski",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9986302
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Marram",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 10137868
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Caroline Bird",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 10252026
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Jacaranda",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 10492468
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Tayari Jones",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 10883005
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Roy Dennis",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 11345160
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Sharon Duggal",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 11975206
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "James Witherspoon",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 28683103
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Doireann Ní Ghríofa",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 30051133
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Maaza Mengiste",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 32351014
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Betwa",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 32933436
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Yan Ge",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 35600386
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Annie McDermott",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 35600396
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Sayaka Murata",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 37378094
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Charco Press",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 38081273
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Naomi Booth",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 42431546
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Alex Pheby",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 44858326
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Selva Almada",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 59006636
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Leonie Charlton",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 65330200
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Kathryn Scanlan",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 103695493
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "John Vercher",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 109009111
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Shola von Reinhold",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 199704810
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Elle McNicoll",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 204540819
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "Nathan Treeves",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 213225111
+                },
+                {
+                    "stories_id": 1799280932,
+                    "tag": "GE Trevelyan",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 224527130
+                }
+            ],
+            "title": "The best books of 2020 to support indie publishers this Christmas",
+            "url": "https://www.theguardian.com/books/2020/dec/16/the-best-books-of-2020-to-support-indie-publishers-this-christmas",
+            "confidence": 0.5445684517963146
+        },
+        {
+            "stories_id": 1799281149,
+            "language": "en",
+            "media_id": 623382,
+            "media_url": "http://www.theguardian.com/us",
+            "publish_date": "2020-12-16 03:00:29",
+            "story_tags": [
+                {
+                    "stories_id": 1799281149,
+                    "tag": "geonames_6252001",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878461
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "geonames_6254928",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878547
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "geonames_6254927",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878566
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "geonames_5206379",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878637
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "geonames_5165418",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878703
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "geonames_1085597",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8884870
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "geonames_4517009",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8885316
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "books and literature",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360844
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "reviews",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360921
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Aaron",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9369030
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Jimmy",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9376160
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Oneworld",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9381851
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Bobby",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9387563
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Addie",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9422248
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Jeremy Tiang",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9496715
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "London School of Hygiene & Tropical Medicine",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9578668
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Granta",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9622331
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Natsuki",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9781174
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Mathilda",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9781296
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Wellcome",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9792421
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Pushkin",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9937234
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Adam Kucharski",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9986302
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Marram",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 10137868
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Caroline Bird",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 10252026
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Jacaranda",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 10492468
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Tayari Jones",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 10883005
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Roy Dennis",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 11345160
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Sharon Duggal",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 11975206
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "James Witherspoon",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 28683103
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Doireann Ní Ghríofa",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 30051133
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Maaza Mengiste",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 32351014
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Betwa",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 32933436
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Yan Ge",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 35600386
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Annie McDermott",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 35600396
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Sayaka Murata",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 37378094
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Charco Press",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 38081273
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Naomi Booth",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 42431546
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Alex Pheby",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 44858326
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Selva Almada",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 59006636
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Leonie Charlton",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 65330200
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Kathryn Scanlan",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 103695493
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "John Vercher",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 109009111
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Shola von Reinhold",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 199704810
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Elle McNicoll",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 204540819
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "Nathan Treeves",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 213225111
+                },
+                {
+                    "stories_id": 1799281149,
+                    "tag": "GE Trevelyan",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 224527130
+                }
+            ],
+            "title": "The best books of 2020 to support indie publishers this Christmas",
+            "url": "https://www.theguardian.com/books/2020/dec/16/the-best-books-of-2020-to-support-indie-publishers-this-christmas",
+            "confidence": 0.5445684517963146
+        },
+        {
+            "stories_id": 1802257079,
+            "language": "en",
+            "media_id": 661934,
+            "media_url": "http://www.omahadailyrecord.com/",
+            "publish_date": "2020-12-19 03:00:00",
+            "story_tags": [
+                {
+                    "stories_id": 1802257079,
+                    "tag": "geonames_3017382",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878470
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "geonames_745042",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8879525
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "geonames_745044",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8879538
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "medicine and health",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360852
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "diseases and conditions",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360942
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "demonstrations and riots",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360974
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "United Nations",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9362785
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "FIFA",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9362973
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "European Union",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9362999
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "Pope Francis",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9363204
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "U.N.",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9363619
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "Council of Europe",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9365195
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "Tayyip Erdogan",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9365525
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "Angela Charlton",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9394652
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "Phumzile Mlambo-Ngcuka",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9422435
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "UNAIDS",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9437429
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "Raf",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9445770
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "Pedro Sánchez",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9617159
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "national statistics agency ISTAT",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9653102
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "Office for National Statistics",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9725809
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "Council of Europe Parliamentary Assembly",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 10044753
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "Giuseppe Conte",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 10496263
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "Nick Thomas-Symonds",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 10653279
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "TikTok",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 31849811
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "Michel fountain",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 32695051
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "Petra Bayr",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 45340771
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "Elisabeth Moreno",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 74007943
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "Labour Party crime",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 141018575
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1802257079,
+                    "tag": "Anya Alian",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 222301504
+                }
+            ],
+            "title": "Push to End Domestic Violence, Worse Amid Pandemic",
+            "url": "https://www.omahadailyrecord.com/content/push-end-domestic-violence-worse-amid-pandemic",
+            "confidence": 0.5410634738973746
+        },
+        {
+            "stories_id": 1802720554,
+            "language": "en",
+            "media_id": 24940,
+            "media_url": "http://seattletimes.com",
+            "publish_date": "2020-12-20 10:00:00",
+            "story_tags": [
+                {
+                    "stories_id": 1802720554,
+                    "tag": "geonames_6252001",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878461
+                },
+                {
+                    "stories_id": 1802720554,
+                    "tag": "geonames_5815135",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878481
+                },
+                {
+                    "stories_id": 1802720554,
+                    "tag": "geonames_3996063",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878716
+                },
+                {
+                    "stories_id": 1802720554,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1802720554,
+                    "tag": "Erik Lacitis",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9746227
+                },
+                {
+                    "stories_id": 1802720554,
+                    "tag": "Pacific NW",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 10851562
+                },
+                {
+                    "stories_id": 1802720554,
+                    "tag": "geonames_5814307",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 22426391
+                },
+                {
+                    "stories_id": 1802720554,
+                    "tag": "Adam Jude",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 28158009
+                },
+                {
+                    "stories_id": 1802720554,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1802720554,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                }
+            ],
+            "title": "Postscripts 2020: After a year of nonstop news, we pause to revisit some highlights",
+            "url": "https://www.seattletimes.com/pacific-nw-magazine/postscripts-in-a-year-of-nonstop-news-we-pause-to-revisit-some-highlights/?utm_source=RSS&utm_medium=Referral&utm_campaign=RSS_all",
+            "confidence": 0.5225043949538279
+        },
+        {
+            "stories_id": 1807398826,
+            "language": "en",
+            "media_id": 644997,
+            "media_url": "http://ksusentinel.com/",
+            "publish_date": "2020-12-25 14:49:47",
+            "story_tags": [
+                {
+                    "stories_id": 1807398826,
+                    "tag": "geonames_3469034",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878586
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "geonames_3451189",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8879141
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "geonames_3451190",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8879654
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "crime and criminals",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360912
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "sex crimes",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360922
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "murders and attempted murders",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360982
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "EFE",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9396094
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "AMB",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9616345
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "Public Security Council",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 10838079
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "Vivian Vieira",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 54670447
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "geonames_7538091",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 187694316
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "Renata Gill",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 196744673
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "Amarj",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 225149502
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "Association of Magistrates of Brazil",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 225149503
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "Amaral Aronenci",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 225149504
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "Paolo José Aronenci",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 225149505
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "Palo José Aronenci",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 225149506
+                },
+                {
+                    "stories_id": 1807398826,
+                    "tag": "Felipe Convells",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 225149507
+                }
+            ],
+            "title": "Man kills his ex-partner, judge in Rio de Janeiro",
+            "url": "https://ksusentinel.com/2020/12/25/man-kills-his-ex-partner-judge-in-rio-de-janeiro/",
+            "confidence": 0.6696693318679979
+        },
+        {
+            "stories_id": 1807450981,
+            "language": "en",
+            "media_id": 661229,
+            "media_url": "http://www.brookfieldcitizen.com/",
+            "publish_date": "2020-12-25 18:53:28",
+            "story_tags": [
+                {
+                    "stories_id": 1807450981,
+                    "tag": "geonames_6252001",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878461
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "geonames_5128638",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878463
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "geonames_5318313",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8879149
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "geonames_5174095",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8884126
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "geonames_2646507",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8955226
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "geonames_5131135",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 9025693
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "violence",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9361116
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "Spike",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9398073
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "Section",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9411721
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "Bbc",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9481622
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "National Domestic Violence Hotline",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 10016126
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "Jennifer Nunez",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 28359778
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "Jami Brookes Berry",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 217638544
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "Domestic Violence National Center For Health",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 217796457
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "Organizational Chart Archives Nnedv",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 221116458
+                },
+                {
+                    "stories_id": 1807450981,
+                    "tag": "Domestic Violence Criminal Justice Training Council... Section",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 221116459
+                }
+            ],
+            "title": "domestic violence chart",
+            "url": "http://gesa.eastsussexpacc.org/domestic-violence-chart/",
+            "confidence": 0.543098424480832
+        },
+        {
+            "stories_id": 1812414512,
+            "language": "en",
+            "media_id": 661229,
+            "media_url": "http://www.brookfieldcitizen.com/",
+            "publish_date": "2021-01-01 00:46:37",
+            "story_tags": [
+                {
+                    "stories_id": 1812414512,
+                    "tag": "geonames_6252001",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878461
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "geonames_5128638",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878463
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "geonames_5318313",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8879149
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "geonames_5174095",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8884126
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "geonames_2646507",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8955226
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "geonames_5131135",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 9025693
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "violence",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9361116
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "Spike",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9398073
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "Section",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9411721
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "Bbc",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9481622
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "National Domestic Violence Hotline",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 10016126
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "Jennifer Nunez",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 28359778
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "Jami Brookes Berry",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 217638544
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "Domestic Violence National Center For Health",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 217796457
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "Organizational Chart Archives Nnedv",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 221116458
+                },
+                {
+                    "stories_id": 1812414512,
+                    "tag": "Domestic Violence Criminal Justice Training Council... Section",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 221116459
+                }
+            ],
+            "title": "domestic violence chart",
+            "url": "https://mane.datnight.org/domestic-violence-chart/",
+            "confidence": 0.543098424480832
+        },
+        {
+            "stories_id": 1813913028,
+            "language": "en",
+            "media_id": 1,
+            "media_url": "http://nytimes.com",
+            "publish_date": "2021-01-03 10:54:41",
+            "story_tags": [
+                {
+                    "stories_id": 1813913028,
+                    "tag": "geonames_3175395",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878643
+                },
+                {
+                    "stories_id": 1813913028,
+                    "tag": "geonames_3165244",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8879977
+                },
+                {
+                    "stories_id": 1813913028,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1813913028,
+                    "tag": "politics and government",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360836
+                },
+                {
+                    "stories_id": 1813913028,
+                    "tag": "biographical information",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360968
+                },
+                {
+                    "stories_id": 1813913028,
+                    "tag": "freedom and human rights",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9361136
+                },
+                {
+                    "stories_id": 1813913028,
+                    "tag": "Adams",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9364902
+                },
+                {
+                    "stories_id": 1813913028,
+                    "tag": "Emma Bonino",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9430056
+                },
+                {
+                    "stories_id": 1813913028,
+                    "tag": "Gudeta",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 55378724
+                },
+                {
+                    "stories_id": 1813913028,
+                    "tag": "Valeria Valente",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 57906332
+                },
+                {
+                    "stories_id": 1813913028,
+                    "tag": "Agitu",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 73207380
+                },
+                {
+                    "stories_id": 1813913028,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1813913028,
+                    "tag": "Caterina Amicucci",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 105728234
+                },
+                {
+                    "stories_id": 1813913028,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1813913028,
+                    "tag": "Fulvio Carlin",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 225590486
+                }
+            ],
+            "title": "Italy Mourns an Immigrant’s Life Cut Short",
+            "url": "https://www.nytimes.com/2021/01/03/world/europe/italy-mourns-immigrant-murder.html",
+            "confidence": 0.5149899302813806
+        },
+        {
+            "stories_id": 1814688878,
+            "language": "en",
+            "media_id": 26047,
+            "media_url": "http://www.clickondetroit.com",
+            "publish_date": "2021-01-04 11:34:21",
+            "story_tags": [
+                {
+                    "stories_id": 1814688878,
+                    "tag": "geonames_6252001",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878461
+                },
+                {
+                    "stories_id": 1814688878,
+                    "tag": "geonames_5391959",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878536
+                },
+                {
+                    "stories_id": 1814688878,
+                    "tag": "geonames_5001836",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878821
+                },
+                {
+                    "stories_id": 1814688878,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1814688878,
+                    "tag": "finances",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360840
+                },
+                {
+                    "stories_id": 1814688878,
+                    "tag": "crime and criminals",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360912
+                },
+                {
+                    "stories_id": 1814688878,
+                    "tag": "Eli Savit",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 10208144
+                },
+                {
+                    "stories_id": 1814688878,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1814688878,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                }
+            ],
+            "title": "Washtenaw County Prosecutor Eli Savit scraps cash bail",
+            "url": "https://www.clickondetroit.com/all-about-ann-arbor/2021/01/04/washtenaw-county-prosecutor-eli-savit-scraps-cash-bail/",
+            "confidence": 0.6327360560720162
+        },
+        {
+            "stories_id": 1815522156,
+            "language": "en",
+            "media_id": 1751,
+            "media_url": "https://www.theguardian.com/us",
+            "publish_date": "2021-01-05 09:36:59",
+            "story_tags": [
+                {
+                    "stories_id": 1815522156,
+                    "tag": "geonames_2635167",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878466
+                },
+                {
+                    "stories_id": 1815522156,
+                    "tag": "geonames_6269131",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878467
+                },
+                {
+                    "stories_id": 1815522156,
+                    "tag": "geonames_2643123",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8879034
+                },
+                {
+                    "stories_id": 1815522156,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1815522156,
+                    "tag": "law and legislation",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360837
+                },
+                {
+                    "stories_id": 1815522156,
+                    "tag": "crime and criminals",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360912
+                },
+                {
+                    "stories_id": 1815522156,
+                    "tag": "Ministry of Justice",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9366947
+                },
+                {
+                    "stories_id": 1815522156,
+                    "tag": "St Mary",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9408038
+                },
+                {
+                    "stories_id": 1815522156,
+                    "tag": "Dame Vera Baird",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 10132625
+                },
+                {
+                    "stories_id": 1815522156,
+                    "tag": "Catherine White",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 16960497
+                },
+                {
+                    "stories_id": 1815522156,
+                    "tag": "Baroness Newlove",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 26175398
+                },
+                {
+                    "stories_id": 1815522156,
+                    "tag": "Centre for Women’s Justice",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 30097318
+                },
+                {
+                    "stories_id": 1815522156,
+                    "tag": "Nogah Ofer",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 35190768
+                },
+                {
+                    "stories_id": 1815522156,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1815522156,
+                    "tag": "Anne-Marie Nield",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 91805160
+                },
+                {
+                    "stories_id": 1815522156,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                }
+            ],
+            "title": "Urgent call for new law to tackle non-fatal strangulation in England and Wales",
+            "url": "https://www.theguardian.com/society/2021/jan/05/urgent-call-for-new-law-to-tackle-non-fatal-strangulation-in-england-and-wales",
+            "confidence": 0.523508086312045
+        },
+        {
+            "stories_id": 1817027785,
+            "language": "en",
+            "media_id": 661229,
+            "media_url": "http://www.brookfieldcitizen.com/",
+            "publish_date": "2021-01-07 00:23:42",
+            "story_tags": [
+                {
+                    "stories_id": 1817027785,
+                    "tag": "geonames_2635167",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878466
+                },
+                {
+                    "stories_id": 1817027785,
+                    "tag": "geonames_2638360",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8879119
+                },
+                {
+                    "stories_id": 1817027785,
+                    "tag": "geonames_2648579",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8882429
+                },
+                {
+                    "stories_id": 1817027785,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1817027785,
+                    "tag": "children and youth",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360981
+                },
+                {
+                    "stories_id": 1817027785,
+                    "tag": "William",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9367021
+                },
+                {
+                    "stories_id": 1817027785,
+                    "tag": "Wikipedia",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9391328
+                },
+                {
+                    "stories_id": 1817027785,
+                    "tag": "Kamil",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9572633
+                },
+                {
+                    "stories_id": 1817027785,
+                    "tag": "Jennifer Nunez",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 28359778
+                },
+                {
+                    "stories_id": 1817027785,
+                    "tag": "Bbc News",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 50125128
+                },
+                {
+                    "stories_id": 1817027785,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1817027785,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1817027785,
+                    "tag": "Domestic Violence National Center For Health",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 217796457
+                },
+                {
+                    "stories_id": 1817027785,
+                    "tag": "Control Ywca Spokane",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 218310113
+                }
+            ],
+            "title": "domestic abuse chart",
+            "url": "https://kamil.lewisburgdistrictumc.org/domestic-abuse-chart/",
+            "confidence": 0.5102500635900132
+        },
+        {
+            "stories_id": 1813705419,
+            "language": "en",
+            "media_id": 661229,
+            "media_url": "http://www.brookfieldcitizen.com/",
+            "publish_date": "2021-01-03 03:57:49",
+            "story_tags": [
+                {
+                    "stories_id": 1813705419,
+                    "tag": "geonames_6252001",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878461
+                },
+                {
+                    "stories_id": 1813705419,
+                    "tag": "geonames_5128638",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878463
+                },
+                {
+                    "stories_id": 1813705419,
+                    "tag": "geonames_5318313",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8879149
+                },
+                {
+                    "stories_id": 1813705419,
+                    "tag": "geonames_5174095",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8884126
+                },
+                {
+                    "stories_id": 1813705419,
+                    "tag": "geonames_2646507",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8955226
+                },
+                {
+                    "stories_id": 1813705419,
+                    "tag": "geonames_5131135",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 9025693
+                },
+                {
+                    "stories_id": 1813705419,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1813705419,
+                    "tag": "violence",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9361116
+                },
+                {
+                    "stories_id": 1813705419,
+                    "tag": "domestic violence",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9361199
+                },
+                {
+                    "stories_id": 1813705419,
+                    "tag": "Spike",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9398073
+                },
+                {
+                    "stories_id": 1813705419,
+                    "tag": "Samil",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 10962493
+                },
+                {
+                    "stories_id": 1813705419,
+                    "tag": "Jennifer Nunez",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 28359778
+                },
+                {
+                    "stories_id": 1813705419,
+                    "tag": "Bbc News",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 50125128
+                },
+                {
+                    "stories_id": 1813705419,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1813705419,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1813705419,
+                    "tag": "Jami Brookes Berry",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 217638544
+                }
+            ],
+            "title": "domestic violence chart",
+            "url": "https://datnight.org/domestic-violence-chart/",
+            "confidence": 0.543098424480832
+        },
+        {
+            "stories_id": 1820892073,
+            "language": "en",
+            "media_id": 661229,
+            "media_url": "http://www.brookfieldcitizen.com/",
+            "publish_date": "2021-01-11 16:08:04",
+            "story_tags": [
+                {
+                    "stories_id": 1820892073,
+                    "tag": "geonames_2635167",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8878466
+                },
+                {
+                    "stories_id": 1820892073,
+                    "tag": "geonames_2638360",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8879119
+                },
+                {
+                    "stories_id": 1820892073,
+                    "tag": "geonames_2648579",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8882429
+                },
+                {
+                    "stories_id": 1820892073,
+                    "tag": "geonames_4636442",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8887460
+                },
+                {
+                    "stories_id": 1820892073,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1820892073,
+                    "tag": "children and youth",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360981
+                },
+                {
+                    "stories_id": 1820892073,
+                    "tag": "William",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 9367021
+                },
+                {
+                    "stories_id": 1820892073,
+                    "tag": "UMC",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9388652
+                },
+                {
+                    "stories_id": 1820892073,
+                    "tag": "Wikipedia",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9391328
+                },
+                {
+                    "stories_id": 1820892073,
+                    "tag": "Jennifer Nunez",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 28359778
+                },
+                {
+                    "stories_id": 1820892073,
+                    "tag": "Bbc News",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 50125128
+                },
+                {
+                    "stories_id": 1820892073,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1820892073,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1820892073,
+                    "tag": "Domestic Violence National Center For Health",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 217796457
+                },
+                {
+                    "stories_id": 1820892073,
+                    "tag": "Control Ywca Spokane",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 218310113
+                }
+            ],
+            "title": "domestic abuse chart",
+            "url": "https://tamil.lewisburgdistrictumc.org/domestic-abuse-chart/",
+            "confidence": 0.5072786524733511
+        },
+        {
+            "stories_id": 1824057846,
+            "language": "en",
+            "media_id": 287422,
+            "media_url": "http://laprensalatina.com/",
+            "publish_date": "2021-01-14 14:02:01",
+            "story_tags": [
+                {
+                    "stories_id": 1824057846,
+                    "tag": "geonames_3703430",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8879660
+                },
+                {
+                    "stories_id": 1824057846,
+                    "tag": "geonames_3703443",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8884550
+                },
+                {
+                    "stories_id": 1824057846,
+                    "tag": "geonames_3703433",
+                    "tag_set": "mc-geocoder@media.mit.edu",
+                    "tag_sets_id": 1011,
+                    "tags_id": 8885428
+                },
+                {
+                    "stories_id": 1824057846,
+                    "tag": "nyt_labeller_v1.0.0",
+                    "tag_set": "nyt_labels_version",
+                    "tag_sets_id": 1964,
+                    "tags_id": 9360669
+                },
+                {
+                    "stories_id": 1824057846,
+                    "tag": "medicine and health",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360852
+                },
+                {
+                    "stories_id": 1824057846,
+                    "tag": "women",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360892
+                },
+                {
+                    "stories_id": 1824057846,
+                    "tag": "murders and attempted murders",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9360982
+                },
+                {
+                    "stories_id": 1824057846,
+                    "tag": "violence",
+                    "tag_set": "nyt_labels",
+                    "tag_sets_id": 1963,
+                    "tags_id": 9361116
+                },
+                {
+                    "stories_id": 1824057846,
+                    "tag": "AG",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9400231
+                },
+                {
+                    "stories_id": 1824057846,
+                    "tag": "Efe",
+                    "tag_set": "cliff_organizations",
+                    "tag_sets_id": 2388,
+                    "tags_id": 9589423
+                },
+                {
+                    "stories_id": 1824057846,
+                    "tag": "Fabio Agrana",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 60711854
+                },
+                {
+                    "stories_id": 1824057846,
+                    "tag": "readability-lxml-0.7",
+                    "tag_set": "extractor_version",
+                    "tag_sets_id": 1354,
+                    "tags_id": 81092444
+                },
+                {
+                    "stories_id": 1824057846,
+                    "tag": "cliff_clavin_v2.6.0",
+                    "tag_set": "geocoder_version",
+                    "tag_sets_id": 1937,
+                    "tags_id": 189462640
+                },
+                {
+                    "stories_id": 1824057846,
+                    "tag": "Eusebia Solis",
+                    "tag_set": "cliff_people",
+                    "tag_sets_id": 2389,
+                    "tags_id": 226397810
+                }
+            ],
+            "title": "Expert blames institutional neglect for rise in femicides in Panama",
+            "url": "https://www.laprensalatina.com/expert-blames-institutional-neglect-for-rise-in-femicides-in-panama/",
+            "confidence": 0.5550615066959842
+        }
+    ]
+}

@@ -54,5 +54,5 @@ monitors.queue_stories_by_page()
 
 **post_results_worker**
   pop off from post_results queue
-  post to the URL specified
+  post to the URL specified:  # see `posting-data-sample.json` for an example
    -> on failure requeue to try again

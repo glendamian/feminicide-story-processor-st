@@ -22,7 +22,8 @@ total_pages = 0
 for monitor in all_monitors:
     # figure out the query to run based on the history
     last_processed_stories_id = monitor_history.get(monitor['id'], 0)
-    logger.info("Checking {} (last processed_stories_id={})".format(monitor['id'], last_processed_stories_id))
+    logger.info("Checking {} - {} (last processed_stories_id={})".format(monitor['id'], monitor['title'],
+                                                                         last_processed_stories_id))
     q = monitor['search_terms']
     start_date = dateparser.parse(monitor['start_date'])
     now = date.today()

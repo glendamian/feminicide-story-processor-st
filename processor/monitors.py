@@ -96,7 +96,10 @@ def post_results(monitor: Dict, stories: List):
     :return: whether the request worked or not (if not, raises an exception)
     """
     stories_to_send = _remove_low_confidence_stories(monitor.get('min_confidence', 0), stories)
-    response = requests.post(monitor['url'], data=dict(stories=_prep_stories_for_posting(stories_to_send)))
+    data_to_send = dict(stories=_prep_stories_for_posting(stories_to_send))
+    #with open('data.json', 'w', encoding='utf-8') as f:
+    #    json.dump(data_to_send, f, ensure_ascii=False, indent=4)
+    response = requests.post(monitor['url'], data=data_to_send)
     return response.ok
 
 
@@ -132,7 +135,7 @@ def _prep_stories_for_posting(stories: List) -> List:
             url=s['url'],
             confidence=s['confidence']
         )
-        prepped_stories.append(s)
+        prepped_stories.append(story)
     return prepped_stories
 
 
