@@ -2,7 +2,6 @@ import os
 import logging
 import pickle
 from typing import Dict
-import zipfile
 
 from processor import base_dir
 
@@ -13,26 +12,10 @@ test_fixture_dir = os.path.join(base_dir, "processor", "test", "fixtures")
 files_dir = os.path.join(base_dir, "files")
 model_dir = os.path.join(base_dir, "files", "models")
 
-
-def _already_downloaded(project: Dict):
-    """
-    Check to see if we have the classifer files already downloaded
-    :param project:
-    :return:
-    """
-    return False  # for now just assume we don't have them
-
-
-def _download(project: Dict) -> bool:
-    """
-
-    :param project:
-    :return: success or failure
-    """
-    test_model_zip = os.path.join(test_fixture_dir, "models.zip")
-    with zipfile.ZipFile(test_model_zip, 'r') as zip_ref:
-        zip_ref.extractall(files_dir)
-    return True
+MODELS = {
+    'en': dict(tfidf_vectorizer='usa_vectorizer.p', nb_model='usa_model.p'),
+    'es': dict(tfidf_vectorizer='uruguay_vectorizer.p', nb_model='uruguay_model.p')
+}
 
 
 def for_project(project: Dict):
@@ -40,9 +23,13 @@ def for_project(project: Dict):
     This is where we would download a classifier, as needed, from the main server based on the URL info
     in the project config passed in. For now, just return the static
     """
-    if not _already_downloaded(project):
-        _download(project)
+    if 'language' not in project:
+        logger.error('No language specified on {}'.format(project['id']))
+    if project['language'] not in MODELS.keys():
+        logger.error('Invalid language specified on {}'.format(project['id']))
+
     return dict(
-        tfidf_vectorizer=pickle.load(open(os.path.join(model_dir, 'usa_vectorizer.p'), 'rb')),
-        nb_model=pickle.load(open(os.path.join(model_dir, 'usa_model.p'), 'rb'))
+        tfidf_vectorizer=pickle.load(open(os.path.join(model_dir,
+                                                       MODELS[project['language']]['tfidf_vectorizer']), 'rb')),
+        nb_model=pickle.load(open(os.path.join(model_dir,MODELS[project['language']]['nb_model']), 'rb'))
     )

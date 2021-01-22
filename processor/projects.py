@@ -5,7 +5,7 @@ import sys
 import json
 import logging
 
-from processor import base_dir
+from processor import base_dir, CONFIG_FILE_URL
 import processor.classifiers as classifiers
 
 logger = logging.getLogger(__name__)
@@ -32,6 +32,11 @@ def load_config(force_reload=False):
     if config and not force_reload:
         return config
     try:
+        if force_reload:  # grab the latest config file from the main server
+            r = requests.get(CONFIG_FILE_URL)
+            open(_path_to_config_file(), 'wb').write(r.content)
+            logger.info("  updated config file from main server")
+        # load and return the (perhaps updated) locally cached file
         with open(_path_to_config_file(), "r") as f:
             config = json.load(f)
         return config
@@ -60,12 +65,12 @@ def load_history(force_reload=False):
         return {}
 
 
-def update_processing_history(project_id: str, last_processed_stories_id: str):
+def update_processing_history(project_id: int, last_processed_stories_id: int):
     """
-    Weite back updated history file. This tracks the last story we processed for each project. It is a lookup table,
+    Write back updated history file. This tracks the last story we processed for each project. It is a lookup table,
      from project_id to last_processed_stories_id. This is *not* thread safe, but should work fine for now because
      we will only have one cron-driven job that fetches and queues up stories to be processed by the workers.
-    :param project_id:
+    :param project_id: needs to be a string so we can save it in JSON
     :param last_processed_stories_id:
     :return:
     """
@@ -75,9 +80,9 @@ def update_processing_history(project_id: str, last_processed_stories_id: str):
     except FileNotFoundError as e:
         logger.warning("No history file, creating a new one")
         data = dict()
-    logger.debug("  {}: updating from {} to {}".format(project_id, data.get(project_id, None),
+    logger.debug("  {}: updating from {} to {}".format(project_id, data.get(str(project_id), None),
                                                        last_processed_stories_id))
-    data[project_id] = last_processed_stories_id
+    data[str(project_id)] = last_processed_stories_id  # JSON dict keys are strings
     try:
         with open(_path_to_history_file(), "w") as f:
             json.dump(data, f)

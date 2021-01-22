@@ -8,7 +8,7 @@ Install for Development
 
 For development, install via standard Python approaches: `pip install -r requirements.txt`.
 You'll need to setup an instance of redis to connect to (on MacOS do `brew install redis`).
-Then `cp .env.template .env` and fill in the approriate info for each setting in that file.
+Then `cp .env.template .env` and fill in the appropriate info for each setting in that file.
 
 Running
 -------

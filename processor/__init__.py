@@ -36,6 +36,13 @@ if SENTRY_DSN:
 else:
     logger.info("Not logging errors to Sentry")
 
+CONFIG_FILE_URL = os.environ.get('CONFIG_FILE_URL', None)
+if CONFIG_FILE_URL is None:
+    logger.error("No CONFIG_FILE_URL is specified. Bailing because we can't list projects to run!")
+    sys.exit(1)
+else:
+    logger.info("Pulling project config from {}".format(CONFIG_FILE_URL))
+
 
 def get_mc_client():
     """

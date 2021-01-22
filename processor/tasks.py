@@ -42,7 +42,7 @@ def post_results_worker(self, project: Dict, stories: List):
     """
     try:
         logger.debug('{}: post {} stories'.format(['id'], len(stories)))
-        projects.post_results(project, stories)
+        # projects.post_results(project, stories)
     except requests.exceptions.HTTPError as err:
         # on failure requeue to try again
         logger.warn("{}: Failed to post {} results".format(project['id'], len(stories)))
