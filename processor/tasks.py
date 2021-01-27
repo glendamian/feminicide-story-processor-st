@@ -1,4 +1,5 @@
 from celery.utils.log import get_task_logger
+import logging
 from typing import List, Dict
 import requests
 
@@ -6,6 +7,12 @@ from processor.celery import app
 import processor.projects as projects
 
 logger = get_task_logger(__name__)
+
+# create another logger to track all the story results posted to a file for auditing internally
+story_logger = get_task_logger('story_classification_results')
+fh = logging.FileHandler('posted-story-data.log')
+fh.setLevel(logging.DEBUG)
+story_logger.addHandler(fh)
 
 
 @app.task(serializer='json', bind=True)
@@ -42,7 +49,9 @@ def post_results_worker(self, project: Dict, stories: List):
     """
     try:
         logger.debug('{}: post {} stories'.format(['id'], len(stories)))
-        # projects.post_results(project, stories)
+        for s in stories:  # for auditing, keep a log in the container of the results posted to main server
+            story_logger.debug("{} - {} - {}".format(project['id'], s['stories_id'], s['confidence']))
+        projects.post_results(project, stories)
     except requests.exceptions.HTTPError as err:
         # on failure requeue to try again
         logger.warn("{}: Failed to post {} results".format(project['id'], len(stories)))

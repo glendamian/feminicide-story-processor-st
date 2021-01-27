@@ -7,7 +7,8 @@ from processor import get_mc_client
 import processor.projects as projects
 import processor.tasks as tasks
 
-STORIES_PER_PAGE = 100
+STORIES_PER_PAGE = 100  # I found this performs poorly if set higher than 100
+MAX_STORIES_PER_PROJECT = 1000  # make sure we don't do too many stories each cron run (for testing)
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +36,7 @@ for project in all_projects:
     new_story_count = 0
     page_count = 0
     more_stories = True
-    while more_stories:
+    while more_stories and new_story_count < MAX_STORIES_PER_PROJECT:
         try:
             page_of_stories = mc.storyList(q, fq, last_processed_stories_id=last_processed_stories_id,
                                            text=True, rows=STORIES_PER_PAGE)

@@ -1,2 +1,2 @@
 #!/bin/sh
-celery -A processor worker -l info
+celery -A processor worker -l debug

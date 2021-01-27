@@ -103,9 +103,9 @@ def post_results(project: Dict, stories: List):
     stories_to_send = _remove_low_confidence_stories(project.get('min_confidence', 0), stories)
     data_to_send = dict(project=project,  # send back project data too (even though id is in the URL) for redundancy
                         stories=_prep_stories_for_posting(stories_to_send))
-    with open('data.json', 'w', encoding='utf-8') as f:
-       json.dump(data_to_send, f, ensure_ascii=False, indent=4)
-    response = requests.post(project['update_post_url'], data=data_to_send)
+    #with open('data.json', 'w', encoding='utf-8') as f:
+    #    json.dump(data_to_send, f, ensure_ascii=False, indent=4)
+    response = requests.post(project['update_post_url'], json=data_to_send)
     return response.ok
 
 

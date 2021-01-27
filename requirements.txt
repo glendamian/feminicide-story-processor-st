@@ -1,11 +1,11 @@
 python-dotenv==0.15.0
 celery==5.0.5
 redis==3.5.3
-pytest==6.2.1
+pytest==6.2.2
 Flask==1.1.2
 mediacloud==3.12.1
 gunicorn==20.0.4
 requests==2.25.1
 dateparser==1.0.0
-scikit-learn==0.23.1
+scikit-learn==0.23.1  # important to hold back to keep in sync with models
 sentry-sdk==0.19.5
