@@ -31,3 +31,5 @@ variable there for each setting in the `.env`.
 
 It is also super useful to deploy an instance of [celery-flower](https://flower.readthedocs.io/en/latest/) so you can
 monitor the production queues.
+
+See `doc/deploying.md` for more info.
