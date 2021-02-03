@@ -112,3 +112,4 @@ __MACOSX
 # app-specific files
 config/projects.json
 config/project-history.json
+data.json

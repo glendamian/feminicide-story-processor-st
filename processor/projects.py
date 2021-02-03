@@ -13,6 +13,8 @@ logger = logging.getLogger(__name__)
 config = None  # acts as a singleton
 history = None  # acts as a singleton
 
+REALLY_POST = True
+
 
 def _path_to_config_file() -> str:
     return os.path.join(base_dir, 'config', 'projects.json')
@@ -103,10 +105,14 @@ def post_results(project: Dict, stories: List):
     stories_to_send = _remove_low_confidence_stories(project.get('min_confidence', 0), stories)
     data_to_send = dict(project=project,  # send back project data too (even though id is in the URL) for redundancy
                         stories=_prep_stories_for_posting(stories_to_send))
-    #with open('data.json', 'w', encoding='utf-8') as f:
-    #    json.dump(data_to_send, f, ensure_ascii=False, indent=4)
-    response = requests.post(project['update_post_url'], json=data_to_send)
-    return response.ok
+    if REALLY_POST:
+        response = requests.post(project['update_post_url'], json=data_to_send)
+        return response.ok
+    else:
+        # helpful for debugging
+        with open('data.json', 'w', encoding='utf-8') as f:
+            json.dump(data_to_send, f, ensure_ascii=False, indent=4)
+        return True
 
 
 def _remove_low_confidence_stories(confidence_threshold: float, stories: List) -> List:
@@ -132,6 +138,7 @@ def _prep_stories_for_posting(stories: List) -> List:
     for s in stories:
         story = dict(
             stories_id=s['stories_id'],
+            processed_stories_id=s['processed_stories_id'],
             language=s['language'],
             media_id=s['media_id'],
             media_url=s['media_url'],
