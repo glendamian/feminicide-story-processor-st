@@ -10,10 +10,10 @@ import processor.classifiers as classifiers
 
 logger = logging.getLogger(__name__)
 
-config = None  # acts as a singleton
-history = None  # acts as a singleton
+_all_projects = None  # acts as a singleton because we only load it once (after we update it from central server)
+_all_project_history = None  # acts as a singleton
 
-REALLY_POST = True
+REALLY_POST = True  # helpful debug flag - set to False and we don't post results to central server
 
 
 def _path_to_config_file() -> str:
@@ -24,15 +24,15 @@ def _path_to_history_file() -> str:
     return os.path.join(base_dir, 'config', 'project-history.json')
 
 
-def load_config(force_reload=False):
+def load_project_list(force_reload=False) -> List[Dict]:
     """
     Treats config like a singleton that is lazy-loaded once the first time this is called.
     :param force_reload: override the default behaviour and load the config from file system again
     :return:
     """
-    global config
-    if config and not force_reload:
-        return config
+    global _all_projects
+    if _all_projects and not force_reload:
+        return _all_projects
     try:
         if force_reload:  # grab the latest config file from the main server
             r = requests.get(CONFIG_FILE_URL)
@@ -40,13 +40,39 @@ def load_config(force_reload=False):
             logger.info("  updated config file from main server")
         # load and return the (perhaps updated) locally cached file
         with open(_path_to_config_file(), "r") as f:
-            config = json.load(f)
-        return config
+            _all_projects = json.load(f)
+        update_count = _update_history_from_config(_all_projects)
+        logger.info("    updated {} last_processed_stories_ids from server data".format(update_count))
+        return _all_projects
     except Exception as e:
         # bail completely if we can't load the config file
         logger.error("Can't load config file - dying ungracefully")
         logger.exception(e)
         sys.exit(1)
+
+
+def _update_history_from_config(project_list: List[Dict]) -> int:
+    """
+    In order to avoid holding state within this container, we rely on the central server to relay back
+    the max(procesed_stories_id) for each project. Yes, we track this ourselves in project-history.json,
+    but when the container is reset we lose that file. This is a redundancy to avoid reprocessing loads and
+    loads of stories
+    :param project_list: the list of projects from the main server
+    :return: the number of projects that we updated the latest processed_stories_id on
+    """
+    update_count = 0
+    the_history = load_history(True)
+    for project in project_list:
+        needs_update = False
+        if 'last_processed_stories_id' in project:
+            if project['id'] in the_history:
+                needs_update = project['last_processed_stories_id'] > the_history[project['id']]
+            else:
+                needs_update = True
+        if needs_update:
+            update_processing_history(project['id'], project['last_processed_stories_id'])
+            update_count += 1
+    return update_count
 
 
 def load_history(force_reload=False):
@@ -55,13 +81,13 @@ def load_history(force_reload=False):
     :param force_reload: override the default behaviour and load the config from file system again
     :return:
     """
-    global history
-    if history and not force_reload:
-        return history
+    global _all_project_history
+    if _all_project_history and not force_reload:
+        return _all_project_history
     try:
         with open(_path_to_history_file(), "r") as f:
-            history = json.load(f)
-        return history
+            _all_project_history = json.load(f)
+        return _all_project_history
     except FileNotFoundError as e:
         logger.warning("No history file yet - returning empty one")
         return {}

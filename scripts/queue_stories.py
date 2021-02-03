@@ -14,14 +14,14 @@ logger = logging.getLogger(__name__)
 
 mc = get_mc_client()
 
-all_projects = projects.load_config(force_reload=True)
+project_list = projects.load_project_list(force_reload=True)
 project_history = projects.load_history()
-logger.info("Checking {} projects".format(len(all_projects)))
+logger.info("Checking {} projects".format(len(project_list)))
 logger.info("  will request {} stories/page".format(STORIES_PER_PAGE))
 total_new_stories = 0
 total_pages = 0
 
-for project in all_projects:
+for project in project_list:
     # figure out the query to run based on the history
     last_processed_stories_id = project_history.get(str(project['id']), 0)  # (JSON dict keys have to be strings)
     logger.info("Checking {} - {} (last processed_stories_id={})".format(project['id'], project['title'],
@@ -60,5 +60,5 @@ for project in all_projects:
     total_new_stories += new_story_count
     total_pages += page_count
 
-logger.info("Done with {} projects".format(len(all_projects)))
+logger.info("Done with {} projects".format(len(project_list)))
 logger.info("  {} stories over {} pages".format(total_new_stories, total_pages))
