@@ -24,7 +24,7 @@ def _path_to_history_file() -> str:
     return os.path.join(base_dir, 'config', 'project-history.json')
 
 
-def load_project_list(force_reload=False) -> List[Dict]:
+def load_project_list(force_reload: bool = False) -> List[Dict]:
     """
     Treats config like a singleton that is lazy-loaded once the first time this is called.
     :param force_reload: override the default behaviour and load the config from file system again
@@ -41,8 +41,10 @@ def load_project_list(force_reload=False) -> List[Dict]:
         # load and return the (perhaps updated) locally cached file
         with open(_path_to_config_file(), "r") as f:
             _all_projects = json.load(f)
-        update_count = _update_history_from_config(_all_projects)
-        logger.info("    updated {} last_processed_stories_ids from server data".format(update_count))
+        updates = _update_history_from_config(_all_projects, load_history(True))
+        for project_id, last_processed_stories_id in updates.items():
+            update_processing_history(project_id, last_processed_stories_id)
+        logger.info("    updated {} last_processed_stories_ids from server data".format(len(updates)))
         return _all_projects
     except Exception as e:
         # bail completely if we can't load the config file
@@ -51,31 +53,29 @@ def load_project_list(force_reload=False) -> List[Dict]:
         sys.exit(1)
 
 
-def _update_history_from_config(project_list: List[Dict]) -> int:
+def _update_history_from_config(project_list: List[Dict], the_history: Dict[str, int]) -> Dict[int, int]:
     """
     In order to avoid holding state within this container, we rely on the central server to relay back
-    the max(procesed_stories_id) for each project. Yes, we track this ourselves in project-history.json,
+    the max(processed_stories_id) for each project. Yes, we track this ourselves in project-history.json,
     but when the container is reset we lose that file. This is a redundancy to avoid reprocessing loads and
     loads of stories
     :param project_list: the list of projects from the main server
-    :return: the number of projects that we updated the latest processed_stories_id on
+    :return: a dict of the
     """
-    update_count = 0
-    the_history = load_history(True)
+    updates_to_do = {}
     for project in project_list:
         needs_update = False
-        if 'last_processed_stories_id' in project:
-            if project['id'] in the_history:
-                needs_update = project['last_processed_stories_id'] > the_history[project['id']]
+        if ('last_processed_stories_id' in project) and (project['last_processed_stories_id'] is not None):
+            if str(project['id']) in the_history:
+                needs_update = int(project['last_processed_stories_id']) > int(the_history[str(project['id'])])
             else:
                 needs_update = True
         if needs_update:
-            update_processing_history(project['id'], project['last_processed_stories_id'])
-            update_count += 1
-    return update_count
+            updates_to_do[project['id']] = project['last_processed_stories_id']
+    return updates_to_do
 
 
-def load_history(force_reload=False):
+def load_history(force_reload: bool = False) -> Dict[str, int]:
     """
     Treats history like a singleton that is lazy-loaded once the first time this is called.
     :param force_reload: override the default behaviour and load the config from file system again
@@ -121,7 +121,7 @@ def update_processing_history(project_id: int, last_processed_stories_id: int):
         sys.exit(1)
 
 
-def post_results(project: Dict, stories: List):
+def post_results(project: Dict, stories: List) -> bool:
     """
     Send results back to the feminicide server. Raises an exception if this post fails.
     :param project:
@@ -141,7 +141,7 @@ def post_results(project: Dict, stories: List):
         return True
 
 
-def _remove_low_confidence_stories(confidence_threshold: float, stories: List) -> List:
+def _remove_low_confidence_stories(confidence_threshold: float, stories: List[Dict]) -> List[Dict]:
     """
     If the config has specified some threshold for which stories to send over, filter out those below the threshold.
     :param confidence_threshold:
@@ -153,7 +153,7 @@ def _remove_low_confidence_stories(confidence_threshold: float, stories: List) -
     return filtered
 
 
-def _prep_stories_for_posting(stories: List) -> List:
+def _prep_stories_for_posting(stories: List[Dict]) -> List[Dict]:
     """
     Pull out just the info to send to the central feminicide server (we don't want to send it data it shouldn't see, or
     cannot use).

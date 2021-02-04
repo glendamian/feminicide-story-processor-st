@@ -23,6 +23,11 @@ To run the small admin web server, execute `run-server.sh`.
 
 * To empty out your local queue while developing, `redis-cli FLUSHALL`.
 
+Testing
+-------
+
+Just run `pytest` on the command line to run all the automated tests.
+
 Deploying
 ---------
 
