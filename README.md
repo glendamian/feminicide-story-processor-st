@@ -32,9 +32,9 @@ Deploying
 ---------
 
 This is built to depoy via a SAAS platform, like Heroku. We deploy via dokku. Make sure to create an environment
-variable there for each setting in the `.env`.
+variable there for each setting in the `.env.template`.
 
 It is also super useful to deploy an instance of [celery-flower](https://flower.readthedocs.io/en/latest/) so you can
 monitor the production queues.
 
-See `doc/deploying.md` for more info.
+See `doc/deploying.md` for full info on deploying to dokku.

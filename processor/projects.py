@@ -121,7 +121,7 @@ def update_processing_history(project_id: int, last_processed_stories_id: int):
         sys.exit(1)
 
 
-def post_results(project: Dict, stories: List) -> bool:
+def post_results(project: Dict, stories: List[Dict]) -> bool:
     """
     Send results back to the feminicide server. Raises an exception if this post fails.
     :param project:
@@ -129,16 +129,20 @@ def post_results(project: Dict, stories: List) -> bool:
     :return: whether the request worked or not (if not, raises an exception)
     """
     stories_to_send = _remove_low_confidence_stories(project.get('min_confidence', 0), stories)
-    data_to_send = dict(project=project,  # send back project data too (even though id is in the URL) for redundancy
-                        stories=_prep_stories_for_posting(stories_to_send))
-    if REALLY_POST:
-        response = requests.post(project['update_post_url'], json=data_to_send)
-        return response.ok
+    if len(stories_to_send) > 0:  # don't bother posting if there are no stories above threshold
+        data_to_send = dict(project=project,  # send back project data too (even though id is in the URL) for redundancy
+                            stories=_prep_stories_for_posting(stories_to_send))
+        if REALLY_POST:
+            response = requests.post(project['update_post_url'], json=data_to_send)
+            return response.ok
+        else:
+            # helpful for debugging
+            with open('data.json', 'w', encoding='utf-8') as f:
+                json.dump(data_to_send, f, ensure_ascii=False, indent=4)
+            return True
     else:
-        # helpful for debugging
-        with open('data.json', 'w', encoding='utf-8') as f:
-            json.dump(data_to_send, f, ensure_ascii=False, indent=4)
-        return True
+        logger.debug("  no stories to send")
+    return True
 
 
 def _remove_low_confidence_stories(confidence_threshold: float, stories: List[Dict]) -> List[Dict]:
@@ -151,6 +155,7 @@ def _remove_low_confidence_stories(confidence_threshold: float, stories: List[Di
     filtered = [s for s in stories if s['confidence'] >= confidence_threshold]
     logger.debug("    kept {}/{} stories above {}".format(len(filtered), len(stories), confidence_threshold))
     return filtered
+
 
 
 def _prep_stories_for_posting(stories: List[Dict]) -> List[Dict]:
