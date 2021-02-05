@@ -157,7 +157,6 @@ def _remove_low_confidence_stories(confidence_threshold: float, stories: List[Di
     return filtered
 
 
-
 def _prep_stories_for_posting(stories: List[Dict]) -> List[Dict]:
     """
     Pull out just the info to send to the central feminicide server (we don't want to send it data it shouldn't see, or

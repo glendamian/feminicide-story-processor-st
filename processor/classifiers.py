@@ -18,7 +18,7 @@ MODELS = {
 }
 
 
-def for_project(project: Dict):
+def for_project(project: Dict) -> Dict:
     """
     This is where we would download a classifier, as needed, from the main server based on the URL info
     in the project config passed in. For now, just return the static
