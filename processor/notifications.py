@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 def send_email(recipients: List[str], subject: str, message: str) -> bool:
     """
     Send an email to a sysadmin or something.
-    :recipients to: email addresses to send to
+    :param recipients to: email addresses to send to
     :param subject:
     :param message: plaintext message
     :return: boolean success
