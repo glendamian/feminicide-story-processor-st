@@ -22,7 +22,7 @@ project_list = projects.load_project_list(force_reload=True)
 project_history = projects.load_history()
 logger.info("  Checking {} projects".format(len(project_list)))
 logger.info("    will request {} stories/page".format(STORIES_PER_PAGE))
-email_message += "Checking {} total projects.\n\n".format(len(project_list))
+email_message += "Checked {} projects.\n\n".format(len(project_list))
 total_new_stories = 0
 total_pages = 0
 
@@ -72,8 +72,8 @@ for project in project_list:
 
 logger.info("Done with {} projects".format(len(project_list)))
 logger.info("  {} stories over {} pages".format(total_new_stories, total_pages))
-email_message += "Done - pulled {} stories over {} pages total\n\n" \
-                 "(An automated email from uour friendly neighborhood Media Cloud story processor)"\
+email_message += "Done - pulled {} stories over {} pages total.\n\n" \
+                 "(An automated email from yout friendly neighborhood Media Cloud story processor)"\
     .format(total_new_stories, total_pages)
 
 # send email!
