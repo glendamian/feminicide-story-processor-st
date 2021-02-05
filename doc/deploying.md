@@ -32,4 +32,9 @@ Release the worker app
 2. grab the code: `git clone git@github.mit.edu:data-feminism-lab/feminicide-mc-story-processor.git`
 3. add a remote: `git remote add mc dokku@feminicide.friends.mediacloud.org:story-processor`
 4. push the code to the server: `git push mc master`
-5. scale it to get a worker (dokku doesn't add one by default): `dokku ps:scale story-processor worker=1 web=1`
+5. scale it to get a worker (dokku doesn't add one by default): `dokku ps:scale story-processor worker=1`
+
+Setup the fetcher
+-----------------
+
+1. scale it to get a fetcher (dokku doesn't add one by default): `dokku ps:scale story-processor fetcher=1`

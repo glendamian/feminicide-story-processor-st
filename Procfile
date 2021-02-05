@@ -1,2 +1,3 @@
-web: gunicorn processor.server:app
-worker: celery -A processor worker -l info
+web: run-server.sh
+worker: run-workers.sh
+fetcher: run-fetch.sh
