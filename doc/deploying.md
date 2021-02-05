@@ -22,7 +22,7 @@ Release the queue monitoring
 ----------------------------
 
 1. grab the code: `git clone git@github.com:mitmedialab/celery-flower-heroku.git`
-2. add a remote: `git remote add mc dokku@feminicide.friends.mediacloud.org:celery-flower`
+2. add a remote: `git remote add mc dokku@feminicide.friends.mediacloud.org:celery-flower`   
 3. push the code to the server: `git push mc master`
 
 Release the worker app
@@ -37,4 +37,5 @@ Release the worker app
 Setup the fetcher
 -----------------
 
-1. scale it to get a fetcher (dokku doesn't add one by default): `dokku ps:scale story-processor fetcher=1`
+1. scale it to get a fetcher (dokku doesn't add one by default): `dokku ps:scale story-processor fetcher=1` (this will run the script once)
+2. add a cron job something like this to fetch new stories every night: `0 6 * * * dokku  dokku --rm run story-processor fetcher /app/run-fetch.sh`
