@@ -82,3 +82,5 @@ if is_email_configured():
     notifications.send_email(email_config['notify_emails'],
                              "Feminicide Media Cloud Update: {} stories".format(total_new_stories),
                              email_message)
+else:
+    logger.info("Not sending any email updates")
