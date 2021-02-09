@@ -5,7 +5,7 @@ import sys
 import json
 import logging
 
-from processor import base_dir, CONFIG_FILE_URL
+from processor import base_dir, CONFIG_FILE_URL, FEMINICIDE_API_KEY
 import processor.classifiers as classifiers
 
 logger = logging.getLogger(__name__)
@@ -131,7 +131,8 @@ def post_results(project: Dict, stories: List[Dict]) -> bool:
     stories_to_send = _remove_low_confidence_stories(project.get('min_confidence', 0), stories)
     if len(stories_to_send) > 0:  # don't bother posting if there are no stories above threshold
         data_to_send = dict(project=project,  # send back project data too (even though id is in the URL) for redundancy
-                            stories=_prep_stories_for_posting(stories_to_send))
+                            stories=_prep_stories_for_posting(stories_to_send),
+                            apikey=FEMINICIDE_API_KEY)
         if REALLY_POST:
             response = requests.post(project['update_post_url'], json=data_to_send)
             return response.ok

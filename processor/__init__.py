@@ -44,6 +44,11 @@ if CONFIG_FILE_URL is None:
 else:
     logger.info("  Project list at {}".format(CONFIG_FILE_URL))
 
+FEMINICIDE_API_KEY = os.environ.get('FEMINICIDE_API_KEY', None)
+if FEMINICIDE_API_KEY is None:
+    logger.error("  No FEMINICIDE_API_KEY is specified. Bailing because we can't send things to the main server without one")
+    sys.exit(1)
+
 
 def get_mc_client() -> mediacloud.api.AdminMediaCloud:
     """
