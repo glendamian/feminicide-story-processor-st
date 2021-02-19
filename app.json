@@ -2,7 +2,7 @@
   "name": "Feminicide Media Cloud Story Processor",
   "description": "Grab stories from Media Cloud, run them against \"feminicide story\" models, post results to feminicide server",
   "cron": [{
-    "command": "fetcher /app/run-fetch.sh",
-    "schedule": "30 * * * *"
+    "command": "fetcher /app/run-fetch.sh >> /var/tmp/story-processor-cron.log 2>&1",
+    "schedule": "3 * * * *"
   }]
 }
