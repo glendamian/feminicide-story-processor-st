@@ -173,6 +173,7 @@ def _prep_stories_for_posting(stories: List[Dict]) -> List[Dict]:
             language=s['language'],
             media_id=s['media_id'],
             media_url=s['media_url'],
+            media_name=s['media_name'],
             publish_date=s['publish_date'],
             story_tags=s['story_tags'],
             title=s['title'],
