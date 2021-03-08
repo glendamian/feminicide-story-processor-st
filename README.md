@@ -31,6 +31,8 @@ Just run `pytest` on the command line to run all the automated tests.
 Deploying
 ---------
 
+When you make a change, edit `processor.VERSION` and update the `CHANGELOG.md` file with a note about what changed.
+
 This is built to depoy via a SAAS platform, like Heroku. We deploy via dokku. Make sure to create an environment
 variable there for each setting in the `.env.template`.
 

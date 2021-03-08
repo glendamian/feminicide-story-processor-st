@@ -3,7 +3,7 @@ from flask import render_template, jsonify
 import json
 from typing import Dict
 
-from processor import create_flask_app
+from processor import create_flask_app, VERSION
 from processor.projects import load_project_list
 
 logger = logging.getLogger(__name__)
@@ -20,7 +20,7 @@ app.jinja_env.filters['as_pretty_json'] = as_pretty_json
 @app.route("/", methods=['GET'])
 def home():
     config = load_project_list()
-    return render_template('home.html', config=config)
+    return render_template('home.html', config=config, version=VERSION)
 
 
 @app.route("/update-config", methods=['POST'])

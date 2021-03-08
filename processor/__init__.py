@@ -7,6 +7,8 @@ from flask import Flask
 from sentry_sdk import init, capture_message
 from typing import Dict
 
+VERSION = "1.0.0"
+
 load_dotenv()  # load config from .env file (local) or env vars (production)
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -15,7 +17,7 @@ base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(levelname)s | %(name)s | %(message)s')
 logger = logging.getLogger(__name__)
 logger.info("------------------------------------------------------------------------")
-logger.info("Starting up Feminicide MC Story Processor")
+logger.info("Starting up Feminicide MC Story Processor v{}".format(VERSION))
 
 # read in environment variables
 MC_API_KEY = os.environ.get('MC_API_KEY', None)  # sensitive, so don't log it
