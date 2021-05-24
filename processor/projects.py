@@ -194,7 +194,4 @@ def classify_stories(project: Dict, stories: List[Dict]) -> List[float]:
     """
     classifier = classifiers.for_project(project)
     story_texts = [s['story_text'] for s in stories]
-    vectorized_data = classifier['tfidf_vectorizer'].transform(story_texts)
-    predictions = classifier['nb_model'].predict_proba(vectorized_data)
-    true_probs = predictions[:, 1]
-    return true_probs
+    return classifier.classify(story_texts)

@@ -1,5 +1,6 @@
-import json
 import os
+import unittest
+import json
 
 from processor import base_dir
 import processor.classifiers as classifiers
@@ -7,22 +8,28 @@ import processor.classifiers as classifiers
 test_fixture_dir = os.path.join(base_dir, "processor", "test", "fixtures")
 
 
-def test_classify_en():
-    project = dict(language='en')
-    classifier = classifiers.for_project(project)
-    assert 'tfidf_vectorizer' in classifier
-    assert 'nb_model' in classifier
-    # load test inputs
-    sample_texts = json.load(open(os.path.join(test_fixture_dir, "usa_sample_stories.json")))
-    # classify them
-    vectorized_data = classifier['tfidf_vectorizer'].transform(sample_texts)
-    predictions = classifier['nb_model'].predict_proba(vectorized_data)
-    # `predictions` is now an array (one per story) of arrays (false confidence, true confidence)
-    feminicide_probs = predictions[:, 1]  # grab just the "true" confidence for each story
-    assert round(feminicide_probs[0], 8) == 0.42901072
-    assert round(feminicide_probs[1], 8) == 0.39132685
-    assert round(feminicide_probs[2], 8) == 0.39625011
+class TestClassifiers(unittest.TestCase):
+
+    def test_classify_en(self):
+        project = dict(language='en', title='')
+        classifier = classifiers.for_project(project)
+        sample_texts = json.load(open(os.path.join(test_fixture_dir, "usa_sample_stories.json")))
+        sample_texts = [dict(story_text=t) for t in sample_texts]
+        results = classifier.classify(sample_texts)
+        assert round(results[0], 5) == 0.36395
+        assert round(results[1], 5) == 0.32298
+        assert round(results[2], 5) == 0.33297
+
+    def test_classify_en_aapf(self):
+        project = dict(language='en', title='stories for AApf')
+        classifier = classifiers.for_project(project)
+        sample_texts = json.load(open(os.path.join(test_fixture_dir, "more_sample_stories.json")))
+        sample_texts = [dict(story_text=t) for t in sample_texts]
+        results = classifier.classify(sample_texts)
+        assert round(results[0], 5) == 0.88928
+        assert round(results[1], 5) == 0.24030
+        assert round(results[2], 5) == 0.23219
 
 
 if __name__ == "__main__":
-    test_classify_en()
+    unittest.main()
