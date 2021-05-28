@@ -19,14 +19,14 @@ SENTENCE_EMBEDDINGS_MODEL = 'sentence_embeddings'
 MODELS = {
     'en_usa': dict(type=NAIVE_BAYES_MODEL, tfidf_vectorizer='usa_vectorizer.p', nb_model='usa_model.p'),
     'es_uruguay': dict(type=NAIVE_BAYES_MODEL, tfidf_vectorizer='uruguay_vectorizer.p', nb_model='uruguay_model.p'),
-    'en_aapf': dict(type=SENTENCE_EMBEDDINGS_MODEL, tfhub_model_url='https://tfhub.dev/google/universal-sentence-encoder/4',
-                    local_model='usa_model_aapf.p')
+    # the model file is downloaded to this location by the deploy hook that runs scripts/download-models.sh
+    'en_aapf': dict(type=SENTENCE_EMBEDDINGS_MODEL, tfhub_model_path='/tmp/models/', local_model='usa_model_aapf.p')
 }
 
 
 class Classifier:
 
-    def __init__(self, model_config: Dict, project:Dict):
+    def __init__(self, model_config: Dict, project: Dict):
         self.config = model_config
         self.project = project
         self._init()
@@ -38,11 +38,15 @@ class Classifier:
             with open(os.path.join(model_dir, MODELS[self.project['model_name']]['nb_model']), 'rb') as m:
                 self.nb_model = pickle.load(m)
         elif self.config['type'] == SENTENCE_EMBEDDINGS_MODEL:
-            self.embed = hub.load(self.config['tfhub_model_url'])  # this will cache to a local dir
-            with open(os.path.join(model_dir, self.config['local_model']), 'rb') as m:
-                self.lr_model = pickle.load(m)
+            try:
+                self.embed = hub.load(self.config['tfhub_model_path'])  # this will cache to a local dir
+                with open(os.path.join(model_dir, self.config['local_model']), 'rb') as m:
+                    self.lr_model = pickle.load(m)
+            except OSError:
+                # probably the cached SavedModel doesn't exist anymore
+                logger.error("Can't load model from {}".format(self.config['tfhub_model_path']))
         else:
-            raise RuntimeError("Unknown model {} for project {}".format(self.config['type'], self.projet['id']))
+            raise RuntimeError("Unknown model {} for project {}".format(self.config['type'], self.project['id']))
 
     def classify(self, stories: List[Dict]) -> List[float]:
         story_texts = [s['story_text'] for s in stories]
@@ -71,11 +75,15 @@ def for_project(project: Dict) -> Classifier:
 
 
 def _model_name_for_project(project: Dict) -> str:
-    # pick the right model cleverly
-    if (project['language'] == 'en') and ('aapf' in project['title'].lower()):
-        model_name = 'en_aapf'
-    elif project['language'] == 'es':
+    """
+    Pick the right model based on keys from the server. Keep in line with central server constants.
+    """
+    if project['language_model'] == "English (Default)":
+        model_name = 'en_usa'
+    elif project['language_model'] == "Spanish (Default)":
         model_name = 'es_uruguay'
+    elif project['language_model'] == "English (African American victims)":
+        model_name = 'en_aapf'
     else:
-        model_name = 'en_usa' # default to english language
+        model_name = 'en_usa'  # default to english language
     return model_name

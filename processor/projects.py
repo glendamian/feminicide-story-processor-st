@@ -193,5 +193,4 @@ def classify_stories(project: Dict, stories: List[Dict]) -> List[float]:
     :return: an array of confidence probabilities for this being a story about feminicide
     """
     classifier = classifiers.for_project(project)
-    story_texts = [s['story_text'] for s in stories]
-    return classifier.classify(story_texts)
+    return classifier.classify(stories)

@@ -18,8 +18,8 @@ class TestModels(unittest.TestCase):
     def test_tf_hub_model(self):
         with open(os.path.join(test_fixture_dir, "more_sample_stories.json")) as f:
             sample_texts = json.load(f)
-        module_url = "https://tfhub.dev/google/universal-sentence-encoder/4"
-        embed = hub.load(module_url)
+        model_path = "/tmp/models"
+        embed = hub.load(model_path)
         vectorized_data = embed(sample_texts)
         with open(os.path.join(model_dir, 'usa_model_aapf.p'), 'rb') as m:
             lr_model = pickle.load(m)

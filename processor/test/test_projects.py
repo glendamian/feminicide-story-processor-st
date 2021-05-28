@@ -41,15 +41,16 @@ class TestProjects(unittest.TestCase):
 
     def test_classify_stories(self):
         # english
-        project = dict(language='en')
+        project = dict(language='en', language_model="English (Default)")
         # load test inputs
-        sample_text = json.load(open(os.path.join(test_fixture_dir, "usa_sample_stories.json")))
+        with open(os.path.join(test_fixture_dir, "usa_sample_stories.json")) as f:
+            sample_text = json.load(f)
         sample_stories = [dict(story_text=t) for t in sample_text]
         # check results
         feminicide_probs = projects.classify_stories(project, sample_stories)
-        assert round(feminicide_probs[0], 8) == 0.42901072
-        assert round(feminicide_probs[1], 8) == 0.39132685
-        assert round(feminicide_probs[2], 8) == 0.39625011
+        assert round(feminicide_probs[0], 5) == 0.36395
+        assert round(feminicide_probs[1], 5) == 0.32298
+        assert round(feminicide_probs[2], 5) == 0.33297
 
 
 if __name__ == "__main__":
