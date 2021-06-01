@@ -21,7 +21,7 @@ class TestClassifiers(unittest.TestCase):
         assert round(results[2], 5) == 0.33297
 
     def test_classify_en_aapf(self):
-        project = dict(language='en', title='stories for AApf', language_model='English (African American victims)')
+        project = dict(language='en', title='stories for AApf', language_model='US English: Black women killed in police violence')
         classifier = classifiers.for_project(project)
         sample_texts = json.load(open(os.path.join(test_fixture_dir, "more_sample_stories.json")))
         sample_texts = [dict(story_text=t) for t in sample_texts]

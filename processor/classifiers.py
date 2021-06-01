@@ -82,7 +82,7 @@ def _model_name_for_project(project: Dict) -> str:
         model_name = 'en_usa'
     elif project['language_model'] == "Spanish (Default)":
         model_name = 'es_uruguay'
-    elif project['language_model'] == "English (African American victims)":
+    elif project['language_model'] == "US English: Black women killed in police violence":
         model_name = 'en_aapf'
     else:
         model_name = 'en_usa'  # default to english language
