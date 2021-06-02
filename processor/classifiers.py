@@ -20,6 +20,8 @@ MODEL_DIR = os.path.join(base_dir, "files", "models")
 NAIVE_BAYES_MODEL = 'naive_bayes'
 SENTENCE_EMBEDDINGS_MODEL = 'sentence_embeddings'
 
+DEFAULT_MODEL_NAME = 'en_usa'
+
 MODELS = {
     # English default
     'en_usa': dict(type=NAIVE_BAYES_MODEL, tfidf_vectorizer='usa_vectorizer.p', nb_model='usa_model.p',
@@ -87,10 +89,10 @@ def _model_name_for_project(project: Dict) -> str:
     """
     Pick the right model based on keys from the server. Keep in line with central server constants.
     """
-    matching_models = [m for m in MODELS if m['language_model_id'] == project['language_model_id']]
+    matching_models = [k for k, m in MODELS.items() if m['language_model_id'] == project['language_model_id']]
     if len(matching_models) == 1:
         return matching_models[0]
-    return MODELS['en_usa']  # default to english US model - does this make sense?
+    return DEFAULT_MODEL_NAME
 
 
 def download_models():

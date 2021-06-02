@@ -19,7 +19,6 @@ mc = get_mc_client()
 
 email_message = ""
 
-download_models()  # do this before running fetch so we have the latest models on the file system
 project_list = projects.load_project_list(force_reload=True)
 project_history = projects.load_history()
 logger.info("  Checking {} projects".format(len(project_list)))

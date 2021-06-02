@@ -7,6 +7,8 @@ from processor import base_dir
 
 test_fixture_dir = os.path.join(base_dir, "processor", "test", "fixtures")
 
+TEST_EN_PROJECT = dict(id=0, language='en', language_model_id=1)
+
 
 class TestProjects(unittest.TestCase):
 
@@ -41,7 +43,7 @@ class TestProjects(unittest.TestCase):
 
     def test_classify_stories(self):
         # english
-        project = dict(language='en', language_model="English (Default)")
+        project = TEST_EN_PROJECT
         # load test inputs
         with open(os.path.join(test_fixture_dir, "usa_sample_stories.json")) as f:
             sample_text = json.load(f)
