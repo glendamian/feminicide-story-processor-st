@@ -12,6 +12,13 @@ TEST_EN_PROJECT = dict(id=0, language='en', language_model_id=1)
 
 class TestProjects(unittest.TestCase):
 
+    def test_update_list(self):
+        project_list = projects.load_project_list(True)
+        assert len(project_list) > 0
+        for p in project_list:
+            assert 'id' in p
+            assert 'language_model_id' in p
+
     def test_update_history_from_config(self):
         # 1. empty - nothing to update
         project_list = [{'id': 1}]

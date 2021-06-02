@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 _all_projects = None  # acts as a singleton because we only load it once (after we update it from central server)
 _all_project_history = None  # acts as a singleton
 
-REALLY_POST = True  # helpful debug flag - set to False and we don't post results to central server
+REALLY_POST = True  # helpful debug flag - set to False and we don't post results to central server, will write to file
 
 
 def _path_to_config_file() -> str:
@@ -37,8 +37,8 @@ def load_project_list(force_reload: bool = False) -> List[Dict]:
     try:
         if force_reload:  # grab the latest config file from the main server
             projects_list = apiclient.get_projects_list()
-            with open(_path_to_config_file(), 'wb') as f:
-                f.write(json.dumps(projects_list))
+            with open(_path_to_config_file(), 'w') as f:
+                json.dump(projects_list, f)
             logger.info("  updated config file from main server")
         # load and return the (perhaps updated) locally cached file
         with open(_path_to_config_file(), "r") as f:
@@ -141,7 +141,7 @@ def post_results(project: Dict, stories: List[Dict]) -> bool:
             return response.ok
         else:
             # helpful for debugging
-            with open('data.json', 'w', encoding='utf-8') as f:
+            with open('data-to-post-{}.json'.format(project['id']), 'w', encoding='utf-8') as f:
                 json.dump(data_to_send, f, ensure_ascii=False, indent=4)
             return True
     else:
