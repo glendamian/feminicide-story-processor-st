@@ -5,8 +5,9 @@ import sys
 import json
 import logging
 
-from processor import base_dir, CONFIG_FILE_URL, FEMINICIDE_API_KEY, VERSION
+from processor import base_dir, FEMINICIDE_API_KEY, VERSION
 import processor.classifiers as classifiers
+import processor.apiclient as apiclient
 
 logger = logging.getLogger(__name__)
 
@@ -35,8 +36,9 @@ def load_project_list(force_reload: bool = False) -> List[Dict]:
         return _all_projects
     try:
         if force_reload:  # grab the latest config file from the main server
-            r = requests.get(CONFIG_FILE_URL)
-            open(_path_to_config_file(), 'wb').write(r.content)
+            projects_list = apiclient.get_projects_list()
+            with open(_path_to_config_file(), 'wb') as f:
+                f.write(json.dumps(projects_list))
             logger.info("  updated config file from main server")
         # load and return the (perhaps updated) locally cached file
         with open(_path_to_config_file(), "r") as f:
@@ -132,7 +134,7 @@ def post_results(project: Dict, stories: List[Dict]) -> bool:
     if len(stories_to_send) > 0:  # don't bother posting if there are no stories above threshold
         data_to_send = dict(version=VERSION,
                             project=project,  # send back project data too (even though id is in the URL) for redundancy
-                            stories=_prep_stories_for_posting(stories_to_send),
+                            stories=_prep_stories_for_posting(project, stories_to_send),
                             apikey=FEMINICIDE_API_KEY)
         if REALLY_POST:
             response = requests.post(project['update_post_url'], json=data_to_send)
@@ -159,7 +161,7 @@ def _remove_low_confidence_stories(confidence_threshold: float, stories: List[Di
     return filtered
 
 
-def _prep_stories_for_posting(stories: List[Dict]) -> List[Dict]:
+def _prep_stories_for_posting(project: Dict, stories: List[Dict]) -> List[Dict]:
     """
     Pull out just the info to send to the central feminicide server (we don't want to send it data it shouldn't see, or
     cannot use).
@@ -169,6 +171,7 @@ def _prep_stories_for_posting(stories: List[Dict]) -> List[Dict]:
     prepped_stories = []
     for s in stories:
         story = dict(
+            # list a bunch of Media Cloud story metadata
             stories_id=s['stories_id'],
             processed_stories_id=s['processed_stories_id'],
             language=s['language'],
@@ -179,7 +182,11 @@ def _prep_stories_for_posting(stories: List[Dict]) -> List[Dict]:
             story_tags=s['story_tags'],
             title=s['title'],
             url=s['url'],
-            confidence=s['confidence']
+            # add in the probability from the model
+            confidence=s['confidence'],
+            # throw in some of the metadata for good measure
+            project_id=project['id'],
+            language_model_id=project['language_model_id']
         )
         prepped_stories.append(story)
     return prepped_stories

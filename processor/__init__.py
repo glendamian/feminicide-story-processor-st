@@ -7,7 +7,7 @@ from flask import Flask
 from sentry_sdk import init, capture_message
 from typing import Dict
 
-VERSION = "1.0.0"
+VERSION = "1.2.0"
 
 load_dotenv()  # load config from .env file (local) or env vars (production)
 
@@ -39,12 +39,12 @@ if SENTRY_DSN:
 else:
     logger.info("  Not logging errors to Sentry")
 
-CONFIG_FILE_URL = os.environ.get('CONFIG_FILE_URL', None)
-if CONFIG_FILE_URL is None:
-    logger.error("  No CONFIG_FILE_URL is specified. Bailing because we can't list projects to run!")
+FEMINICIDE_API_URL = os.environ.get('FEMINICIDE_API_URL', None)
+if FEMINICIDE_API_URL is None:
+    logger.error("  No FEMINICIDE_API_URL is specified. Bailing because we can't list projects to run!")
     sys.exit(1)
 else:
-    logger.info("  Project list at {}".format(CONFIG_FILE_URL))
+    logger.info("  Config server at at {}".format(FEMINICIDE_API_URL))
 
 FEMINICIDE_API_KEY = os.environ.get('FEMINICIDE_API_KEY', None)
 if FEMINICIDE_API_KEY is None:

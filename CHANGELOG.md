@@ -3,6 +3,14 @@ Change Log
 
 Here is a history of the changes to this software.
 
+### 1.2.0
+
+Dynamically fetch models from server.
+
+### 1.1.0
+
+Add in new aapf models.
+
 ### 1.0.0
 
 Add version number, update classifier models.

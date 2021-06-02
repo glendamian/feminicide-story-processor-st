@@ -5,6 +5,7 @@ from mediacloud.error import MCException
 
 from processor import get_mc_client, get_email_config, is_email_configured
 import processor.projects as projects
+from processor.classifiers import download_models
 import processor.tasks as tasks
 import processor.notifications as notifications
 
@@ -18,6 +19,7 @@ mc = get_mc_client()
 
 email_message = ""
 
+download_models()  # do this before running fetch so we have the latest models on the file system
 project_list = projects.load_project_list(force_reload=True)
 project_history = projects.load_history()
 logger.info("  Checking {} projects".format(len(project_list)))
