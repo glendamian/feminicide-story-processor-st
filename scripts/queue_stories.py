@@ -5,7 +5,6 @@ from mediacloud.error import MCException
 
 from processor import get_mc_client, get_email_config, is_email_configured
 import processor.projects as projects
-from processor.classifiers import download_models
 import processor.tasks as tasks
 import processor.notifications as notifications
 
