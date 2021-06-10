@@ -34,11 +34,13 @@ for project in project_list:
                                                                                last_processed_stories_id))
     email_message += "Project {} - {}:\n".format(project['id'], project['title'])
     # setup queries to filter by language too so we only get stories the model can process
-    q = "({}) AND language:{}".format(project['search_terms'], project['language'])
+    q = "({}) AND language:{} AND tags_id_media:({})".format(
+        project['search_terms'],
+        project['language'],
+        " ".join([str(tid) for tid in project['media_collections']]))
     start_date = dateparser.parse(project['start_date'])
     now = date.today()
-    fq = ["tags_id_media:({})".format(" ".join([str(tid) for tid in project['media_collections']])),
-          mc.dates_as_query_clause(start_date, now)]
+    fq = mc.dates_as_query_clause(start_date, now)
     # page through any new stories
     new_story_count = 0
     page_count = 0

@@ -114,4 +114,5 @@ config/projects.json
 config/project-history.json
 data.json
 files/models/*.p
-data-to-post*
+*.log
+logs/*.json

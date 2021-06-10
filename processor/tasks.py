@@ -9,8 +9,8 @@ import processor.projects as projects
 logger = get_task_logger(__name__)
 
 # create another logger to track all the story results posted to a file for auditing internally
-story_logger = get_task_logger('story_classification_results')
-fh = logging.FileHandler('posted-story-data.log')
+story_logger = get_task_logger('tasks')
+fh = logging.FileHandler('story-tasks.log')
 fh.setLevel(logging.DEBUG)
 story_logger.addHandler(fh)
 

@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of the changes to this software.
 
+### 1.2.1
+
+Cleaned up queries and added more debug logging.
+
 ### 1.2.0
 
 Dynamically fetch models from server.

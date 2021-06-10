@@ -63,8 +63,8 @@ class Classifier:
         story_texts = [s['story_text'] for s in stories]
         predictions = []
         if self.config['type'] == NAIVE_BAYES_MODEL:
-            vectorized_data = self.tfidf_vectorizer.transform(story_texts)
-            predictions = self.nb_model.predict_proba(vectorized_data)
+            vectorized_data = self.tfidf_vectorizer.transform(story_texts)  # turn words into vectors
+            predictions = self.nb_model.predict_proba(vectorized_data)  # turn vectors into probabilities
         elif self.config['type'] == SENTENCE_EMBEDDINGS_MODEL:
             vectorized_data = self.embed(story_texts)
             predictions = self.lr_model.predict_proba(vectorized_data)
@@ -77,8 +77,6 @@ def for_project(project: Dict) -> Classifier:
     This is where we would download a classifier, as needed, from the main server based on the URL info
     in the project config passed in. This is a factory method.
     """
-    if 'language' not in project:
-        logger.error('No language specified on {}'.format(project['id']))
     project['model_name'] = _model_name_for_project(project)
     if project['model_name'] not in MODELS.keys():
         logger.error('Invalid model_name specified on {}'.format(project['id']))

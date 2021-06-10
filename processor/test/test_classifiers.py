@@ -39,6 +39,23 @@ class TestClassifiers(unittest.TestCase):
         assert round(results[0], 5) == 0.88928
         assert round(results[1], 5) == 0.24030
         assert round(results[2], 5) == 0.23219
+        assert round(results[3], 5) == 0.23250
+
+    def test_classify_one_story(self):
+        with open(os.path.join(test_fixture_dir, "more_sample_stories.json")) as f:
+            sample_texts = json.load(f)
+        one_story = [sample_texts[3]]
+        sample_texts = [dict(story_text=t) for t in one_story]
+        results_by_model_id = []
+        for model_id in [1, 2, 3]:
+            project = TEST_EN_PROJECT.copy()
+            project['language_model_id'] = model_id
+            classifier = classifiers.for_project(project)
+            model_result = classifier.classify(sample_texts)[0]
+            results_by_model_id.append(model_result)
+        assert round(results_by_model_id[0], 5) == 0.78411
+        assert round(results_by_model_id[1], 5) == 0.57012
+        assert round(results_by_model_id[2], 5) == 0.23250
 
 
 if __name__ == "__main__":
