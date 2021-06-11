@@ -4,9 +4,8 @@ import json
 
 from processor import base_dir
 import processor.classifiers as classifiers
+from processor.test import test_fixture_dir
 from processor.test.test_projects import TEST_EN_PROJECT
-
-test_fixture_dir = os.path.join(base_dir, "processor", "test", "fixtures")
 
 
 class TestModelDownload(unittest.TestCase):
@@ -15,7 +14,21 @@ class TestModelDownload(unittest.TestCase):
         classifiers.download_models()
 
 
-class TestClassifiers(unittest.TestCase):
+class TestClassifierHelpers(unittest.TestCase):
+
+    def test_classifier_for_project(self):
+        p = TEST_EN_PROJECT.copy()
+        c = classifiers.for_project(p)
+        assert c.model_name() == 'en_usa'
+        p['language_model_id'] = 2
+        c = classifiers.for_project(p)
+        assert c.model_name() == 'es_uruguay'
+        p['language_model_id'] = 3
+        c = classifiers.for_project(p)
+        assert c.model_name() == 'en_aapf'
+
+
+class TestClassifierResults(unittest.TestCase):
 
     def test_classify_en(self):
         project = TEST_EN_PROJECT
@@ -40,6 +53,7 @@ class TestClassifiers(unittest.TestCase):
         assert round(results[1], 5) == 0.24030
         assert round(results[2], 5) == 0.23219
         assert round(results[3], 5) == 0.23250
+        assert round(results[4], 5) == 0.37232
 
     def test_classify_one_story(self):
         with open(os.path.join(test_fixture_dir, "more_sample_stories.json")) as f:
@@ -56,6 +70,22 @@ class TestClassifiers(unittest.TestCase):
         assert round(results_by_model_id[0], 5) == 0.78411
         assert round(results_by_model_id[1], 5) == 0.57012
         assert round(results_by_model_id[2], 5) == 0.23250
+
+    def test_classify_another_story(self):
+        with open(os.path.join(test_fixture_dir, "more_sample_stories.json")) as f:
+            sample_texts = json.load(f)
+        one_story = [sample_texts[4]]
+        sample_texts = [dict(story_text=t) for t in one_story]
+        results_by_model_id = []
+        for model_id in [1, 2, 3]:
+            project = TEST_EN_PROJECT.copy()
+            project['language_model_id'] = model_id
+            classifier = classifiers.for_project(project)
+            model_result = classifier.classify(sample_texts)[0]
+            results_by_model_id.append(model_result)
+        assert round(results_by_model_id[0], 5) == 0.70025
+        assert round(results_by_model_id[1], 5) == 0.50000
+        assert round(results_by_model_id[2], 5) == 0.37232
 
 
 if __name__ == "__main__":

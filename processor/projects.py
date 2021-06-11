@@ -5,7 +5,7 @@ import sys
 import json
 import logging
 
-from processor import base_dir, FEMINICIDE_API_KEY, VERSION
+from processor import base_dir, FEMINICIDE_API_KEY, VERSION, path_to_log_dir
 import processor.classifiers as classifiers
 import processor.apiclient as apiclient
 
@@ -131,17 +131,14 @@ def post_results(project: Dict, stories: List[Dict]) -> bool:
     :param stories:
     :return: whether the request worked or not (if not, raises an exception)
     """
-    if LOG_LAST_POST_TO_FILE:  # helpful for debugging (the last project post will written to a file
-        with open(os.path.join('logs', '{}-all-stories.json'.format(project['id'])), 'w', encoding='utf-8') as f:
-            json.dump(_prep_stories_for_posting(project, stories), f, ensure_ascii=False, indent=4)
     stories_to_send = _remove_low_confidence_stories(project.get('min_confidence', 0), stories)
     if len(stories_to_send) > 0:  # don't bother posting if there are no stories above threshold
         data_to_send = dict(version=VERSION,
                             project=project,  # send back project data too (even though id is in the URL) for redundancy
-                            stories=_prep_stories_for_posting(project, stories_to_send),
+                            stories=stories_to_send,
                             apikey=FEMINICIDE_API_KEY)
         if LOG_LAST_POST_TO_FILE:  # helpful for debugging (the last project post will written to a file
-            with open(os.path.join('logs', '{}-posted-data.json'.format(project['id'])), 'w', encoding='utf-8') as f:
+            with open(os.path.join(path_to_log_dir, '{}-posted-data.json'.format(project['id'])), 'w', encoding='utf-8') as f:
                 json.dump(data_to_send, f, ensure_ascii=False, indent=4)
         if REALLY_POST:
             response = requests.post(project['update_post_url'], json=data_to_send)
@@ -163,10 +160,11 @@ def _remove_low_confidence_stories(confidence_threshold: float, stories: List[Di
     return filtered
 
 
-def _prep_stories_for_posting(project: Dict, stories: List[Dict]) -> List[Dict]:
+def prep_stories_for_posting(project: Dict, stories: List[Dict]) -> List[Dict]:
     """
     Pull out just the info to send to the central feminicide server (we don't want to send it data it shouldn't see, or
     cannot use).
+    :param project:
     :param stories:
     :return:
     """

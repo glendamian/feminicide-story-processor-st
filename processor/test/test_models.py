@@ -5,8 +5,8 @@ import pickle
 import json
 
 from processor import base_dir
+from processor.test import test_fixture_dir
 
-test_fixture_dir = os.path.join(base_dir, "processor", "test", "fixtures")
 model_dir = os.path.join(base_dir, "files", "models")
 
 

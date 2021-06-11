@@ -3,9 +3,7 @@ import json
 import unittest
 
 import processor.projects as projects
-from processor import base_dir
-
-test_fixture_dir = os.path.join(base_dir, "processor", "test", "fixtures")
+from processor.test import test_fixture_dir
 
 TEST_EN_PROJECT = dict(id=0, language='en', language_model_id=1)
 
@@ -60,6 +58,28 @@ class TestProjects(unittest.TestCase):
         assert round(feminicide_probs[0], 5) == 0.36395
         assert round(feminicide_probs[1], 5) == 0.32298
         assert round(feminicide_probs[2], 5) == 0.33297
+
+    def test_remove_low_confidence_stories(self):
+        project = TEST_EN_PROJECT.copy()
+        project['min_confidence'] = 0.5
+        stories = [
+            dict(id=0, confidence=0),
+            dict(id=1, confidence=0.1),
+            dict(id=2, confidence=0.2),
+            dict(id=3, confidence=0.3),
+            dict(id=4, confidence=0.4),
+            dict(id=5, confidence=0.5),
+            dict(id=6, confidence=0.6),
+            dict(id=7, confidence=0.7),
+            dict(id=8, confidence=0.8),
+            dict(id=9, confidence=0.9),
+            dict(id=10, confidence=1),
+        ]
+        trimmed_stories = projects._remove_low_confidence_stories(project['min_confidence'], stories)
+        assert len(trimmed_stories) < len(stories)
+        assert len(trimmed_stories) == 6
+        for s in trimmed_stories:
+            assert(s['confidence'] >= project['min_confidence'])
 
 
 if __name__ == "__main__":

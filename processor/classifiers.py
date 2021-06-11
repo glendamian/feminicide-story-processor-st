@@ -25,13 +25,13 @@ DEFAULT_MODEL_NAME = 'en_usa'
 MODELS = {
     # English default
     'en_usa': dict(type=NAIVE_BAYES_MODEL, tfidf_vectorizer='usa_vectorizer.p', nb_model='usa_model.p',
-                   language_model_id=1),
+                   language_model_id=1, name='en_usa'),
     # Spanish default
     'es_uruguay': dict(type=NAIVE_BAYES_MODEL, tfidf_vectorizer='uruguay_vectorizer.p', nb_model='uruguay_model.p',
-                       language_model_id=2),
+                       language_model_id=2, name='es_uruguay'),
     # the model file is downloaded to this location by the deploy hook that runs scripts/download-models.sh
     'en_aapf': dict(type=SENTENCE_EMBEDDINGS_MODEL, tfhub_model_path='/tmp/models/', local_model='usa_model_aapf.p',
-                    language_model_id=3)
+                    language_model_id=3, name='en_aapf')
 }
 
 
@@ -42,11 +42,14 @@ class Classifier:
         self.project = project
         self._init()
 
+    def model_name(self) -> str:
+        return self.config['name']
+
     def _init(self):
         if self.config['type'] == NAIVE_BAYES_MODEL:
-            with open(os.path.join(MODEL_DIR, MODELS[self.project['model_name']]['tfidf_vectorizer']), 'rb') as v:
+            with open(os.path.join(MODEL_DIR, self.config['tfidf_vectorizer']), 'rb') as v:
                 self.tfidf_vectorizer = pickle.load(v)
-            with open(os.path.join(MODEL_DIR, MODELS[self.project['model_name']]['nb_model']), 'rb') as m:
+            with open(os.path.join(MODEL_DIR, self.config['nb_model']), 'rb') as m:
                 self.nb_model = pickle.load(m)
         elif self.config['type'] == SENTENCE_EMBEDDINGS_MODEL:
             try:
@@ -74,23 +77,18 @@ class Classifier:
 
 def for_project(project: Dict) -> Classifier:
     """
-    This is where we would download a classifier, as needed, from the main server based on the URL info
-    in the project config passed in. This is a factory method.
+    This is a factory method to return a model for the project based on the `language_model_id`
     """
-    project['model_name'] = _model_name_for_project(project)
-    if project['model_name'] not in MODELS.keys():
-        logger.error('Invalid model_name specified on {}'.format(project['id']))
-    return Classifier(MODELS[project['model_name']], project)
-
-
-def _model_name_for_project(project: Dict) -> str:
-    """
-    Pick the right model based on keys from the server. Keep in line with central server constants.
-    """
-    matching_models = [k for k, m in MODELS.items() if m['language_model_id'] == project['language_model_id']]
-    if len(matching_models) == 1:
-        return matching_models[0]
-    return DEFAULT_MODEL_NAME
+    try:
+        matching_models = [m for k, m in MODELS.items()
+                           if int(m['language_model_id']) == int(project['language_model_id'])]
+        model_config = matching_models[0]
+    except:
+        logger.warning("Can't find model for project {}, language_model_id {} (defaulting to {})".format(
+            project['id'], project['language_model_id'], DEFAULT_MODEL_NAME
+        ))
+        model_config = MODELS[DEFAULT_MODEL_NAME]
+    return Classifier(model_config, project)
 
 
 def download_models():

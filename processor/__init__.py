@@ -7,11 +7,12 @@ from flask import Flask
 from sentry_sdk import init, capture_message
 from typing import Dict
 
-VERSION = "1.2.1"
+VERSION = "1.2.2"
 
 load_dotenv()  # load config from .env file (local) or env vars (production)
 
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+path_to_log_dir = os.path.join(base_dir, 'logs')
 
 # set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(levelname)s | %(name)s | %(message)s')
