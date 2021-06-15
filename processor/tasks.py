@@ -62,9 +62,11 @@ def post_results_worker(self, project: Dict, stories: List[Dict]):
     """
     try:
         logger.debug('{}: posting {} stories'.format(project['id'], len(stories)))
-        for s in stories:  # for auditing, keep a log in the container of the results posted to main server
+        # do this again, just in case there is something old in the queues
+        stories_to_send = projects.remove_low_confidence_stories(project.get('min_confidence', 0), stories)
+        for s in stories_to_send:  # for auditing, keep a log in the container of the results posted to main server
             logger.debug("  post: {} - {} - {}".format(project['id'], s['stories_id'], s['confidence']))
-        projects.post_results(project, stories)
+        projects.post_results(project, stories_to_send)
     except requests.exceptions.HTTPError as err:
         # on failure requeue to try again
         logger.warn("{}: Failed to post {} results".format(project['id'], len(stories)))

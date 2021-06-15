@@ -75,7 +75,7 @@ class TestProjects(unittest.TestCase):
             dict(id=9, confidence=0.9),
             dict(id=10, confidence=1),
         ]
-        trimmed_stories = projects._remove_low_confidence_stories(project['min_confidence'], stories)
+        trimmed_stories = projects.remove_low_confidence_stories(project['min_confidence'], stories)
         assert len(trimmed_stories) < len(stories)
         assert len(trimmed_stories) == 6
         for s in trimmed_stories:
