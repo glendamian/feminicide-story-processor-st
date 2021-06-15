@@ -4,6 +4,7 @@ import os
 import sys
 import json
 import logging
+import time
 
 from processor import base_dir, FEMINICIDE_API_KEY, VERSION, path_to_log_dir
 import processor.classifiers as classifiers
@@ -14,7 +15,7 @@ logger = logging.getLogger(__name__)
 _all_projects = None  # acts as a singleton because we only load it once (after we update it from central server)
 _all_project_history = None  # acts as a singleton
 
-REALLY_POST = True  # helpful debug flag - set to False and we don't post results to central server
+REALLY_POST = True  # helpful debug flag - set to False and we don't post results to central server TMP
 LOG_LAST_POST_TO_FILE = True
 
 
@@ -131,14 +132,13 @@ def post_results(project: Dict, stories: List[Dict]) -> bool:
     :param stories:
     :return: whether the request worked or not (if not, raises an exception)
     """
-    stories_to_send = _remove_low_confidence_stories(project.get('min_confidence', 0), stories)
-    if len(stories_to_send) > 0:  # don't bother posting if there are no stories above threshold
+    if len(stories) > 0:  # don't bother posting if there are no stories above threshold
         data_to_send = dict(version=VERSION,
                             project=project,  # send back project data too (even though id is in the URL) for redundancy
-                            stories=stories_to_send,
+                            stories=stories,
                             apikey=FEMINICIDE_API_KEY)
         if LOG_LAST_POST_TO_FILE:  # helpful for debugging (the last project post will written to a file
-            with open(os.path.join(path_to_log_dir, '{}-posted-data.json'.format(project['id'])), 'w', encoding='utf-8') as f:
+            with open(os.path.join(path_to_log_dir, '{}-posted-data-{}.json'.format(project['id'], time.strftime("%Y%m%d-%H%M%S"))), 'w', encoding='utf-8') as f:
                 json.dump(data_to_send, f, ensure_ascii=False, indent=4)
         if REALLY_POST:
             response = requests.post(project['update_post_url'], json=data_to_send)
@@ -148,7 +148,7 @@ def post_results(project: Dict, stories: List[Dict]) -> bool:
     return True
 
 
-def _remove_low_confidence_stories(confidence_threshold: float, stories: List[Dict]) -> List[Dict]:
+def remove_low_confidence_stories(confidence_threshold: float, stories: List[Dict]) -> List[Dict]:
     """
     If the config has specified some threshold for which stories to send over, filter out those below the threshold.
     :param confidence_threshold:

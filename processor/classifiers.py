@@ -83,6 +83,7 @@ def for_project(project: Dict) -> Classifier:
         matching_models = [m for k, m in MODELS.items()
                            if int(m['language_model_id']) == int(project['language_model_id'])]
         model_config = matching_models[0]
+        logger.debug("Project {} - model {}".format(project['id'], model_config['language_model_id']))
     except:
         logger.warning("Can't find model for project {}, language_model_id {} (defaulting to {})".format(
             project['id'], project['language_model_id'], DEFAULT_MODEL_NAME

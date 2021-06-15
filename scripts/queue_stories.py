@@ -27,6 +27,7 @@ total_new_stories = 0
 total_pages = 0
 
 # iterate over all the projects, fetching new stories and q-ing them up for analysis (upto MAX_STORIES_PER_PROJECT)
+#project_list = [p for p in project_list if p['id'] == 84]  # TMP
 for project in project_list:
     # figure out the query to run based on the history
     last_processed_stories_id = project_history.get(str(project['id']), 0)  # (JSON dict keys have to be strings)
