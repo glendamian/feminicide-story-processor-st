@@ -35,11 +35,11 @@ class TestTasks(unittest.TestCase):
     def test_one_story_by_id(self):
         project = TEST_EN_PROJECT.copy()
         project['language_model_id'] = 3
-        story_ids = [1961281194]
+        story_ids = [1962328343]
         classified_stories = self._classify_story_ids(project, story_ids)
         for s in classified_stories:
             assert 'story_text' not in s
-        assert round(classified_stories[0]['confidence'], 5) == 0.75126
+        assert round(classified_stories[0]['confidence'], 5) == 0.78392
 
 
 if __name__ == "__main__":
