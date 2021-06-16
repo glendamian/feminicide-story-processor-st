@@ -7,7 +7,7 @@ from flask import Flask
 from sentry_sdk import init, capture_message
 from typing import Dict
 
-VERSION = "1.2.2"
+VERSION = "1.2.3"
 
 load_dotenv()  # load config from .env file (local) or env vars (production)
 

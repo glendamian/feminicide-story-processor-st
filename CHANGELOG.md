@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of the changes to this software.
 
+### 1.2.3
+
+More logging and removing queues.
+
 ### 1.2.2
 
 More work on testing and logging to chase down bugs.

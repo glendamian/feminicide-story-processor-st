@@ -60,7 +60,7 @@ for project in project_list:
             page_count += 1
             new_story_count += len(page_of_stories)
             # TODO: change this to use a celery chain
-            tasks.classify_stories_worker.delay(project, page_of_stories)
+            tasks.classify_and_post_worker.delay(project, page_of_stories)
             last_processed_stories_id = page_of_stories[-1]['processed_stories_id']
             # important to write this update now, because we have queued up the task to process these stories
             # the task queue will manage retrying with the stories if it fails with this batch
