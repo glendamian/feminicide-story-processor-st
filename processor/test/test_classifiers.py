@@ -19,13 +19,13 @@ class TestClassifierHelpers(unittest.TestCase):
     def test_classifier_for_project(self):
         p = TEST_EN_PROJECT.copy()
         c = classifiers.for_project(p)
-        assert c.model_name() == 'en_usa'
+        assert c.model_name() == 'usa'
         p['language_model_id'] = 2
         c = classifiers.for_project(p)
-        assert c.model_name() == 'es_uruguay'
+        assert c.model_name() == 'uruguay'
         p['language_model_id'] = 3
         c = classifiers.for_project(p)
-        assert c.model_name() == 'en_aapf'
+        assert c.model_name() == 'aapf'
 
 
 class TestClassifierResults(unittest.TestCase):
@@ -49,11 +49,11 @@ class TestClassifierResults(unittest.TestCase):
             sample_texts = json.load(f)
         sample_texts = [dict(story_text=t) for t in sample_texts]
         results = classifier.classify(sample_texts)
-        assert round(results[0], 5) == 0.88928
-        assert round(results[1], 5) == 0.24030
-        assert round(results[2], 5) == 0.23219
-        assert round(results[3], 5) == 0.23250
-        assert round(results[4], 5) == 0.37232
+        assert round(results[0], 5) == 0.78030
+        assert round(results[1], 5) == 0.13698
+        assert round(results[2], 5) == 0.16526
+        assert round(results[3], 5) == 0.36343
+        assert round(results[4], 5) == 0.35770
 
     def test_classify_es(self):
         project = TEST_EN_PROJECT.copy()  # important to copy before editing, otherwise subsequent tests get messed up
@@ -71,7 +71,7 @@ class TestClassifierResults(unittest.TestCase):
         one_story = [sample_texts[index]]
         sample_texts = [dict(story_text=t) for t in one_story]
         results_by_model_id = []
-        for model_id in [1, 2, 3]:
+        for model_id in [1, 2, 3, 4]:
             project = TEST_EN_PROJECT.copy()
             project['language_model_id'] = model_id
             classifier = classifiers.for_project(project)
@@ -83,23 +83,26 @@ class TestClassifierResults(unittest.TestCase):
         results_by_model_id = self._classify_one_from(6, "more_sample_stories.json")
         assert round(results_by_model_id[0], 5) == 0.30392
         assert round(results_by_model_id[1], 5) == 0.44384
-        assert round(results_by_model_id[2], 5) == 0.77732
+        assert round(results_by_model_id[2], 5) == 0.60241
+        assert round(results_by_model_id[3], 5) == 0.30392
 
         results_by_model_id = self._classify_one_from(3, "more_sample_stories.json")
         assert round(results_by_model_id[0], 5) == 0.78411
         assert round(results_by_model_id[1], 5) == 0.57012
-        assert round(results_by_model_id[2], 5) == 0.23250
+        assert round(results_by_model_id[2], 5) == 0.36343
+        assert round(results_by_model_id[3], 5) == 0.78411
 
         results_by_model_id = self._classify_one_from(4, "more_sample_stories.json")
         assert round(results_by_model_id[0], 5) == 0.70025
         assert round(results_by_model_id[1], 5) == 0.50000
-        assert round(results_by_model_id[2], 5) == 0.37232
+        assert round(results_by_model_id[2], 5) == 0.35770
+        assert round(results_by_model_id[3], 5) == 0.70025
 
         results_by_model_id = self._classify_one_from(5, "more_sample_stories.json")
         assert round(results_by_model_id[0], 5) == 0.24967
         assert round(results_by_model_id[1], 5) == 0.34135
-        assert round(results_by_model_id[2], 5) == 0.54318
-
+        assert round(results_by_model_id[2], 5) == 0.43022
+        assert round(results_by_model_id[3], 5) == 0.24967
 
 
 if __name__ == "__main__":
