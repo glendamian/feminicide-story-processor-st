@@ -92,7 +92,7 @@ def load_history(force_reload: bool = False) -> Dict[str, int]:
         with open(_path_to_history_file(), "r") as f:
             _all_project_history = json.load(f)
         return _all_project_history
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         logger.warning("No history file yet - returning empty one")
         return {}
 
