@@ -6,7 +6,7 @@ import json
 import logging
 import time
 
-from processor import base_dir, FEMINICIDE_API_KEY, VERSION, path_to_log_dir
+from processor import FEMINICIDE_API_KEY, VERSION, path_to_log_dir
 import processor.classifiers as classifiers
 import processor.apiclient as apiclient
 
@@ -20,11 +20,11 @@ LOG_LAST_POST_TO_FILE = True
 
 
 def _path_to_config_file() -> str:
-    return os.path.join(base_dir, 'config', 'projects.json')
+    return os.path.join(classifiers.CONFIG_DIR, 'projects.json')
 
 
 def _path_to_history_file() -> str:
-    return os.path.join(base_dir, 'config', 'project-history.json')
+    return os.path.join(classifiers.CONFIG_DIR, 'project-history.json')
 
 
 def load_project_list(force_reload: bool = False) -> List[Dict]:

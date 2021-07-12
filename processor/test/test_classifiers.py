@@ -2,16 +2,21 @@ import os
 import unittest
 import json
 
-from processor import base_dir
 import processor.classifiers as classifiers
 from processor.test import test_fixture_dir
 from processor.test.test_projects import TEST_EN_PROJECT
 
 
-class TestModelDownload(unittest.TestCase):
+class TestModelList(unittest.TestCase):
 
     def test_model_download(self):
-        classifiers.download_models()
+        classifiers.update_model_list()  # should write to file syste,
+        models = classifiers.get_model_list()
+        for p in models:
+            assert 'id' in p
+            assert p['model_type'] in classifiers.MODEL_TYPES
+            assert p['vectorizer_type'] in classifiers.VECTORIZER_TYPES
+            assert p['filename_prefix'] is not None
 
 
 class TestClassifierHelpers(unittest.TestCase):
@@ -84,25 +89,25 @@ class TestClassifierResults(unittest.TestCase):
         assert round(results_by_model_id[0], 5) == 0.30392
         assert round(results_by_model_id[1], 5) == 0.44384
         assert round(results_by_model_id[2], 5) == 0.60241
-        assert round(results_by_model_id[3], 5) == 0.30392
+        assert round(results_by_model_id[3], 5) == 0.16565
 
         results_by_model_id = self._classify_one_from(3, "more_sample_stories.json")
         assert round(results_by_model_id[0], 5) == 0.78411
         assert round(results_by_model_id[1], 5) == 0.57012
         assert round(results_by_model_id[2], 5) == 0.36343
-        assert round(results_by_model_id[3], 5) == 0.78411
+        assert round(results_by_model_id[3], 5) == 0.08955
 
         results_by_model_id = self._classify_one_from(4, "more_sample_stories.json")
         assert round(results_by_model_id[0], 5) == 0.70025
         assert round(results_by_model_id[1], 5) == 0.50000
         assert round(results_by_model_id[2], 5) == 0.35770
-        assert round(results_by_model_id[3], 5) == 0.70025
+        assert round(results_by_model_id[3], 5) == 0.04277
 
         results_by_model_id = self._classify_one_from(5, "more_sample_stories.json")
         assert round(results_by_model_id[0], 5) == 0.24967
         assert round(results_by_model_id[1], 5) == 0.34135
         assert round(results_by_model_id[2], 5) == 0.43022
-        assert round(results_by_model_id[3], 5) == 0.24967
+        assert round(results_by_model_id[3], 5) == 0.22443
 
 
 if __name__ == "__main__":

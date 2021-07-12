@@ -112,6 +112,7 @@ __MACOSX
 # app-specific files
 config/projects.json
 config/project-history.json
+config/language-models.json
 data.json
 files/models/*.p
 *.log

@@ -4,6 +4,7 @@ import pickle
 from typing import Dict, List
 import tensorflow_hub as hub
 import requests
+import json
 import shutil
 from urllib.parse import urlparse
 
@@ -16,36 +17,19 @@ test_fixture_dir = os.path.join(base_dir, "processor", "test", "fixtures")
 
 FILES_DIR = os.path.join(base_dir, "files")
 MODEL_DIR = os.path.join(base_dir, "files", "models")
+CONFIG_DIR = os.path.join(base_dir, "config")
 
 # constants that tell us what type of model to load and run (keep in sync with the main server)
 MODEL_LINEAR_REGRESSION = 'lr'
 MODEL_NAIVE_BAYES = 'nb'
+MODEL_TYPES = [MODEL_LINEAR_REGRESSION, MODEL_NAIVE_BAYES]
 VECTORIZER_TF_IDF = 'tfidf'
 VECTORIZER_EMBEDDINGS = 'embeddings'
+VECTORIZER_TYPES = [VECTORIZER_TF_IDF, VECTORIZER_EMBEDDINGS]
 
 DEFAULT_MODEL_NAME = 'usa'
 
 TFHUB_MODEL_PATH = '/tmp/models/'
-
-MODELS = {
-    # English default
-    'usa': dict(language_model_id=1, name='usa',
-                model_type=MODEL_NAIVE_BAYES, vectorizer_type=VECTORIZER_TF_IDF,
-                vectorizer='usa_vectorizer.p', model='usa_model.p'),
-    # Spanish default
-    'uruguay': dict(language_model_id=2, name='uruguay',
-                    model_type=MODEL_NAIVE_BAYES, vectorizer_type=VECTORIZER_TF_IDF,
-                    vectorizer='uruguay_vectorizer.p', model='uruguay_model.p'),
-    # black women killed by police
-    'aapf': dict(language_model_id=3, name='aapf',
-                 model_type=MODEL_LINEAR_REGRESSION, vectorizer_type=VECTORIZER_TF_IDF,
-                 vectorizer='aapf_vectorizer.p', model='aapf_model.p'),
-    # indigenous feminicides
-    'sbi': dict(language_model_id=3, name='sbi',
-                model_type=MODEL_LINEAR_REGRESSION, vectorizer_type=VECTORIZER_TF_IDF,
-                vectorizer='sbi_vectorizer.p', model='sbi_model.p')
-
-}
 
 
 class Classifier:
@@ -56,22 +40,22 @@ class Classifier:
         self._init()
 
     def model_name(self) -> str:
-        return self.config['name']
+        return self.config['filename_prefix']
 
     def _path_to_file(self, filename: str) -> str:
-        return os.path.join(MODEL_DIR, filename)
+        return os.path.join(MODEL_DIR, self.config['filename_prefix'] + '_' + filename + '.p')
 
     def _init(self):
         # load model
-        with open(self._path_to_file(self.config['model']), 'rb') as m:
+        with open(self._path_to_file('model'), 'rb') as m:
             self._model = pickle.load(m)
         # load vectorizer
         if self.config['vectorizer_type'] == VECTORIZER_TF_IDF:
-            with open(self._path_to_file(self.config['vectorizer']), 'rb') as v:
+            with open(self._path_to_file('vectorizer'), 'rb') as v:
                 self.vectorizer = pickle.load(v)
         elif self.config['vectorizer_type'] == VECTORIZER_EMBEDDINGS:
             try:
-                self.model = hub.load(self._path_to_file(TFHUB_MODEL_PATH))  # this will cache to a local dir
+                self.model = hub.load(TFHUB_MODEL_PATH)  # this will cache to a local dir
             except OSError:
                 # probably the cached SavedModel doesn't exist anymore
                 logger.error("Can't load model from {}".format(self.config['tfhub_model_path']))
@@ -97,25 +81,39 @@ def for_project(project: Dict) -> Classifier:
     """
     This is a factory method to return a model for the project based on the `language_model_id`
     """
+    model_list = get_model_list()
     try:
-        matching_models = [m for k, m in MODELS.items()
-                           if int(m['language_model_id']) == int(project['language_model_id'])]
+        matching_models = [m for m in model_list if int(m['id']) == int(project['language_model_id'])]
         model_config = matching_models[0]
-        logger.debug("Project {} - model {}".format(project['id'], model_config['language_model_id']))
+        logger.debug("Project {} - model {}".format(project['id'], model_config['id']))
     except:
-        logger.warning("Can't find model for project {}, language_model_id {} (defaulting to {})".format(
-            project['id'], project['language_model_id'], DEFAULT_MODEL_NAME
+        logger.warning("Can't find model for project {}, language_model_id {}".format(
+            project['id'], project['language_model_id']
         ))
-        model_config = MODELS[DEFAULT_MODEL_NAME]
+        raise RuntimeError()
     return Classifier(model_config, project)
+
+
+def get_model_list() -> List[Dict]:
+    with open(os.path.join(CONFIG_DIR, 'language-models.json'), 'r') as f:
+        return json.load(f)
+
+
+def update_model_list():
+    """
+    The list of models is on the central server.
+    """
+    model_list = apiclient.get_language_models_list()
+    with open(os.path.join(CONFIG_DIR, 'language-models.json'), 'w') as f:
+        json.dump(model_list, f)
+    return model_list
 
 
 def download_models():
     """
     Models are stored centrally on the server. We need to retrieve and store them here.
-    :return:
     """
-    model_list = apiclient.get_language_models_list()
+    model_list = update_model_list()
     logger.info("Downloading models:")
     for m in model_list:
         logger.info("  {} - {}".format(m['id'], m['name']))

@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of the changes to this software.
 
+### 1.3.0
+
+Load full model configuration from server
+
 ### 1.2.3
 
 More logging and removing queues.

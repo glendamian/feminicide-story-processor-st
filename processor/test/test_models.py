@@ -1,11 +1,10 @@
 import os
 import unittest
-import tensorflow_hub as hub
 import pickle
 import json
 
 from processor.test import test_fixture_dir
-from processor.classifiers import TFHUB_MODEL_PATH, MODEL_DIR
+from processor.classifiers import MODEL_DIR
 
 
 class TestModels(unittest.TestCase):
