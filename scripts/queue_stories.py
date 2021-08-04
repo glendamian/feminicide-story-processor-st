@@ -2,6 +2,7 @@ import logging
 import dateparser
 from datetime import date
 from mediacloud.error import MCException
+from processor.classifiers import download_models
 
 from processor import get_mc_client, get_email_config, is_email_configured
 import processor.projects as projects
@@ -13,6 +14,10 @@ MAX_STORIES_PER_PROJECT = 20 * 1000  # make sure we don't do too many stories ea
 
 logger = logging.getLogger(__name__)
 logger.info("Starting story fetch job")
+
+# important to do because there might new models on the server!
+logger.info("  Checking for any new models we need")
+download_models()
 
 mc = get_mc_client()
 
