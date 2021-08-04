@@ -72,9 +72,15 @@ class Classifier:
             embed = hub.load(TFHUB_MODEL_PATH)
             vectorized_data = embed(story_texts)
         # now run model against vectors (turn vectors into probabilities)
-        predictions = self._model.predict_proba(vectorized_data)
-        true_probs = predictions[:, 1]  # grab the list of probabilities that these *are* feminicide stories
-        return true_probs
+        try:
+            predictions = self._model.predict_proba(vectorized_data)
+            true_probs = predictions[:, 1]  # grab the list of probabilities that these *are* feminicide stories
+            return true_probs
+        except ValueError as ve:
+            logger.exception(ve)
+            raise RuntimeError("Model {} failed to run ({}/{})".format(self.config['id'],
+                                                                       self.config['model_type'],
+                                                                       self.config['vectorizer_type']))
 
 
 def for_project(project: Dict) -> Classifier:
@@ -118,13 +124,16 @@ def download_models():
     for m in model_list:
         logger.info("  {} - {}".format(m['id'], m['name']))
         for u in m['model_files']:
-            _download_file(u, MODEL_DIR)
+            _download_file(u, MODEL_DIR, m['filename_prefix'])
 
 
-def _download_file(url: str, dest_dir: str):
+def _download_file(url: str, dest_dir: str, prefix: str):
     # https://stackoverflow.com/questions/16694907/download-large-file-in-python-with-requests
     url_parts = urlparse(url)
     local_filename = url_parts.path.split('/')[-1]
+    filename_parts = local_filename.split("_")
+    extra_safe_filename = prefix + "_" + filename_parts[1]
+    logger.info("    to {}".format(extra_safe_filename))
     with requests.get(url, stream=True) as r:
-        with open(os.path.join(dest_dir, local_filename), 'wb') as f:
+        with open(os.path.join(dest_dir, extra_safe_filename), 'wb') as f:
             shutil.copyfileobj(r.raw, f)

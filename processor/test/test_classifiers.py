@@ -3,6 +3,7 @@ import unittest
 import json
 
 import processor.classifiers as classifiers
+from processor import get_mc_client
 from processor.test import test_fixture_dir
 from processor.test.test_projects import TEST_EN_PROJECT
 
@@ -10,7 +11,7 @@ from processor.test.test_projects import TEST_EN_PROJECT
 class TestModelList(unittest.TestCase):
 
     def test_model_download(self):
-        classifiers.update_model_list()  # should write to file syste,
+        classifiers.update_model_list()  # should write to file system
         models = classifiers.get_model_list()
         for p in models:
             assert 'id' in p
@@ -83,6 +84,15 @@ class TestClassifierResults(unittest.TestCase):
             model_result = classifier.classify(sample_texts)[0]
             results_by_model_id.append(model_result)
         return results_by_model_id
+
+    def test_classify_aapf2(self):
+        mc = get_mc_client()
+        story = mc.story(2008554915, text=True)
+        project = TEST_EN_PROJECT.copy()
+        project['language_model_id'] = 5
+        classifier = classifiers.for_project(project)
+        model_result = classifier.classify([story])
+        assert round(model_result[0], 5) == 0.00789
 
     def test_stories_against_all_classifiers(self):
         results_by_model_id = self._classify_one_from(6, "more_sample_stories.json")
