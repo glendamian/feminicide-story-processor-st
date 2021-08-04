@@ -4,10 +4,12 @@ import sys
 from dotenv import load_dotenv
 import mediacloud.api
 from flask import Flask
+from sentry_sdk.integrations.flask import FlaskIntegration
+from sentry_sdk.integrations.redis import RedisIntegration
 from sentry_sdk import init, capture_message
 from typing import Dict
 
-VERSION = "1.3.0"
+VERSION = "1.3.1"
 
 load_dotenv()  # load config from .env file (local) or env vars (production)
 
@@ -34,8 +36,8 @@ logger.info("  Redis at {}".format(BROKER_URL))
 
 SENTRY_DSN = os.environ.get('SENTRY_DSN', None)  # optional
 if SENTRY_DSN:
-    init(dsn=SENTRY_DSN)
-    capture_message("Initializing")
+    init(dsn=SENTRY_DSN, release=VERSION,
+         integrations=[FlaskIntegration(), RedisIntegration()])
     logger.info("  SENTRY_DSN: {}".format(SENTRY_DSN))
 else:
     logger.info("  Not logging errors to Sentry")

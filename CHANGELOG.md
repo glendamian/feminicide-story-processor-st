@@ -3,9 +3,13 @@ Change Log
 
 Here is a history of the changes to this software.
 
+### 1.3.1
+
+Fully integrate Sentry-based centralized logging. Integrate an embeddings model.
+
 ### 1.3.0
 
-Load full model configuration from server
+Load full model configuration from server.
 
 ### 1.2.3
 
