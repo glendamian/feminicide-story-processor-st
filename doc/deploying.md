@@ -13,7 +13,7 @@ Create the Dokku apps
 1. [install Dokku](http://dokku.viewdocs.io/dokku/getting-started/installation/)
 2. install the [Dokku redis plugin](https://github.com/dokku/dokku-redis) 
 3. setup a redis queue: `dokku redis:create story-processor-q`
-4. create an app: `dokku apps:cerate story-processor`
+4. create an app: `dokku apps:create story-processor`
 5. link it to the redis queue: `dokku redis:link story-processor-q story-processor`
 6. create an app to monitor the queues: `dokku apps:create celery-flower`
 7. link it to the redis queue: `dokku redis:link story-processor-q celery-flower`
