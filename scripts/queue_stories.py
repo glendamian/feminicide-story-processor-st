@@ -50,7 +50,7 @@ for project in project_list:
     new_story_count = 0
     page_count = 0
     more_stories = True
-    while more_stories and new_story_count < MAX_STORIES_PER_PROJECT:
+    while more_stories and (new_story_count < MAX_STORIES_PER_PROJECT):
         try:
             page_of_stories = mc.storyList(q, fq, last_processed_stories_id=last_processed_stories_id,
                                            text=True, rows=STORIES_PER_PAGE)
