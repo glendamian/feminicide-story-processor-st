@@ -14,7 +14,7 @@ class Story(Base):
     model_id = Column(Integer)
     model_score = Column(Float)
     published_date = Column(DateTime)
-    qeued_date = Column(DateTime)
+    queued_date = Column(DateTime)
     processed_date = Column(DateTime)
 
     def __repr__(self):
@@ -25,3 +25,4 @@ class Story(Base):
         s = Story()
         s.stories_id = story['stories_id']
         s.published_date = parse(story['publish_date'])
+        return s
