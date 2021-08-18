@@ -6,8 +6,9 @@ import mediacloud.api
 from flask import Flask
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.redis import RedisIntegration
-from sentry_sdk import init, capture_message
+from sentry_sdk import init
 from typing import Dict
+from sqlalchemy import create_engine
 
 VERSION = "1.3.1"
 
@@ -53,6 +54,12 @@ FEMINICIDE_API_KEY = os.environ.get('FEMINICIDE_API_KEY', None)
 if FEMINICIDE_API_KEY is None:
     logger.error("  No FEMINICIDE_API_KEY is specified. Bailing because we can't send things to the main server without one")
     sys.exit(1)
+
+SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+if SQLALCHEMY_DATABASE_URI is None:
+    logger.error("  No SQLALCHEMY_DATABASE_URI is specified. Bailing because we can't save things to a DB for tracking")
+    sys.exit(1)
+engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
 
 def get_mc_client() -> mediacloud.api.AdminMediaCloud:
