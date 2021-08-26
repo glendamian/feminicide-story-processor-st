@@ -132,7 +132,7 @@ def _download_file(url: str, dest_dir: str, prefix: str):
     url_parts = urlparse(url)
     local_filename = url_parts.path.split('/')[-1]
     filename_parts = local_filename.split("_")
-    extra_safe_filename = prefix + "_" + filename_parts[1]
+    extra_safe_filename = prefix + "_" + filename_parts[-1]
     logger.info("    to {}".format(extra_safe_filename))
     with requests.get(url, stream=True) as r:
         with open(os.path.join(dest_dir, extra_safe_filename), 'wb') as f:
