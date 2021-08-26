@@ -2,12 +2,14 @@ import logging
 import dateparser
 from datetime import date
 from mediacloud.error import MCException
-from processor.classifiers import download_models
+from requests.exceptions import ConnectionError
 
+from processor.classifiers import download_models
 from processor import get_mc_client, get_email_config, is_email_configured
 import processor.projects as projects
 import processor.tasks as tasks
 import processor.notifications as notifications
+import processor.database as db
 
 STORIES_PER_PAGE = 100  # I found this performs poorly if set higher than 100
 MAX_STORIES_PER_PROJECT = 20 * 1000  # make sure we don't do too many stories each cron run (for testing)
@@ -50,11 +52,16 @@ for project in project_list:
     new_story_count = 0
     page_count = 0
     more_stories = True
-    while more_stories and new_story_count < MAX_STORIES_PER_PROJECT:
+    while more_stories and (new_story_count < MAX_STORIES_PER_PROJECT):
         try:
             page_of_stories = mc.storyList(q, fq, last_processed_stories_id=last_processed_stories_id,
                                            text=True, rows=STORIES_PER_PAGE)
             logger.info("    page {}: ({}) stories".format(page_count, len(page_of_stories)))
+        except ConnectionError as ce:
+            logger.error("  Connection failed on project {}. Skipping project.".format(project['id']))
+            logger.exception(ce)
+            more_stories = False
+            continue  # fail gracefully by going to the next project; maybe next cron run it'll work?
         except MCException as mce:
             logger.error("  Query failed on project {}. Skipping project.".format(project['id']))
             logger.exception(mce)
@@ -66,6 +73,8 @@ for project in project_list:
             # TODO: change this to use a celery chain
             tasks.classify_and_post_worker.delay(project, page_of_stories)
             last_processed_stories_id = page_of_stories[-1]['processed_stories_id']
+            # and log that we got and queued them all
+            db.add_stories(page_of_stories, project)
             # important to write this update now, because we have queued up the task to process these stories
             # the task queue will manage retrying with the stories if it fails with this batch
             projects.update_processing_history(project['id'], last_processed_stories_id)

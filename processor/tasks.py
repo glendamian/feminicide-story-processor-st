@@ -9,6 +9,7 @@ import time
 from processor import path_to_log_dir
 from processor.celery import app
 import processor.projects as projects
+import processor.database as db
 
 logger = logging.getLogger(__name__)  # get_task_logger(__name__)
 logFormatter = logging.Formatter("[%(levelname)s %(threadName)s] - %(asctime)s - %(name)s - : %(message)s")
@@ -45,6 +46,8 @@ def classify_and_post_worker(self, project: Dict, stories: List[Dict]):
         for s in stories_with_confidence:
             logger.debug("  classify: {}/{} - {} - {}".format(s['project_id'], s['language_model_id'],
                                                               s['stories_id'], s['confidence']))
+        # keep an auditable log in our own local database
+        db.update_stories_processed_date_score(stories, project['id'])
         # now post the stories that were above threshold
         stories_to_send = projects.remove_low_confidence_stories(project.get('min_confidence', 0),
                                                                  stories_with_confidence)
