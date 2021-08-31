@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of the changes to this software.
 
+### 1.4.0
+
+Add database for logging story state over to to make debugging across workers easier.
+
 ### 1.3.1
 
 Fully integrate Sentry-based centralized logging. Integrate an embeddings model.
