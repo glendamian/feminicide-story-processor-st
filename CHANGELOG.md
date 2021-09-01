@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of the changes to this software.
 
+### 1.5.0
+
+Switch to RabbitMQ, also log a LOT more to our local DB.
+
 ### 1.4.0
 
 Add database for logging story state over to to make debugging across workers easier.
