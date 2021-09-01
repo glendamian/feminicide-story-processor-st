@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of the changes to this software.
 
+### 1.5.1
+
+Fix Sentry-related bug.
+
 ### 1.5.0
 
 Switch to RabbitMQ, also log a LOT more to our local DB.
