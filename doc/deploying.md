@@ -3,8 +3,8 @@ Deploying
 
 This is built to deploy via [dokku](http://dokku.viewdocs.io/dokku/). This takes a few rounds of configuration to set up
 correctly. There are three components:
-* The worker app - ingest stories from Media Cloud and queues them up for classification and sending to central server
-* The queues - one holds batches of stories needing classification, the other batches to be posted to the central server
+* The fetcher app - ingest stories from Media Cloud and queues them up processing
+* The worker queue - this holds batches of stories needing classification & posting to the central server
 * The queue monitor - lets us keep an eye on queue servicing speeds
 
 Create the Dokku apps
