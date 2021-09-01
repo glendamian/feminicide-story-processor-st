@@ -1,5 +1,5 @@
 from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, Integer, DateTime, Float
+from sqlalchemy import Column, Integer, DateTime, Float, Boolean
 from dateutil.parser import parse
 
 Base = declarative_base()
@@ -16,6 +16,8 @@ class Story(Base):
     published_date = Column(DateTime)
     queued_date = Column(DateTime)
     processed_date = Column(DateTime)
+    posted_date = Column(DateTime)
+    above_threshold = Column(Boolean)
 
     def __repr__(self):
         return '<Story id={}>'.format(self.id)

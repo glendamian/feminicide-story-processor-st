@@ -125,27 +125,31 @@ def update_processing_history(project_id: int, last_processed_stories_id: int):
         sys.exit(1)
 
 
-def post_results(project: Dict, stories: List[Dict]) -> bool:
+def post_results(project: Dict, stories: List[Dict]) -> None:
     """
     Send results back to the feminicide server. Raises an exception if this post fails.
     :param project:
     :param stories:
-    :return: whether the request worked or not (if not, raises an exception)
+    :return:
     """
     if len(stories) > 0:  # don't bother posting if there are no stories above threshold
         data_to_send = dict(version=VERSION,
                             project=project,  # send back project data too (even though id is in the URL) for redundancy
                             stories=stories,
                             apikey=FEMINICIDE_API_KEY)
-        if LOG_LAST_POST_TO_FILE:  # helpful for debugging (the last project post will written to a file
-            with open(os.path.join(path_to_log_dir, '{}-posted-data-{}.json'.format(project['id'], time.strftime("%Y%m%d-%H%M%S"))), 'w', encoding='utf-8') as f:
+        # helpful logging for debugging (the last project post will written to a file)
+        if LOG_LAST_POST_TO_FILE:
+            with open(os.path.join(path_to_log_dir, '{}-posted-data-{}.json'.format(
+                    project['id'], time.strftime("%Y%m%d-%H%M%S"))), 'w', encoding='utf-8') as f:
                 json.dump(data_to_send, f, ensure_ascii=False, indent=4)
+        # now post to server (if not in debug mode)
         if REALLY_POST:
             response = requests.post(project['update_post_url'], json=data_to_send)
-            return response.ok
+            if not response.ok:
+                raise RuntimeError("Tried to post to project {} but got an error code {}".format(
+                    project['id'], response.status_code))
     else:
-        logger.debug("  no stories to send")
-    return True
+        logger.debug("  no stories to send for project {}".format(project['id']))
 
 
 def remove_low_confidence_stories(confidence_threshold: float, stories: List[Dict]) -> List[Dict]:

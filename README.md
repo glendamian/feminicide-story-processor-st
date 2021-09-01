@@ -7,7 +7,7 @@ Install for Development
 -----------------------
 
 For development, install via standard Python approaches: `pip install -r requirements.txt`.
-You'll need to setup an instance of redis to connect to (on MacOS do `brew install redis`).
+You'll need to setup an instance of rabbitmq to connect to (on MacOS do `brew install rabbitmq`).
 Then `cp .env.template .env` and fill in the appropriate info for each setting in that file.
 Create a database called "mc-story-processor" in Postgres, then run `alembic upgrade head`.
 
@@ -22,7 +22,8 @@ To run the small admin web server, execute `run-server.sh`.
 
 ### Tips
 
-* To empty out your local queue while developing, `redis-cli FLUSHALL`.
+* To empty out your local queue while developing, visit `http://localhost:15672/` the and click "delete/purge"
+on the Queue tab.
 
 Testing
 -------

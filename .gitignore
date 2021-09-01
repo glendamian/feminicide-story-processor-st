@@ -115,5 +115,5 @@ config/project-history.json
 config/language-models.json
 data.json
 files/models/*.p
-*.log
 logs/*.json
+*.db

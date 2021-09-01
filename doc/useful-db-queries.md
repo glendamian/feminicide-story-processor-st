@@ -1,0 +1,12 @@
+Useful queries for the logging database
+=======================================
+
+Connect to db: `dokku postgres:connect mc-story-processor-db`
+
+**Stories posted to main server by date**
+
+`SELECT date_trunc('day', processed_date) as day, count(*) as stories from stories  group by 1 order by 1  DESC;`
+
+**Stories unprocessed but queued day**
+
+`SELECT date_trunc('day', queued_date) as day, count(*) as stories from stories where processed_date is null group by 1 order by 1  DESC;`

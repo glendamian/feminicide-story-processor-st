@@ -6,4 +6,7 @@ from processor import BROKER_URL
 
 logger = logging.getLogger(__name__)
 
-app = Celery('feminicide-story-processor', broker=BROKER_URL, include=['processor.tasks'])
+app = Celery('feminicide-story-processor',
+             broker=BROKER_URL,
+             backend="db+sqlite:///celery-backend.db",
+             include=['processor.tasks'])

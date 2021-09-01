@@ -33,7 +33,7 @@ BROKER_URL = os.environ.get('BROKER_URL', None)
 if BROKER_URL is None:
     logger.error("No BROKER_URL env var specified. Pathetically refusing to start!")
     sys.exit(1)
-logger.info("  Redis at {}".format(BROKER_URL))
+logger.info("  Queue at {}".format(BROKER_URL))
 
 SENTRY_DSN = os.environ.get('SENTRY_DSN', None)  # optional
 if SENTRY_DSN:

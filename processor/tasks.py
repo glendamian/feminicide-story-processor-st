@@ -47,15 +47,20 @@ def classify_and_post_worker(self, project: Dict, stories: List[Dict]):
             logger.debug("  classify: {}/{} - {} - {}".format(s['project_id'], s['language_model_id'],
                                                               s['stories_id'], s['confidence']))
         # keep an auditable log in our own local database
-        db.update_stories_processed_date_score(stories, project['id'])
-        # now post the stories that were above threshold
+        db.update_stories_processed_date_score(stories_with_confidence, project['id'])
+        # only stories above project score threshold should be posted
         stories_to_send = projects.remove_low_confidence_stories(project.get('min_confidence', 0),
                                                                  stories_with_confidence)
+        # mark the stories in the local DB that we intend to send
+        db.update_stories_above_threshold(stories_to_send, project['id'])
+        # now actually post them
         logger.debug('{}: {} stories to post'.format(project['id'], len(stories_to_send)))
+        projects.post_results(project, stories_to_send)
         for s in stories_to_send:  # for auditing, keep a log in the container of the results posted to main server
             logger.debug("  post: {}/{} - {} - {}".format(s['project_id'], s['language_model_id'],
                                                           s['stories_id'], s['confidence']))
-        projects.post_results(project, stories_to_send)
+        # and track that we posted the stories that we did in our local debug DB
+        db.update_stories_posted_date(stories_to_send, project['id'])
     except requests.exceptions.HTTPError as err:
         # on failure requeue to try again
         logger.warning("{}: Failed to post {} results".format(project['id'], len(stories)))

@@ -17,6 +17,7 @@ def add_stories(mc_story_list: List, project: Dict) -> None:
         db_story.project_id = project['id']
         db_story.model_id = project['language_model_id']
         db_story.queued_date = now
+        db_story.above_threshold = False
         db_stories_to_insert.append(db_story)
     # now insert in batch to the database
     session = Session()
@@ -39,4 +40,32 @@ def update_stories_processed_date_score(stories: List, project_id: int) -> None:
         mc_story = matching_mc_story[0]
         db_story.model_score = mc_story['confidence']
         db_story.processed_date = now
+    session.commit()
+
+
+def update_stories_above_threshold(stories: List, project_id:id) -> None:
+    now = dt.datetime.now()
+    session = Session()
+    db_stories = session.query(Story).filter(
+        and_(
+            Story.project_id == project_id,
+            Story.stories_id.in_(set([s['stories_id'] for s in stories])),
+        )
+    ).all()
+    for db_story in db_stories:
+        db_story.above_threshold = True
+    session.commit()
+
+
+def update_stories_posted_date(stories: List, project_id: int) -> None:
+    now = dt.datetime.now()
+    session = Session()
+    db_stories = session.query(Story).filter(
+        and_(
+            Story.project_id == project_id,
+            Story.stories_id.in_(set([s['stories_id'] for s in stories])),
+        )
+    ).all()
+    for db_story in db_stories:
+        db_story.posted_date = now
     session.commit()
