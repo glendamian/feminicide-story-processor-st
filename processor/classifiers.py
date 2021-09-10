@@ -47,33 +47,33 @@ class Classifier:
 
     def _init(self):
         # load model
-        with open(self._path_to_file('model'), 'rb') as m:
-            self._model = pickle.load(m)
+        with open(self._path_to_file('1_model'), 'rb') as m:
+            self._model_1 = pickle.load(m)
         # load vectorizer
-        if self.config['vectorizer_type'] == VECTORIZER_TF_IDF:
-            with open(self._path_to_file('vectorizer'), 'rb') as v:
-                self.vectorizer = pickle.load(v)
-        elif self.config['vectorizer_type'] == VECTORIZER_EMBEDDINGS:
+        if self.config['vectorizer_type_1'] == VECTORIZER_TF_IDF:
+            with open(self._path_to_file('1_vectorizer'), 'rb') as v:
+                self._vectorizer_1 = pickle.load(v)
+        elif self.config['vectorizer_type_1'] == VECTORIZER_EMBEDDINGS:
             try:
                 self.model = hub.load(TFHUB_MODEL_PATH)  # this will cache to a local dir
             except OSError:
                 # probably the cached SavedModel doesn't exist anymore
                 logger.error("Can't load model from {}".format(self.config['tfhub_model_path']))
         else:
-            raise RuntimeError("Unknown vectorizer type '{}' for project {}".format(self.config['vectorizer_type'],
+            raise RuntimeError("Unknown vectorizer type '{}' for project {}".format(self.config['vectorizer_type_1'],
                                                                                     self.project['id']))
 
     def classify(self, stories: List[Dict]) -> List[float]:
         story_texts = [s['story_text'] for s in stories]
         # vectorize first (turn words/sentences into vectors)
-        if self.config['vectorizer_type'] == VECTORIZER_TF_IDF:
-            vectorized_data = self.vectorizer.transform(story_texts)
-        elif self.config['vectorizer_type'] == VECTORIZER_EMBEDDINGS:
+        if self.config['vectorizer_type_1'] == VECTORIZER_TF_IDF:
+            vectorized_data = self._vectorizer_1.transform(story_texts)
+        elif self.config['vectorizer_type_1'] == VECTORIZER_EMBEDDINGS:
             embed = hub.load(TFHUB_MODEL_PATH)
             vectorized_data = embed(story_texts)
         # now run model against vectors (turn vectors into probabilities)
         try:
-            predictions = self._model.predict_proba(vectorized_data)
+            predictions = self._model_1.predict_proba(vectorized_data)
             true_probs = predictions[:, 1]  # grab the list of probabilities that these *are* feminicide stories
             return true_probs
         except ValueError as ve:
@@ -123,8 +123,10 @@ def download_models():
     logger.info("Downloading models:")
     for m in model_list:
         logger.info("  {} - {}".format(m['id'], m['name']))
-        for u in m['model_files']:
-            _download_file(u, MODEL_DIR, m['filename_prefix'])
+        for u in m['model_1_files']:
+            _download_file(u, MODEL_DIR, m['filename_prefix']+"_1")
+        for u in m['model_2_files']:
+            _download_file(u, MODEL_DIR, m['filename_prefix']+"_2")
 
 
 def _download_file(url: str, dest_dir: str, prefix: str):

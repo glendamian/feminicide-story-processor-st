@@ -21,8 +21,14 @@ class TestApiClient(unittest.TestCase):
         models_list = apiclient.get_language_models_list()
         for p in models_list:
             assert 'id' in p
-            assert p['model_type'] in MODEL_TYPES
-            assert p['vectorizer_type'] in VECTORIZER_TYPES
+            if p['model_type_1'] is not None:
+                assert p['model_type_1'] in MODEL_TYPES
+            if p['model_type_2'] is not None:
+                assert p['model_type_2'] in MODEL_TYPES
+            if p['vectorizer_type_1'] is not None:
+                assert p['vectorizer_type_1'] in VECTORIZER_TYPES
+            if p['vectorizer_type_2'] is not None:
+                assert p['vectorizer_type_1'] in VECTORIZER_TYPES
             assert p['filename_prefix'] is not None
 
 

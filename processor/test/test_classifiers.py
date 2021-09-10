@@ -15,8 +15,8 @@ class TestModelList(unittest.TestCase):
         models = classifiers.get_model_list()
         for p in models:
             assert 'id' in p
-            assert p['model_type'] in classifiers.MODEL_TYPES
-            assert p['vectorizer_type'] in classifiers.VECTORIZER_TYPES
+            assert p['model_type_1'] in classifiers.MODEL_TYPES
+            assert p['vectorizer_type_1'] in classifiers.VECTORIZER_TYPES
             assert p['filename_prefix'] is not None
 
 

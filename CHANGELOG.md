@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of the changes to this software.
 
+### 1.5.2
+
+Update the support model chaining format, but not implementation yet.
+
 ### 1.5.1
 
 Fix Sentry-related bug.
