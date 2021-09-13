@@ -2,8 +2,9 @@ Deploying
 =========
 
 This is built to deploy via [dokku](http://dokku.viewdocs.io/dokku/). This takes a few rounds of configuration to set up
-correctly. There are three components:
+correctly. There are a few components:
 * The fetcher app - ingest stories from Media Cloud and queues them up processing
+* The loggin DB - to help us interrogate and debug, we keep track of stories as they move through the pipeline in a DB
 * The worker queue - this holds batches of stories needing classification & posting to the central server
 * The queue monitor - lets us keep an eye on queue servicing speeds
 
@@ -32,3 +33,11 @@ Setup the fetcher
 
 1. scale it to get a fetcher (dokku doesn't add one by default): `dokku ps:scale story-processor fetcher=1` (this will run the script once)
 2. add a cron job something like this to fetch new stories every night: `0 8 * * * dokku --rm run story-processor fetcher /app/run-fetch.sh >> /var/tmp/story-processor-cron.log 2>&1`
+
+Setup Database Backups
+----------------------
+
+The local logging database is useful for future interrogation, so we back it up.
+
+1. `dokku postgres:backup-auth mc-story-processor-db AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY`
+2. `dokku postgres:backup-schedule mc-story-processor-db "0 9 * * *" df-server-backup`
