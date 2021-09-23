@@ -82,14 +82,18 @@ for project in project_list:
             more_stories = False
     logger.info("  queued {} stories for project {}/{} (in {} pages)".format(new_story_count, project['id'],
                                                                              project['title'], page_count))
-    email_message += "    found {} new stories (over {} pages)\n\n".format(new_story_count, page_count)
+    #  add a summary to the email we are generating
+    warnings = ""
+    if new_story_count > (MAX_STORIES_PER_PROJECT*0.8): # try to get our attention in the email
+        warnings += "(⚠️️️ query might be too broad)"
+    email_message += "    found {} new stories (over {} pages) {}\n\n".format(new_story_count, page_count, warnings)
     total_new_stories += new_story_count
     total_pages += page_count
 
 logger.info("Done with {} projects".format(len(project_list)))
 logger.info("  {} stories over {} pages".format(total_new_stories, total_pages))
 email_message += "Done - pulled {} stories over {} pages total.\n\n" \
-                 "(An automated email from yout friendly neighborhood Media Cloud story processor)"\
+                 "(An automated email from your friendly neighborhood Media Cloud story processor)"\
     .format(total_new_stories, total_pages)
 
 # send email!

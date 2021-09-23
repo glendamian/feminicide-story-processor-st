@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of the changes to this software.
 
+### 1.5.3
+
+Add warning emoji to email update for projects that are near max stories per day.
+
 ### 1.5.2
 
 Update the support model chaining format, but not implementation yet.

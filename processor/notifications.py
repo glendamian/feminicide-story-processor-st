@@ -28,6 +28,6 @@ def send_email(recipients: List[str], subject: str, message: str) -> bool:
         server.starttls(context=context)
         server.login(email_config['user_name'], email_config['password'])
         for email_address in recipients:
-            server.sendmail(email_config['from_address'], email_address, msg)
+            server.sendmail(email_config['from_address'], email_address, msg.encode("utf8"))
     logger.info("  sent")
     return True

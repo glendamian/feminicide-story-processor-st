@@ -23,7 +23,7 @@ To run the small admin web server, execute `run-server.sh`.
 ### Tips
 
 * To empty out your local queue while developing, visit `http://localhost:15672/` the and click "delete/purge"
-on the Queue tab.
+on the Queues tab.
 
 Testing
 -------
