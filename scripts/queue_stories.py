@@ -70,7 +70,6 @@ for project in project_list:
         if len(page_of_stories) > 0:
             page_count += 1
             new_story_count += len(page_of_stories)
-            # TODO: change this to use a celery chain
             tasks.classify_and_post_worker.delay(project, page_of_stories)
             last_processed_stories_id = page_of_stories[-1]['processed_stories_id']
             # and log that we got and queued them all
