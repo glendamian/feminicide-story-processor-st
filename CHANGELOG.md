@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of the changes to this software.
 
+### 1.6.0
+
+Supports chained language models.
+
 ### 1.5.3
 
 Add warning emoji to email update for projects that are near max stories per day.
