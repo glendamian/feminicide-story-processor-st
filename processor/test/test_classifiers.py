@@ -32,7 +32,33 @@ class TestClassifierHelpers(unittest.TestCase):
         p['language_model_id'] = 3
         c = classifiers.for_project(p)
         assert c.model_name() == 'aapf'
+"""
+class TestChainedClassifers(unittest.TestCase):
 
+    def test_multiplied(self):
+        project = TEST_EN_PROJECT
+        model_config = {
+            'chained_models': 'true',
+            'vectorizer_1': 'tfidf',
+            'vectorizer_2': 'embeddings',
+            'model_1': 'lr',
+            'model_2': 'lr',
+            'vectorizer_1_fpath': '../models/aapf-deploy/tfidf_vectorizer_1031.p',
+            'vectorizer_2_fpath': '', # empty because vectorizer_2 == 'embeddings'
+            'model_1_fpath': '../models/aapf-deploy/police_tfidf_LR_1031.p',
+            'model_2_fpath': '../models/aapf-deploy/feminicide_emb_LR_1031.p',
+            'model_1_threshold': 0.5,
+            'model_2_threshold': None
+        }
+
+        classifier =
+        classifier.config.chainder_models = True
+
+        with open(os.path.join(test_fixture_dir, "more_sample_stories.json")) as f:
+            sample_texts = json.load(f)
+        sample_texts = [dict(story_text=t) for t in sample_texts]
+        results = classifier.classify(sample_texts)
+"""
 
 class TestClassifierResults(unittest.TestCase):
 
