@@ -34,10 +34,25 @@ class TestClassifierHelpers(unittest.TestCase):
         assert c.model_name() == 'aapf'
 
 
+class TestChainedClassifers(unittest.TestCase):
+
+    def test_multiplied(self):
+        project = TEST_EN_PROJECT.copy()
+        project['language_model_id'] = 9
+        with open(os.path.join(test_fixture_dir, "more_sample_stories.json")) as f:
+            sample_texts = json.load(f)
+        sample_texts = [dict(story_text=t) for t in sample_texts]
+        classifier = classifiers.for_project(project)
+        results = classifier.classify(sample_texts)
+        assert len(results) == 7
+        assert round(results[0], 5) == 0.96861
+        assert round(results[1], 5) == 0.01917
+
+
 class TestClassifierResults(unittest.TestCase):
 
     def test_classify_en(self):
-        project = TEST_EN_PROJECT
+        project = TEST_EN_PROJECT.copy()
         classifier = classifiers.for_project(project)
         with open(os.path.join(test_fixture_dir, "usa_sample_stories.json")) as f:
             sample_texts = json.load(f)

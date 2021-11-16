@@ -46,41 +46,76 @@ class Classifier:
         return os.path.join(MODEL_DIR, self.config['filename_prefix'] + '_' + filename + '.p')
 
     def _init(self):
-        # load model
-        with open(self._path_to_file('1_model'), 'rb') as m:
+        # Classifier 1 is always defined
+        with open(self._path_to_file('1_model'), 'rb') as m: # load model
             self._model_1 = pickle.load(m)
-        # load vectorizer
-        if self.config['vectorizer_type_1'] == VECTORIZER_TF_IDF:
+        if self.config['vectorizer_type_1'] == VECTORIZER_TF_IDF: # load vectorizer
             with open(self._path_to_file('1_vectorizer'), 'rb') as v:
                 self._vectorizer_1 = pickle.load(v)
         elif self.config['vectorizer_type_1'] == VECTORIZER_EMBEDDINGS:
             try:
-                self.model = hub.load(TFHUB_MODEL_PATH)  # this will cache to a local dir
+                self._vectorizer_1 = hub.load(TFHUB_MODEL_PATH)  # this will cache to a local dir
             except OSError:
                 # probably the cached SavedModel doesn't exist anymore
-                logger.error("Can't load model from {}".format(self.config['tfhub_model_path']))
+                logger.error("Can't load _vectorizer_1 from {} - did you run /scripts/download-models.sh?".format(
+                    TFHUB_MODEL_PATH))
         else:
-            raise RuntimeError("Unknown vectorizer type '{}' for project {}".format(self.config['vectorizer_type_1'],
+            raise RuntimeError("Unknown vectorizer 1 type '{}' for project {}".format(self.config['vectorizer_type_1'],
                                                                                     self.project['id']))
+        # Classifier 2 could also exist
+        if self.config['chained_models']:
+            with open(self._path_to_file('2_model'), 'rb') as m: # load model
+                self._model_2 = pickle.load(m)
+            if self.config['vectorizer_type_2'] == VECTORIZER_TF_IDF: # load vectorizer
+                with open(self._path_to_file('2_vectorizer'), 'rb') as v:
+                    self._vectorizer_2 = pickle.load(v)
+            elif self.config['vectorizer_type_2'] == VECTORIZER_EMBEDDINGS:
+                try:
+                    self._vectorizer_2 = hub.load(TFHUB_MODEL_PATH)  # this will cache to a local dir
+                except OSError:
+                    # probably the cached SavedModel doesn't exist anymore
+                    logger.error("Can't load _vectorizer_2 from {} - did you run /scripts/download-models.sh?".format(
+                        TFHUB_MODEL_PATH))
+            else:
+                raise RuntimeError("Unknown vectorizer 2 type '{}' for project {}".format(
+                    self.config['vectorizer_type_2'], self.project['id']))
 
     def classify(self, stories: List[Dict]) -> List[float]:
         story_texts = [s['story_text'] for s in stories]
+        # Classifier 1 always exists
         # vectorize first (turn words/sentences into vectors)
         if self.config['vectorizer_type_1'] == VECTORIZER_TF_IDF:
-            vectorized_data = self._vectorizer_1.transform(story_texts)
+            vectorized_data_1 = self._vectorizer_1.transform(story_texts)
         elif self.config['vectorizer_type_1'] == VECTORIZER_EMBEDDINGS:
-            embed = hub.load(TFHUB_MODEL_PATH)
-            vectorized_data = embed(story_texts)
+            vectorized_data_1 = self._vectorizer_1(story_texts)
         # now run model against vectors (turn vectors into probabilities)
         try:
-            predictions = self._model_1.predict_proba(vectorized_data)
-            true_probs = predictions[:, 1]  # grab the list of probabilities that these *are* feminicide stories
-            return true_probs
+            predictions_1 = self._model_1.predict_proba(vectorized_data_1)
+            true_probs_1 = predictions_1[:, 1]  # grab the list of probabilities that these *are* feminicide stories
         except ValueError as ve:
             logger.exception(ve)
             raise RuntimeError("Model {} failed to run ({}/{})".format(self.config['id'],
-                                                                       self.config['model_type'],
-                                                                       self.config['vectorizer_type']))
+                                                                       self.config['model_1'],
+                                                                       self.config['vectorizer_type_1']))
+        if not self.config['chained_models']:
+            return true_probs_1
+        # Classifier 2 could also exist
+        if self.config['vectorizer_type_2'] == VECTORIZER_TF_IDF:
+            vectorized_data_2 = self._vectorizer_2.transform(story_texts)
+        elif self.config['vectorizer_type_2'] == VECTORIZER_EMBEDDINGS:
+            vectorized_data_2 = self._vectorizer_2(story_texts)
+        # now run model against vectors (turn vectors into probabilities)
+        try:
+            predictions_2 = self._model_2.predict_proba(vectorized_data_2)
+            true_probs_2 = predictions_2[:, 1]  # grab the list of probabilities that these *are* feminicide stories
+        except ValueError as ve:
+            logger.exception(ve)
+            raise RuntimeError("Model {} failed to run ({}/{})".format(self.config['id'],
+                                                                       self.config['model_2'],
+                                                                       self.config['vectorizer_type_2']))
+        # with chained models we just return the multiplied probs (for now)
+        combined_probs = true_probs_1 * true_probs_2
+        return combined_probs
 
 
 def for_project(project: Dict) -> Classifier:
@@ -130,6 +165,14 @@ def download_models():
 
 
 def _download_file(url: str, dest_dir: str, prefix: str):
+    """
+    This expects the files to either end with "_model.p" or "_vectorizer.p". It renames them here so that
+    there is less of a convention that needs to be maintained on the central server.
+    :param url:
+    :param dest_dir:
+    :param prefix:
+    :return:
+    """
     # https://stackoverflow.com/questions/16694907/download-large-file-in-python-with-requests
     url_parts = urlparse(url)
     local_filename = url_parts.path.split('/')[-1]

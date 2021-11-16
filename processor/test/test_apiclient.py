@@ -19,17 +19,21 @@ class TestApiClient(unittest.TestCase):
 
     def test_get_language_models_list(self):
         models_list = apiclient.get_language_models_list()
+        prefixes = []
         for p in models_list:
             assert 'id' in p
-            if p['model_type_1'] is not None:
-                assert p['model_type_1'] in MODEL_TYPES
-            if p['model_type_2'] is not None:
+            assert p['filename_prefix'] is not None, "{} has no filename_prefix".format(p['id'])
+            assert p['filename_prefix'] not in prefixes,\
+                "{} has a non-unique filename_prefix of {}".format(p['id'], p['filename_prefix'])
+            # has to include 1 model
+            prefixes.append(p['filename_prefix'])
+            assert p['model_type_1'] in MODEL_TYPES
+            assert p['vectorizer_type_1'] in VECTORIZER_TYPES
+            # can potentially include a second
+            assert 'chained_models' in p
+            if p['chained_models']:
                 assert p['model_type_2'] in MODEL_TYPES
-            if p['vectorizer_type_1'] is not None:
                 assert p['vectorizer_type_1'] in VECTORIZER_TYPES
-            if p['vectorizer_type_2'] is not None:
-                assert p['vectorizer_type_1'] in VECTORIZER_TYPES
-            assert p['filename_prefix'] is not None
 
 
 if __name__ == "__main__":
