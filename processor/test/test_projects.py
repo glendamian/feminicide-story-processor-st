@@ -48,7 +48,7 @@ class TestProjects(unittest.TestCase):
 
     def test_classify_stories(self):
         # english
-        project = TEST_EN_PROJECT
+        project = TEST_EN_PROJECT.copy()
         # load test inputs
         with open(os.path.join(test_fixture_dir, "usa_sample_stories.json")) as f:
             sample_text = json.load(f)

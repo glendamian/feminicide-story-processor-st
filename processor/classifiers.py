@@ -165,6 +165,14 @@ def download_models():
 
 
 def _download_file(url: str, dest_dir: str, prefix: str):
+    """
+    This expects the files to either end with "_model.p" or "_vectorizer.p". It renames them here so that
+    there is less of a convention that needs to be maintained on the central server.
+    :param url:
+    :param dest_dir:
+    :param prefix:
+    :return:
+    """
     # https://stackoverflow.com/questions/16694907/download-large-file-in-python-with-requests
     url_parts = urlparse(url)
     local_filename = url_parts.path.split('/')[-1]
