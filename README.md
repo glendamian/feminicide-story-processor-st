@@ -35,10 +35,7 @@ Deploying
 
 When you make a change, edit `processor.VERSION` and update the `CHANGELOG.md` file with a note about what changed.
 
-This is built to depoy via a SAAS platform, like Heroku. We deploy via dokku. Make sure to create an environment
-variable there for each setting in the `.env.template`.
-
-It is also super useful to deploy an instance of [celery-flower](https://flower.readthedocs.io/en/latest/) so you can
-monitor the production queues.
+This is built to deploy via a SAAS platform, like Heroku. We deploy via [dokku](https://dokku.com). Whatever your deploy
+platform, make sure to create environment variables there for each setting in the `.env.template`.
 
 See `doc/deploying.md` for full info on deploying to dokku.

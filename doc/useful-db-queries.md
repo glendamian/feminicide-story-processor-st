@@ -3,7 +3,7 @@ Useful queries for the logging database
 
 Connect to db: `dokku postgres:connect mc-story-processor-db`
 
-**Stories posted to main server by date**
+**Stories fetched by date**
 
 `SELECT date_trunc('day', processed_date) as day, count(*) as stories from stories  group by 1 order by 1  DESC;`
 
