@@ -18,14 +18,14 @@ logger = logging.getLogger(__name__)
 logger.info("Starting story fetch job")
 
 # important to do because there might new models on the server!
-logger.info("  Checking for any new models we need")
-download_models()
+#logger.info("  Checking for any new models we need")
+#download_models()
 
 mc = get_mc_client()
 
 email_message = ""
 
-project_list = projects.load_project_list(force_reload=True)
+project_list = projects.load_project_list(force_reload=False, update_history=False)
 project_history = projects.load_history()
 logger.info("  Checking {} projects".format(len(project_list)))
 logger.info("    will request {} stories/page".format(STORIES_PER_PAGE))
@@ -35,6 +35,9 @@ total_pages = 0
 
 # iterate over all the projects, fetching new stories and q-ing them up for analysis (upto MAX_STORIES_PER_PROJECT)
 for project in project_list:
+    #if project['id'] not in [30, 23, 36]:
+    #if project['id'] not in [36]:
+    #    continue
     # figure out the query to run based on the history
     last_processed_stories_id = project_history.get(str(project['id']), 0)  # (JSON dict keys have to be strings)
     logger.info("Checking project {}/{} (last processed_stories_id={})".format(project['id'], project['title'],
@@ -45,7 +48,8 @@ for project in project_list:
         project['search_terms'],
         project['language'],
         " ".join([str(tid) for tid in project['media_collections']]))
-    start_date = dateparser.parse(project['start_date'])
+    #start_date = dateparser.parse(project['start_date'])
+    start_date = dateparser.parse("2021-12-01")
     now = date.today()
     fq = mc.dates_as_query_clause(start_date, now)
     # page through any new stories

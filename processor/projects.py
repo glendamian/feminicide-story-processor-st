@@ -27,11 +27,13 @@ def _path_to_history_file() -> str:
     return os.path.join(classifiers.CONFIG_DIR, 'project-history.json')
 
 
-def load_project_list(force_reload: bool = False) -> List[Dict]:
+def load_project_list(force_reload: bool = False, update_history: bool = True) -> List[Dict]:
     """
     Treats config like a singleton that is lazy-loaded once the first time this is called.
-    :param force_reload: override the default behaviour and load the config from file system again
-    :return:
+    :param force_reload: Override the default behaviour and load the config from file system again.
+    :param update_history: Set to False to override default behaviour, which is to update history of last processed
+                           story id to latest from server. Useful for debugging.
+    :return: list of configutations for projects to query about
     """
     global _all_projects
     if _all_projects and not force_reload:
@@ -45,10 +47,14 @@ def load_project_list(force_reload: bool = False) -> List[Dict]:
         # load and return the (perhaps updated) locally cached file
         with open(_path_to_config_file(), "r") as f:
             _all_projects = json.load(f)
-        updates = _update_history_from_config(_all_projects, load_history(True))
-        for project_id, last_processed_stories_id in updates.items():
-            update_processing_history(project_id, last_processed_stories_id)
-        logger.info("    updated {} last_processed_stories_ids from server data".format(len(updates)))
+        # update the local history file, which tracks the latest processed_stories_id we've run for each project
+        if update_history:
+            updates = _update_history_from_config(_all_projects, load_history(True))
+            for project_id, last_processed_stories_id in updates.items():
+                update_processing_history(project_id, last_processed_stories_id)
+            logger.info("    updated {} last_processed_stories_ids from server data".format(len(updates)))
+        else:
+            logger.info("    skipping history update - using whatever is in local history file for last processed id")
         return _all_projects
     except Exception as e:
         # bail completely if we can't load the config file
