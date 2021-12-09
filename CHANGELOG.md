@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of the changes to this software.
 
+### 1.7.0
+
+Switch to parallel processing model (via Prefect + Dask).
+
 ### 1.6.0
 
 Supports chained language models.
