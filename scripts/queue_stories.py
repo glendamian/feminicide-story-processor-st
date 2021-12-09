@@ -59,7 +59,7 @@ def process_project_task(project: Dict, history: Dict, page_size: int, max_stori
         try:
             page_of_stories = mc.storyList(q, fq, last_processed_stories_id=project_last_processed_stories_id,
                                            text=True, rows=page_size)
-            logger.info("    page {}: ({}) stories".format(page_count, len(page_of_stories)))
+            logger.info("    {} - page {}: ({}) stories".format(project['id'], page_count, len(page_of_stories)))
         except ConnectionError as ce:
             logger.error("  Connection failed on project {}. Skipping project.".format(project['id']))
             logger.exception(ce)
