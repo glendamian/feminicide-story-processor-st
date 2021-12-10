@@ -130,7 +130,7 @@ if __name__ == '__main__':
     download_models()
 
     with Flow("story-processor") as flow:
-        flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=2)  # execute `map` calls in parallel
+        flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=6)  # execute `map` calls in parallel
         # read parameters
         stories_per_page = Parameter("stories_per_page", default=DEFAULT_STORIES_PER_PAGE)
         max_stories_per_project = Parameter("max_stories_per_project", default=DEFAULT_MAX_STORIES_PER_PROJECT)
