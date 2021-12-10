@@ -10,6 +10,13 @@ from processor.test.test_projects import TEST_EN_PROJECT
 
 class TestTasks(unittest.TestCase):
 
+    def _sample_story_ids(self):
+        # this loads read data from a real request from a log file on the real server
+        with open(os.path.join(test_fixture_dir, "aapf_samples.json")) as f:
+            sample_stories = json.load(f)
+        story_ids = [s['stories_id'] for s in sample_stories]
+        return story_ids
+
     def _classify_story_ids(self, project, story_ids):
         mc = get_mc_client()
         stories_with_text = mc.storyList("stories_id:({})".format(" ".join([str(id) for id in story_ids])),
@@ -21,10 +28,7 @@ class TestTasks(unittest.TestCase):
     def test_add_probability_to_stories(self):
         project = TEST_EN_PROJECT.copy()
         project['language_model_id'] = 3
-        # this loads read data from a real request from a log file on the real server
-        with open(os.path.join(test_fixture_dir, "aapf_samples.json")) as f:
-            sample_stories = json.load(f)
-        story_ids = [s['stories_id'] for s in sample_stories]
+        story_ids = self._sample_story_ids()
         classified_stories = self._classify_story_ids(project, story_ids)
         for s in classified_stories:
             assert 'story_text' not in s
@@ -42,6 +46,15 @@ class TestTasks(unittest.TestCase):
                 assert 'story_text' not in s
                 assert s['confidence'] > 0.75
             # assert round(classified_stories[0]['confidence'], 5) == 0.78392
+
+    def test_add_entities_to_stories(self):
+        mc = get_mc_client()
+        story_ids = self._sample_story_ids()
+        stories_with_text = mc.storyList("stories_id:({})".format(" ".join([str(id) for id in story_ids])),
+                                         text=True, rows=100)
+        stories_with_entities = tasks._add_entities_to_stories(stories_with_text)
+        for s in stories_with_entities:
+            assert 'entities' in s
 
 
 if __name__ == "__main__":

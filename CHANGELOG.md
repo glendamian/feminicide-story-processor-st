@@ -1,7 +1,13 @@
 Change Log
 ==========
 
-Here is a history of the changes to this software.
+Here is a history of what was changed in each version. 
+
+### 1.7.0
+
+* Switch to parallel processing model (via Prefect + Dask)
+* Parse and send entities to main server
+* Hack to work with temporary Media Cloud database change
 
 ### 1.6.0
 

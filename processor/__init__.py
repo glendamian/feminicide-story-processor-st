@@ -10,7 +10,7 @@ from sentry_sdk import init
 from typing import Dict
 from sqlalchemy import create_engine
 
-VERSION = "1.6.0"
+VERSION = "1.7.0"
 
 load_dotenv()  # load config from .env file (local) or env vars (production)
 
@@ -60,6 +60,11 @@ if SQLALCHEMY_DATABASE_URI is None:
     logger.error("  No SQLALCHEMY_DATABASE_URI is specified. Bailing because we can't save things to a DB for tracking")
     sys.exit(1)
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
+
+
+ENTITY_SERVER_URL = os.environ['ENTITY_SERVER_URL']
+if ENTITY_SERVER_URL is None:
+    logger.info("  No ENTITY_SERVER_URL is specified. You won't get entities in the stories sent to the  main server.")
 
 
 def get_mc_client() -> mediacloud.api.AdminMediaCloud:
