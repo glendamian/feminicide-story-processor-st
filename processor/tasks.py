@@ -4,6 +4,7 @@ import requests
 from typing import List, Dict
 import logging
 import time
+from json.decoder import JSONDecodeError
 # from celery.utils.log import get_task_logger
 
 from processor import path_to_log_dir
@@ -37,11 +38,19 @@ def _add_confidence_to_stories(project: Dict, stories: List[Dict]) -> List[Dict]
 def _add_entities_to_stories(stories: List[Dict]):
     for s in stories:
         response = entities.from_content(s['title'] + " " + s['story_text'], s['language'])
+        story_entities = None
         if entities.server_address_set():
-            s['entities'] = [item['text'].lower() for item in response['results']
-                             if item['type'] in ACCEPTED_ENTITY_TYPES]
-        else:
-            s['entities'] = None
+            try:
+                story_entities = [item['text'].lower() for item in response['results']
+                                  if item['type'] in ACCEPTED_ENTITY_TYPES]
+            except JSONDecodeError:
+                # the entity extractor failed, so don't return any entities
+                story_entities = None
+            except Exception as e:
+                # something else happened, so log it but also continue
+                logger.error(e)
+                story_entities = None
+        s['entities'] = story_entities
     return stories
 
 
