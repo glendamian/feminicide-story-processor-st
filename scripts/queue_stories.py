@@ -23,7 +23,7 @@ history_file_lock = threading.Lock()  # used to control access to history file a
 
 @task(name='load_projects')
 def load_projects_task() -> Dict:
-    project_list = projects.load_project_list(force_reload=False, update_history=True)
+    project_list = projects.load_project_list(force_reload=True, update_history=True)
     logger.info("  Checking {} projects".format(len(project_list)))
     with history_file_lock:
         project_history = projects.load_history()
