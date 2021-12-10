@@ -14,3 +14,7 @@ Connect to db: `dokku postgres:connect mc-story-processor-db`
 **Stories above/below theshold by day**
 
 `SELECT date_trunc('day', processed_date) as day, above_threshold,  count(*) as stories from stories  group by 1, 2 order by 1  DESC;`
+
+**Above-threshold stories for a project by day**
+
+`SELECT date_trunc('day', published_date) as day, above_threshold,  count(*) as stories from stories where project_id=30 and above_threshold='t' group by 1, 2 order by 1  DESC;`
