@@ -196,8 +196,8 @@ def prep_stories_for_posting(project: Dict, stories: List[Dict]) -> List[Dict]:
             story_tags=s['story_tags'],
             title=s['title'],
             url=s['url'],
-            # add in the entities we parsed out via news-entitiy-server
-            entities=project['entities'],  # just a flat array of strings
+            # add in the entities we parsed out via news-entity-server
+            entities=s['entities'] if 'entities' in s else None,  # backwards compatible, in case some in queue are old
             # add in the probability from the model
             confidence=s['confidence'],
             # throw in some of the metadata for good measure

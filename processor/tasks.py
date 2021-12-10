@@ -35,11 +35,14 @@ def _add_confidence_to_stories(project: Dict, stories: List[Dict]) -> List[Dict]
 
 
 def _add_entities_to_stories(stories: List[Dict]):
-    if entities.server_address_set():
-        for s in stories:
-            response = entities.from_content(s['title'] + " " + s['story_text'], s['language'])
-            s['entities'] = [item['text'].lower() for item in response['results'] if item['type'] in ACCEPTED_ENTITY_TYPES]
-        return stories
+    for s in stories:
+        response = entities.from_content(s['title'] + " " + s['story_text'], s['language'])
+        if entities.server_address_set():
+            s['entities'] = [item['text'].lower() for item in response['results']
+                             if item['type'] in ACCEPTED_ENTITY_TYPES]
+        else:
+            s['entities'] = None
+    return stories
 
 
 @app.task(serializer='json', bind=True)
