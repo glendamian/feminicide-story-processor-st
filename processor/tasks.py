@@ -37,10 +37,10 @@ def _add_confidence_to_stories(project: Dict, stories: List[Dict]) -> List[Dict]
 
 def _add_entities_to_stories(stories: List[Dict]):
     for s in stories:
-        response = entities.from_content(s['title'] + " " + s['story_text'], s['language'])
         story_entities = None
         if entities.server_address_set():
             try:
+                response = entities.from_content(s['title'] + " " + s['story_text'], s['language'])
                 story_entities = [item['text'].lower() for item in response['results']
                                   if item['type'] in ACCEPTED_ENTITY_TYPES]
             except JSONDecodeError:
