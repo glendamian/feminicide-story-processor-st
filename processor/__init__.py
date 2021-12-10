@@ -62,6 +62,11 @@ if SQLALCHEMY_DATABASE_URI is None:
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
 
+ENTITY_SERVER_URL = os.environ['ENTITY_SERVER_URL']
+if ENTITY_SERVER_URL is None:
+    logger.info("  No ENTITY_SERVER_URL is specified. You won't get entities in the stories sent to the  main server.")
+
+
 def get_mc_client() -> mediacloud.api.AdminMediaCloud:
     """
     A central place to get the Media Cloud client

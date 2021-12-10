@@ -7,6 +7,7 @@ correctly. There are a few components:
 * The loggin DB - to help us interrogate and debug, we keep track of stories as they move through the pipeline in a DB
 * The worker queue - this holds batches of stories needing classification & posting to the central server
 * The queue monitor - lets us keep an eye on queue servicing speeds
+* External [News-Entity-Server install](https://github.com/dataculturegroup/news-entity-server) - you need a url to an install of that service running
 
 Create the Dokku apps
 ---------------------

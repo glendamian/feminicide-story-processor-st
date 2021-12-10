@@ -23,7 +23,7 @@ history_file_lock = threading.Lock()  # used to control access to history file a
 
 @task(name='load_projects')
 def load_projects_task() -> Dict:
-    project_list = projects.load_project_list(force_reload=False, update_history=False)
+    project_list = projects.load_project_list(force_reload=False, update_history=True)
     logger.info("  Checking {} projects".format(len(project_list)))
     with history_file_lock:
         project_history = projects.load_history()
@@ -46,7 +46,7 @@ def process_project_task(project: Dict, history: Dict, page_size: int, max_stori
         project['search_terms'],
         project['language'],
         " ".join([str(tid) for tid in project['media_collections']]))
-# HACK
+# HACK - we need to query from *after* the Nov Media Cloud crash (for now), otherwise paging doesn't work
     # start_date = dateparser.parse(project['start_date'])
     start_date = dateparser.parse("2021-12-01")
     now = date.today()
@@ -126,11 +126,11 @@ if __name__ == '__main__':
     logger.info("Starting story fetch job")
 
     # important to do because there might new models on the server!
-    #logger.info("  Checking for any new models we need")
-    #download_models()
+    logger.info("  Checking for any new models we need")
+    download_models()
 
     with Flow("story-processor") as flow:
-        flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=4)  # execute `map` calls in parallel
+        flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=2)  # execute `map` calls in parallel
         # read parameters
         stories_per_page = Parameter("stories_per_page", default=DEFAULT_STORIES_PER_PAGE)
         max_stories_per_project = Parameter("max_stories_per_project", default=DEFAULT_MAX_STORIES_PER_PROJECT)

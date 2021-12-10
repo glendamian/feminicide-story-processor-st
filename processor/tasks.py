@@ -10,12 +10,15 @@ from processor import path_to_log_dir
 from processor.celery import app
 import processor.projects as projects
 import processor.database as db
+import processor.entities as entities
 
 logger = logging.getLogger(__name__)  # get_task_logger(__name__)
 logFormatter = logging.Formatter("[%(levelname)s %(threadName)s] - %(asctime)s - %(name)s - : %(message)s")
 fileHandler = logging.FileHandler(os.path.join(path_to_log_dir, "tasks-{}.log".format(time.strftime("%Y%m%d-%H%M%S"))))
 fileHandler.setFormatter(logFormatter)
 logger.addHandler(fileHandler)
+
+ACCEPTED_ENTITY_TYPES = ["PERSON", "PER", "GPE", "LOC", "FAC", "DATE", "TIME", "C_DATE", "C_AGE"]
 
 
 def _add_confidence_to_stories(project: Dict, stories: List[Dict]) -> List[Dict]:
@@ -31,6 +34,14 @@ def _add_confidence_to_stories(project: Dict, stories: List[Dict]) -> List[Dict]
     return results
 
 
+def _add_entities_to_stories(stories: List[Dict]):
+    if entities.server_address_set():
+        for s in stories:
+            response = entities.from_content(s['title'] + " " + s['story_text'], s['language'])
+            s['entities'] = [item['text'].lower() for item in response['results'] if item['type'] in ACCEPTED_ENTITY_TYPES]
+        return stories
+
+
 @app.task(serializer='json', bind=True)
 def classify_and_post_worker(self, project: Dict, stories: List[Dict]):
     """
@@ -42,7 +53,10 @@ def classify_and_post_worker(self, project: Dict, stories: List[Dict]):
     try:
         logger.debug('{}: classify {} stories (model {})'.format(project['id'], len(stories),
                                                                  project['language_model_id']))
-        stories_with_confidence = _add_confidence_to_stories(project, stories)
+        # first add in multi-lingual entities
+        stories_with_entities = _add_entities_to_stories(stories)
+        # now classify the stories again the model specified for the project
+        stories_with_confidence = _add_confidence_to_stories(project, stories_with_entities)
         for s in stories_with_confidence:
             logger.debug("  classify: {}/{} - {} - {}".format(s['project_id'], s['language_model_id'],
                                                               s['stories_id'], s['confidence']))
