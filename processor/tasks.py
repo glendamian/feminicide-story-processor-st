@@ -66,9 +66,9 @@ def classify_and_post_worker(self, project: Dict, stories: List[Dict]):
         logger.debug('{}: classify {} stories (model {})'.format(project['id'], len(stories),
                                                                  project['language_model_id']))
         # first add in multi-lingual entities
-        stories_with_entities = _add_entities_to_stories(stories)
+        #stories_with_entities = _add_entities_to_stories(stories)
         # now classify the stories again the model specified for the project
-        stories_with_confidence = _add_confidence_to_stories(project, stories_with_entities)
+        stories_with_confidence = _add_confidence_to_stories(project, stories)
         for s in stories_with_confidence:
             logger.debug("  classify: {}/{} - {} - {}".format(s['project_id'], s['language_model_id'],
                                                               s['stories_id'], s['confidence']))
