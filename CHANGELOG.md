@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### 1.7.2
+
+* Add logging of two separated chained model scores
+
 ### 1.7.1
 
 * Upgrade python to latest

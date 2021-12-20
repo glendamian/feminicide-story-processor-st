@@ -10,7 +10,7 @@ from sentry_sdk import init
 from typing import Dict
 from sqlalchemy import create_engine
 
-VERSION = "1.7.1"
+VERSION = "1.7.2"
 
 load_dotenv()  # load config from .env file (local) or env vars (production)
 
