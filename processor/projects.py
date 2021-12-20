@@ -131,7 +131,7 @@ def prep_stories_for_posting(project: Dict, stories: List[Dict]) -> List[Dict]:
     return prepped_stories
 
 
-def classify_stories(project: Dict, stories: List[Dict]) -> List[float]:
+def classify_stories(project: Dict, stories: List[Dict]) -> Dict[str, List[float]]:
     """
     Run all the stories passed in through the appropriate classifier, based on the project config
     :param project:

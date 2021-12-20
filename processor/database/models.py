@@ -13,6 +13,8 @@ class Story(Base):
     project_id = Column(Integer)
     model_id = Column(Integer)
     model_score = Column(Float)
+    model_1_score = Column(Float)
+    model_2_score = Column(Float)
     published_date = Column(DateTime)
     queued_date = Column(DateTime)
     processed_date = Column(DateTime)

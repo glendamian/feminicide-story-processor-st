@@ -80,7 +80,7 @@ class Classifier:
                 raise RuntimeError("Unknown vectorizer 2 type '{}' for project {}".format(
                     self.config['vectorizer_type_2'], self.project['id']))
 
-    def classify(self, stories: List[Dict]) -> List[float]:
+    def classify(self, stories: List[Dict]) -> Dict[str, List[float]]:
         story_texts = [s['story_text'] for s in stories]
         # Classifier 1 always exists
         # vectorize first (turn words/sentences into vectors)
@@ -98,7 +98,11 @@ class Classifier:
                                                                        self.config['model_1'],
                                                                        self.config['vectorizer_type_1']))
         if not self.config['chained_models']:
-            return true_probs_1
+            return dict(
+                model_1_scores=None,
+                model_2_scores=None,
+                model_scores=true_probs_1
+            )
         # Classifier 2 could also exist
         if self.config['vectorizer_type_2'] == VECTORIZER_TF_IDF:
             vectorized_data_2 = self._vectorizer_2.transform(story_texts)
@@ -115,7 +119,11 @@ class Classifier:
                                                                        self.config['vectorizer_type_2']))
         # with chained models we just return the multiplied probs (for now)
         combined_probs = true_probs_1 * true_probs_2
-        return combined_probs
+        return dict(
+            model_1_scores=true_probs_1,
+            model_2_scores=true_probs_2,
+            model_scores=combined_probs
+        )
 
 
 def for_project(project: Dict) -> Classifier:

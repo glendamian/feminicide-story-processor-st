@@ -5,12 +5,11 @@ from typing import List, Dict
 import logging
 import time
 from json.decoder import JSONDecodeError
-# from celery.utils.log import get_task_logger
-import processor.database.stories_db
+
+import processor.database.stories_db as stories_db
 from processor import path_to_log_dir
 from processor.celery import app
 import processor.projects as projects
-import processor.database as db
 import processor.entities as entities
 
 logger = logging.getLogger(__name__)  # get_task_logger(__name__)
@@ -25,7 +24,13 @@ ACCEPTED_ENTITY_TYPES = ["PERSON", "PER", "GPE", "LOC", "FAC", "DATE", "TIME", "
 def _add_confidence_to_stories(project: Dict, stories: List[Dict]) -> List[Dict]:
     probabilities = projects.classify_stories(project, stories)
     for idx, s in enumerate(stories):
-        s['confidence'] = probabilities[idx]
+        s['confidence'] = probabilities['model_scores'][idx]
+        s['model_score'] = probabilities['model_scores'][idx]
+        s['model_1_score'] = probabilities['model_1_scores'][idx]
+        s['model_2_score'] = probabilities['model_2_scores'][idx]
+    # keep an auditable log in our own local database
+    stories_db.update_stories_processed_date_score(stories, project['id'])
+    # remove data we aren't going to send to the server
     results = projects.prep_stories_for_posting(project, stories)
     if projects.LOG_LAST_POST_TO_FILE:  # helpful for debugging (the last project post will written to a file)
         with open(os.path.join(path_to_log_dir,
@@ -72,13 +77,11 @@ def classify_and_post_worker(self, project: Dict, stories: List[Dict]):
         for s in stories_with_confidence:
             logger.debug("  classify: {}/{} - {} - {}".format(s['project_id'], s['language_model_id'],
                                                               s['stories_id'], s['confidence']))
-        # keep an auditable log in our own local database
-        processor.database.stories_db.update_stories_processed_date_score(stories_with_confidence, project['id'])
         # only stories above project score threshold should be posted
         stories_to_send = projects.remove_low_confidence_stories(project.get('min_confidence', 0),
                                                                  stories_with_confidence)
         # mark the stories in the local DB that we intend to send
-        processor.database.stories_db.update_stories_above_threshold(stories_to_send, project['id'])
+        stories_db.update_stories_above_threshold(stories_to_send, project['id'])
         # now actually post them
         logger.debug('{}: {} stories to post'.format(project['id'], len(stories_to_send)))
         projects.post_results(project, stories_to_send)
@@ -86,7 +89,7 @@ def classify_and_post_worker(self, project: Dict, stories: List[Dict]):
             logger.debug("  post: {}/{} - {} - {}".format(s['project_id'], s['language_model_id'],
                                                           s['stories_id'], s['confidence']))
         # and track that we posted the stories that we did in our local debug DB
-        processor.database.stories_db.update_stories_posted_date(stories_to_send, project['id'])
+        stories_db.update_stories_posted_date(stories_to_send, project['id'])
     except requests.exceptions.HTTPError as err:
         # on failure requeue to try again
         logger.warning("{}: Failed to post {} results".format(project['id'], len(stories)))

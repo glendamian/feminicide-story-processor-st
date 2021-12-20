@@ -39,7 +39,9 @@ def update_stories_processed_date_score(stories: List, project_id: int) -> None:
         matching_mc_story = [s for s in stories if
                              (s['stories_id'] == db_story.stories_id) and (project_id == db_story.project_id)]
         mc_story = matching_mc_story[0]
-        db_story.model_score = mc_story['confidence']
+        db_story.model_score = mc_story['model_score']
+        db_story.model_1_score = mc_story['model_1_score']
+        db_story.model_2_score = mc_story['model_2_score']
         db_story.processed_date = now
     session.commit()
 

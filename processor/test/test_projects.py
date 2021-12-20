@@ -25,7 +25,7 @@ class TestProjects(unittest.TestCase):
             sample_text = json.load(f)
         sample_stories = [dict(story_text=t) for t in sample_text]
         # check results
-        feminicide_probs = projects.classify_stories(project, sample_stories)
+        feminicide_probs = projects.classify_stories(project, sample_stories)['model_scores']
         assert round(feminicide_probs[0], 5) == 0.36395
         assert round(feminicide_probs[1], 5) == 0.32298
         assert round(feminicide_probs[2], 5) == 0.33297

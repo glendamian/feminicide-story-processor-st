@@ -44,9 +44,13 @@ class TestChainedClassifers(unittest.TestCase):
         sample_texts = [dict(story_text=t) for t in sample_texts]
         classifier = classifiers.for_project(project)
         results = classifier.classify(sample_texts)
-        assert len(results) == 7
-        assert round(results[0], 5) == 0.96861
-        assert round(results[1], 5) == 0.01917
+        assert len(results['model_scores']) == 7
+        assert results['model_1_scores'] is not None
+        assert len(results['model_1_scores']) == 7
+        assert results['model_2_scores'] is not None
+        assert len(results['model_2_scores']) == 7
+        assert round(results['model_scores'][0], 5) == 0.96861
+        assert round(results['model_scores'][1], 5) == 0.01917
 
 
 class TestClassifierResults(unittest.TestCase):
@@ -57,7 +61,7 @@ class TestClassifierResults(unittest.TestCase):
         with open(os.path.join(test_fixture_dir, "usa_sample_stories.json")) as f:
             sample_texts = json.load(f)
         sample_texts = [dict(story_text=t) for t in sample_texts]
-        results = classifier.classify(sample_texts)
+        results = classifier.classify(sample_texts)['model_scores']
         assert round(results[0], 5) == 0.36395
         assert round(results[1], 5) == 0.32298
         assert round(results[2], 5) == 0.33297
@@ -69,7 +73,7 @@ class TestClassifierResults(unittest.TestCase):
         with open(os.path.join(test_fixture_dir, "more_sample_stories.json")) as f:
             sample_texts = json.load(f)
         sample_texts = [dict(story_text=t) for t in sample_texts]
-        results = classifier.classify(sample_texts)
+        results = classifier.classify(sample_texts)['model_scores']
         assert round(results[0], 5) == 0.78030
         assert round(results[1], 5) == 0.13698
         assert round(results[2], 5) == 0.16526
@@ -83,7 +87,7 @@ class TestClassifierResults(unittest.TestCase):
         with open(os.path.join(test_fixture_dir, "es_sample_stories.json")) as f:
             sample_texts = json.load(f)
         sample_texts = [dict(story_text=t) for t in sample_texts]
-        results = classifier.classify(sample_texts)
+        results = classifier.classify(sample_texts)['model_scores']
         assert round(results[0], 5) == 0.83309
 
     def _classify_one_from(self, index, file):
@@ -96,7 +100,7 @@ class TestClassifierResults(unittest.TestCase):
             project = TEST_EN_PROJECT.copy()
             project['language_model_id'] = model_id
             classifier = classifiers.for_project(project)
-            model_result = classifier.classify(sample_texts)[0]
+            model_result = classifier.classify(sample_texts)['model_scores'][0]
             results_by_model_id.append(model_result)
         return results_by_model_id
 
@@ -106,7 +110,7 @@ class TestClassifierResults(unittest.TestCase):
         project = TEST_EN_PROJECT.copy()
         project['language_model_id'] = 5
         classifier = classifiers.for_project(project)
-        model_result = classifier.classify([story])
+        model_result = classifier.classify([story])['model_scores']
         assert round(model_result[0], 5) == 0.00789
 
     def test_stories_against_all_classifiers(self):
