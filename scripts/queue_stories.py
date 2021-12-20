@@ -8,34 +8,29 @@ from prefect import Flow, Parameter, task, unmapped
 from prefect.executors import LocalDaskExecutor
 import threading
 
+import processor.database.stories_db as stories_db
+import processor.database.projects_db as projects_db
 from processor.classifiers import download_models
 from processor import get_mc_client, get_email_config, is_email_configured
 import processor.projects as projects
 import processor.tasks as tasks
 import processor.notifications as notifications
-import processor.database as db
 
 DEFAULT_STORIES_PER_PAGE = 100  # I found this performs poorly if set higher than 100
 DEFAULT_MAX_STORIES_PER_PROJECT = 20 * 1000  # make sure we don't do too many stories each cron run (for testing)
 
-history_file_lock = threading.Lock()  # used to control access to history file across threads
-
 
 @task(name='load_projects')
-def load_projects_task() -> Dict:
-    project_list = projects.load_project_list(force_reload=True, update_history=True)
+def load_projects_task() -> List[Dict]:
+    project_list = projects.load_project_list(force_reload=True)
     logger.info("  Checking {} projects".format(len(project_list)))
-    with history_file_lock:
-        project_history = projects.load_history()
-    return dict(
-        list=project_list,
-        history=project_history)
+    return project_list[:5]
 
 
 @task(name='process_project')
-def process_project_task(project: Dict, history: Dict, page_size: int, max_stories: int) -> Dict:
+def process_project_task(project: Dict, page_size: int, max_stories: int) -> Dict:
     mc = get_mc_client()
-    project_last_processed_stories_id = history.get(str(project['id']), 0)
+    project_last_processed_stories_id = project['local_processed_stories_id']
     project_email_message = ""
     logger.info("Checking project {}/{} (last processed_stories_id={})".format(project['id'], project['title'],
                                                                                project_last_processed_stories_id))
@@ -76,12 +71,10 @@ def process_project_task(project: Dict, history: Dict, page_size: int, max_stori
             tasks.classify_and_post_worker.delay(project, page_of_stories)
             project_last_processed_stories_id = page_of_stories[-1]['processed_stories_id']
             # and log that we got and queued them all
-            db.add_stories(page_of_stories, project)
+            stories_db.add_stories(page_of_stories, project)
             # important to write this update now, because we have queued up the task to process these stories
             # the task queue will manage retrying with the stories if it fails with this batch
-            # BUT we are running in parallel threads, so make sure to do this behind a mutex
-            with history_file_lock:
-                projects.update_processing_history(project['id'], project_last_processed_stories_id)
+            projects_db.update_history(project['id'], project_last_processed_stories_id)
         else:
             more_stories = False
     logger.info("  queued {} stories for project {}/{} (in {} pages)".format(story_count, project['id'],
@@ -130,16 +123,15 @@ if __name__ == '__main__':
     download_models()
 
     with Flow("story-processor") as flow:
-        flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=6)  # execute `map` calls in parallel
+        #flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=6)  # execute `map` calls in parallel
         # read parameters
         stories_per_page = Parameter("stories_per_page", default=DEFAULT_STORIES_PER_PAGE)
         max_stories_per_project = Parameter("max_stories_per_project", default=DEFAULT_MAX_STORIES_PER_PROJECT)
         logger.info("    will request {} stories/page (up to {})".format(stories_per_page, max_stories_per_project))
         # 1. list all the project we need to work on
-        projects_info = load_projects_task()
+        projects_list = load_projects_task()
         # 2. process all the projects (in parallel)
-        project_statuses = process_project_task.map(projects_info['list'],
-                                                    history=unmapped(projects_info['history']),
+        project_statuses = process_project_task.map(projects_list,
                                                     page_size=unmapped(stories_per_page),
                                                     max_stories=unmapped(max_stories_per_project))
         # 3. send email with results of operations

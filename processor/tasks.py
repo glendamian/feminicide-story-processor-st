@@ -6,7 +6,7 @@ import logging
 import time
 from json.decoder import JSONDecodeError
 # from celery.utils.log import get_task_logger
-
+import processor.database.stories_db
 from processor import path_to_log_dir
 from processor.celery import app
 import processor.projects as projects
@@ -73,12 +73,12 @@ def classify_and_post_worker(self, project: Dict, stories: List[Dict]):
             logger.debug("  classify: {}/{} - {} - {}".format(s['project_id'], s['language_model_id'],
                                                               s['stories_id'], s['confidence']))
         # keep an auditable log in our own local database
-        db.update_stories_processed_date_score(stories_with_confidence, project['id'])
+        processor.database.stories_db.update_stories_processed_date_score(stories_with_confidence, project['id'])
         # only stories above project score threshold should be posted
         stories_to_send = projects.remove_low_confidence_stories(project.get('min_confidence', 0),
                                                                  stories_with_confidence)
         # mark the stories in the local DB that we intend to send
-        db.update_stories_above_threshold(stories_to_send, project['id'])
+        processor.database.stories_db.update_stories_above_threshold(stories_to_send, project['id'])
         # now actually post them
         logger.debug('{}: {} stories to post'.format(project['id'], len(stories_to_send)))
         projects.post_results(project, stories_to_send)
@@ -86,7 +86,7 @@ def classify_and_post_worker(self, project: Dict, stories: List[Dict]):
             logger.debug("  post: {}/{} - {} - {}".format(s['project_id'], s['language_model_id'],
                                                           s['stories_id'], s['confidence']))
         # and track that we posted the stories that we did in our local debug DB
-        db.update_stories_posted_date(stories_to_send, project['id'])
+        processor.database.stories_db.update_stories_posted_date(stories_to_send, project['id'])
     except requests.exceptions.HTTPError as err:
         # on failure requeue to try again
         logger.warning("{}: Failed to post {} results".format(project['id'], len(stories)))

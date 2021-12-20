@@ -1,5 +1,5 @@
 from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, Integer, DateTime, Float, Boolean
+from sqlalchemy import Column, BigInteger, Integer, DateTime, Float, Boolean
 from dateutil.parser import parse
 
 Base = declarative_base()
@@ -28,3 +28,15 @@ class Story(Base):
         s.stories_id = story['stories_id']
         s.published_date = parse(story['publish_date'])
         return s
+
+
+class ProjectHistory(Base):
+    __tablename__ = 'projects'
+
+    id = Column(Integer, primary_key=True)
+    last_processed_id = Column(BigInteger)
+    created_at = Column(DateTime)
+    updated_at = Column(DateTime)
+
+    def __repr__(self):
+        return '<Story id={}>'.format(self.id)

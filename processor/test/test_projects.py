@@ -17,35 +17,6 @@ class TestProjects(unittest.TestCase):
             assert 'id' in p
             assert 'language_model_id' in p
 
-    def test_update_history_from_config(self):
-        # 1. empty - nothing to update
-        project_list = [{'id': 1}]
-        history = {}
-        updates_to_run = projects._update_history_from_config(project_list, history)
-        assert len(updates_to_run) == 0
-        # 2. empty - no data on server yet
-        project_list = [{'id': 1, 'latest_processed_stories_id': None}]
-        history = {}
-        updates_to_run = projects._update_history_from_config(project_list, history)
-        assert len(updates_to_run) == 0
-        # 3. newly deployed container needs updating
-        project_list = [{'id': 1, 'latest_processed_stories_id': 1234}]
-        history = {}
-        updates_to_run = projects._update_history_from_config(project_list, history)
-        assert len(updates_to_run) == 1
-        assert updates_to_run[1] == 1234
-        # 4. some updates we have not run on main server yet? maybe stuck in the queue
-        project_list = [{'id': 1, 'latest_processed_stories_id': 1}]
-        history = {'1': 1000}
-        updates_to_run = projects._update_history_from_config(project_list, history)
-        assert len(updates_to_run) == 0
-        # 5. corrupted local file with old info, overwrite with new server info
-        project_list = [{'id': 1, 'latest_processed_stories_id': 1000}]
-        history = {'1': 2}
-        updates_to_run = projects._update_history_from_config(project_list, history)
-        assert len(updates_to_run) == 1
-        assert updates_to_run[1] == 1000
-
     def test_classify_stories(self):
         # english
         project = TEST_EN_PROJECT.copy()
