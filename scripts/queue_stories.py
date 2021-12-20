@@ -22,9 +22,9 @@ DEFAULT_MAX_STORIES_PER_PROJECT = 20 * 1000  # make sure we don't do too many st
 
 @task(name='load_projects')
 def load_projects_task() -> List[Dict]:
-    project_list = projects.load_project_list(force_reload=True)
+    project_list = projects.load_project_list(force_reload=True, overwrite_last_story=False)
     logger.info("  Checking {} projects".format(len(project_list)))
-    return project_list[:5]
+    return project_list
 
 
 @task(name='process_project')
@@ -123,7 +123,7 @@ if __name__ == '__main__':
     download_models()
 
     with Flow("story-processor") as flow:
-        #flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=6)  # execute `map` calls in parallel
+        flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=6)  # execute `map` calls in parallel
         # read parameters
         stories_per_page = Parameter("stories_per_page", default=DEFAULT_STORIES_PER_PAGE)
         max_stories_per_project = Parameter("max_stories_per_project", default=DEFAULT_MAX_STORIES_PER_PROJECT)

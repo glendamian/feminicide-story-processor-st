@@ -23,10 +23,12 @@ def _path_to_config_file() -> str:
     return os.path.join(classifiers.CONFIG_DIR, 'projects.json')
 
 
-def load_project_list(force_reload: bool = False) -> List[Dict]:
+def load_project_list(force_reload: bool = False, overwrite_last_story=False) -> List[Dict]:
     """
     Treats config like a singleton that is lazy-loaded once the first time this is called.
     :param force_reload: Override the default behaviour and load the config from file system again.
+    :param overwrite_last_story: Update the last processed story to the latest from the server (useful for reprocessing
+                                 stories and other debugging)
     :return: list of configurations for projects to query about
     """
     global _all_projects
@@ -44,9 +46,9 @@ def load_project_list(force_reload: bool = False) -> List[Dict]:
         # update the local history file, which tracks the latest processed_stories_id we've run for each project
         for project in _all_projects:
             project_history = projects_db.get_history(project['id'])
-            if project_history is None:
+            if (project_history is None) or overwrite_last_story:
                 projects_db.add_history(project['id'], project['latest_processed_stories_id'])
-                logger.info("    added {} to local history".format(project['id']))
+                logger.info("    added/overwrote {} to local history".format(project['id']))
             project['local_processed_stories_id'] = projects_db.get_history(project['id']).last_processed_id
         return _all_projects
     except Exception as e:
