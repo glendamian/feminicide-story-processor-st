@@ -8,6 +8,7 @@ Here is a history of what was changed in each version.
 * Upgrade python to latest
 * Store last_processed_stories_id in new `projects` table to try and reduce reprocessing for projects with broad queries
   and few positive, above threshold, stories
+* Disabled-for-now support for fetching and adding entities on this side
 
 ### 1.7.0
 
