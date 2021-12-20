@@ -3,6 +3,12 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### 1.7.1
+
+* Upgrade python to latest
+* Store last_processed_stories_id in new `projects` table to try and reduce reprocessing for projects with broad queries
+  and few positive, above threshold, stories
+
 ### 1.7.0
 
 * Switch to parallel processing model (via Prefect + Dask)
