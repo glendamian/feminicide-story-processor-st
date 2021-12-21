@@ -2,35 +2,63 @@
 
 {% block content %}
 
-<button type="button" id="update" class="btn btn-primary">Update config now!</button>
+<div class="row">
+    <div class="col-12">
+        <div class="jumbotron">
+            <h1 class="display-4">Media Cloud Story Processor v{{version}}</h1>
+            <p class="lead">
+            Grab stories from Media Cloud, run them against trained classifiers, post results to another server.
+            </p>
+        </div>
+    </div>
+</div>
+
+<h2>Projects
+<div style="float:right"><button type="button" id="update" class="btn btn-primary">Update config now!</button></div>
+</h2>
 
 <div class="row">
     <div class="col-lg-12">
-        <div id="results">
-            <pre>{{ config | as_pretty_json }}</pre>
-        </div>
+        <table class="table">
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Model</th>
+                <th>Latest</th>
+                <th>Local</th>
+            </tr>
+            {% for p in projects %}
+                <tr>
+                    <td>{{ p['id'] }}</td>
+                    <td><a href="/projects/{{ p['id'] }}">{{ p['title'] }}</a></td>
+                    <td>{{ p['language_model'] }}</td>
+                    <td>{{ p['latest_processed_stories_id'] }}</td>
+                    <td>{{ p['local_processed_stories_id'] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
     </div>
 </div>
 
 {% endblock %}
 
 {% block page_scripts %}
-$(function(){
-  $("#update").click(function(){
-    // show feedback while fetching results
-    $('#results').html('<div style="text-align:center;"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
-    // ask server to update config
-    $.post({
-      url: "/update-config",
-    }).done(function(response){
-      // if server responds well then display JSON
-      console.log(response);
-      var responseStr = JSON.stringify(response, null, 2);
-      $('#results').html('<pre>'+responseStr+'</pre>');
-    }).fail(function() {
-      // if server failed show error msg
-      $('#results').html('<div class="alert alert-danger" role="alert">⚠️ Something went wrong</div>');
-    });
-  })
+
+$("#update").click(function(){
+// show feedback while fetching results
+$('#results').html('<div style="text-align:center;"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+// ask server to update config
+$.post({
+  url: "/update-config",
+}).done(function(response){
+  // if server responds well then display JSON
+  console.log(response);
+  var responseStr = JSON.stringify(response, null, 2);
+  $('#results').html('<pre>'+responseStr+'</pre>');
+}).fail(function() {
+  // if server failed show error msg
+  $('#results').html('<div class="alert alert-danger" role="alert">⚠️ Something went wrong</div>');
 });
+})
+
 {% endblock %}

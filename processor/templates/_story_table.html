@@ -1,0 +1,24 @@
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Publisher</th>
+        <th>Confidence</th>
+        <th>Published</th>
+        <th>Processed</th>
+        <th>Posted</th>
+    </tr>
+    {% for s in stories %}
+        {% with story=story_lookup[s['stories_id']] %}
+        <tr>
+            <td>{{ s['stories_id'] }}</td>
+            <td><a href="{{ story['url'] }}">{{ story['title'] }}</a></td>
+            <td>{{ story['media_name'] }}</td>
+            <td>{{ "%.2f"|format(s['model_score']|float) }}</td>
+            <td>{{ s['published_date'] }}</td>
+            <td>{{ s['processed_date'] }}</td>
+            <td>{{ s['posted_date'] }}</td>
+        </tr>
+        {% endwith %}
+    {% endfor %}
+</table>

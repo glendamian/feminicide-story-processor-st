@@ -1,7 +1,7 @@
 import datetime as dt
 from typing import List, Dict
 
-from sqlalchemy import and_
+from sqlalchemy import and_, text
 from sqlalchemy.orm import sessionmaker
 
 from processor import engine
@@ -71,3 +71,26 @@ def update_stories_posted_date(stories: List, project_id: int) -> None:
     for db_story in db_stories:
         db_story.posted_date = now
     session.commit()
+
+
+def recent_stories(project_id: int, above_threshold: bool, limit: int = 5) -> List[Story]:
+    session = Session()
+    q = session.query(Story).\
+        filter(Story.project_id == project_id). \
+        filter(Story.above_threshold == above_threshold). \
+        order_by(Story.processed_date.desc()). \
+        limit(limit).all()
+    stories = [s for s in q]
+    return stories
+
+
+def stories_by_day(project_id: int, above_threshold: bool, limit: int = 20) -> List:
+    query = "SELECT date_trunc('day', processed_date) as day, count(*) as stories from stories " \
+            "where project_id={} and above_threshold is {} " \
+            "group by 1 order by 1 DESC limit {}".format(project_id, 'True' if above_threshold else 'False', limit)
+    data = []
+    with engine.begin() as connection:
+        result = connection.execute(text(query))
+        for row in result:
+            data.append(row)
+    return data

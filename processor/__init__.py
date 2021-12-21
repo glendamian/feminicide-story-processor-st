@@ -5,12 +5,12 @@ from dotenv import load_dotenv
 import mediacloud.api
 from flask import Flask
 from sentry_sdk.integrations.flask import FlaskIntegration
-from sentry_sdk.integrations.celery import CeleryIntegration
+#from sentry_sdk.integrations.celery import CeleryIntegration
 from sentry_sdk import init
 from typing import Dict
 from sqlalchemy import create_engine
 
-VERSION = "1.7.2"
+VERSION = "1.7.3"
 
 load_dotenv()  # load config from .env file (local) or env vars (production)
 
@@ -38,7 +38,8 @@ logger.info("  Queue at {}".format(BROKER_URL))
 SENTRY_DSN = os.environ.get('SENTRY_DSN', None)  # optional
 if SENTRY_DSN:
     init(dsn=SENTRY_DSN, release=VERSION,
-         integrations=[FlaskIntegration(), CeleryIntegration()])
+         #integrations=[FlaskIntegration(), CeleryIntegration()])
+         integrations=[FlaskIntegration()])
     logger.info("  SENTRY_DSN: {}".format(SENTRY_DSN))
 else:
     logger.info("  Not logging errors to Sentry")
