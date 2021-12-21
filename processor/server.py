@@ -63,8 +63,9 @@ def a_project(project_id_str):
 
     # render it all
     return render_template('project.html',
-                           posted_story_count=stories_db.posted_story_count(project_id),
-                           unposted_story_count=stories_db.unposted_story_count(project_id),
+                           unposted_above_story_count=stories_db.unposted_above_story_count(project_id),
+                           posted_above_story_count=stories_db.posted_above_story_count(project_id),
+                           below_story_count=stories_db.below_story_count(project_id),
                            project=project,
                            stories_above=stories_above,
                            stories_below=stories_below,

@@ -88,6 +88,10 @@ def stories_by_day(project_id: int, above_threshold: bool, limit: int = 20) -> L
     query = "select date_trunc('day', processed_date) as day, count(*) as stories from stories " \
             "where (project_id={}) and (above_threshold is {}) and (processed_date is not Null) " \
             "group by 1 order by 1 DESC limit {}".format(project_id, 'True' if above_threshold else 'False', limit)
+    return _run_query(query)
+
+
+def _run_query(query: str) -> List:
     data = []
     with engine.begin() as connection:
         result = connection.execute(text(query))
@@ -96,21 +100,62 @@ def stories_by_day(project_id: int, above_threshold: bool, limit: int = 20) -> L
     return data
 
 
-def unposted_story_count(project_id: int) -> int:
-    query = "select count(*) from stories where project_id={} and posted_date is Null".\
-        format(project_id)
-    data = []
-    with engine.begin() as connection:
-        result = connection.execute(text(query))
-        for row in result:
-            data.append(row)
+def _run_count_query(query: str) -> int:
+    data = _run_query(query)
     return data[0][0]
 
 
-def posted_story_count(project_id: int) -> int:
+def unposted_above_story_count(project_id: int) -> int:
+    query = "select count(*) from stories where project_id={} and posted_date is Null and above_threshold is True".\
+        format(project_id)
+    return _run_count_query(query)
+
+
+def posted_above_story_count(project_id: int) -> int:
+    query = "select count(*) from stories where project_id={} and posted_date is not Null and above_threshold is True". \
+        format(project_id)
+    return _run_count_query(query)
+
+
+def below_story_count(project_id: int) -> int:
+    query = "select count(*) from stories where project_id={} and above_threshold is False".\
+        format(project_id)
+    return _run_count_query(query)
+
+
+def unposted_stories(project_id: int):
+    query = "select * from stories where project_id={} and posted_date is Null and above_threshold is True".format(project_id)
+    """
     session = Session()
     q = session.query(Story). \
         filter(Story.project_id == project_id). \
-        filter(Story.posted_date is not None). \
-        count()
-    return q
+        filter(Story.above_threshold is True). \
+        filter(Story.posted_date is None)
+    return q.all()
+    """
+    return _run_query(query)
+
+
+def _windowed_query(q, column, windowsize: int):
+    """
+    Break a Query into chunks on a given column.
+    https://github.com/sqlalchemy/sqlalchemy/wiki/RangeQuery-and-WindowedRangeQuery
+    """
+
+    single_entity = q.is_single_entity
+    q = q.add_column(column).order_by(column)
+    last_id = None
+
+    while True:
+        subq = q
+        if last_id is not None:
+            subq = subq.filter(column > last_id)
+        chunk = subq.limit(windowsize).all()
+        if not chunk:
+            break
+        last_id = chunk[-1][-1]
+        for row in chunk:
+            if single_entity:
+                yield row[0]
+            else:
+                yield row[0:-1]
