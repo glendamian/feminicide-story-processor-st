@@ -30,17 +30,18 @@ def update_config():
     return jsonify(config)
 
 
-@app.route("/projects/<project_id>", methods=['GET'])
-def a_project(project_id):
+@app.route("/projects/<project_id_str>", methods=['GET'])
+def a_project(project_id_str):
+    project_id = int(project_id_str)
     # pull out the project info
-    project = [p for p in load_project_list() if p['id'] == int(project_id)][0]
+    project = [p for p in load_project_list() if p['id'] == project_id][0]
 
     # get some stats
-    above_over_time = {r['day'].strftime("%Y-%m-%d"): r['stories'] for r in stories_db.stories_by_day(int(project_id), True)}
-    below_over_time = {r['day'].strftime("%Y-%m-%d"): r['stories'] for r in stories_db.stories_by_day(int(project_id), False)}
+    above_over_time = {r['day'].strftime("%Y-%m-%d"): r['stories'] for r in stories_db.stories_by_day(project_id, True)}
+    below_over_time = {r['day'].strftime("%Y-%m-%d"): r['stories'] for r in stories_db.stories_by_day(project_id, False)}
     dates = set(above_over_time.keys() | below_over_time.keys())
     stories_by_day_data = []
-    for d in dates: # need to make sure there is a pair of entries for each date
+    for d in dates:  # need to make sure there is a pair of entries for each date
         stories_by_day_data.append(dict(
             date=d,
             type='above',
@@ -53,8 +54,8 @@ def a_project(project_id):
         ))
 
     # show some recent story results
-    stories_above = stories_db.recent_stories(int(project_id), True)
-    stories_below = stories_db.recent_stories(int(project_id), False)
+    stories_above = stories_db.recent_stories(project_id, True)
+    stories_below = stories_db.recent_stories(project_id, False)
     story_ids = list(set([s.stories_id for s in stories_above]) | set([s.stories_id for s in stories_below]))
     mc = get_mc_client()
     stories = mc.storyList("stories_id:({})".format(" ".join([str(s) for s in story_ids])))
@@ -62,6 +63,8 @@ def a_project(project_id):
 
     # render it all
     return render_template('project.html',
+                           posted_story_count=stories_db.posted_story_count(project_id),
+                           unposted_story_count=stories_db.unposted_story_count(project_id),
                            project=project,
                            stories_above=stories_above,
                            stories_below=stories_below,

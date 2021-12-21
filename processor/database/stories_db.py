@@ -94,3 +94,23 @@ def stories_by_day(project_id: int, above_threshold: bool, limit: int = 20) -> L
         for row in result:
             data.append(row)
     return data
+
+
+def unposted_story_count(project_id: int) -> int:
+    query = "select count(*) from stories where project_id={} and posted_date is Null".\
+        format(project_id)
+    data = []
+    with engine.begin() as connection:
+        result = connection.execute(text(query))
+        for row in result:
+            data.append(row)
+    return data[0][0]
+
+
+def posted_story_count(project_id: int) -> int:
+    session = Session()
+    q = session.query(Story). \
+        filter(Story.project_id == project_id). \
+        filter(Story.posted_date is not None). \
+        count()
+    return q

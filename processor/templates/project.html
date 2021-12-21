@@ -8,6 +8,18 @@
 
 <div class="row">
     <div class="col-lg-12">
+        <h2>Stats</h2>
+        <ul>
+            <li>Unposted Stories: {{ "{:,}".format(unposted_story_count) }}</li>
+            <li>Posted Stories: {{ "{:,}".format(posted_story_count) }}</li>
+        </ul>
+    </div>
+</div>
+
+<hr/>
+
+<div class="row">
+    <div class="col-lg-12">
         <h2>Recent Story Volume (by processed_date)</h2>
         <div id="stories-over-time"></div>
     </div>
@@ -17,12 +29,12 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h2>Recent Stories</h2>
-        <h3>Above Threshold</h3>
+        <h2>Latest Stories</h2>
+        <h4>Above Threshold</h4>
         {% with stories=stories_above %}
             {% include '_story_table.html' %}
         {% endwith %}
-        <h3>Below Threshold</h3>
+        <h4>Below Threshold</h4>
         {% with stories=stories_below %}
             {% include '_story_table.html' %}
         {% endwith %}
