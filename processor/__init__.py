@@ -60,7 +60,7 @@ SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 if SQLALCHEMY_DATABASE_URI is None:
     logger.error("  No SQLALCHEMY_DATABASE_URI is specified. Bailing because we can't save things to a DB for tracking")
     sys.exit(1)
-engine = create_engine(SQLALCHEMY_DATABASE_URI)
+engine = create_engine(SQLALCHEMY_DATABASE_URI, pool_size=10)
 
 
 ENTITY_SERVER_URL = os.environ['ENTITY_SERVER_URL']

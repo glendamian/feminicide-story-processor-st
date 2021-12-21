@@ -1,9 +1,11 @@
 import logging
 from typing import List, Dict
 from prefect import Flow, Parameter, task, unmapped
+from prefect.executors import LocalDaskExecutor
+
 import processor.database.stories_db as stories_db
 from processor.classifiers import download_models
-from processor import get_mc_client, get_email_config, is_email_configured
+from processor import get_mc_client, get_email_config, is_email_configured, base_dir
 import processor.projects as projects
 import processor.notifications as notifications
 
@@ -55,8 +57,9 @@ def process_project_task(project: Dict, page_size: int) -> Dict:
             # and log that we did it
             stories_db.update_stories_posted_date(stories_to_send, project['id'])
             story_count += len(stories_to_send)
+            logger.info("    sent page of {} stories for project {}".format(len(stories_to_send), project['id']))
             page_count += 1
-    logger.info("  sent {} stories for project {}".format(story_count, project['id']))
+    logger.info("  sent {} stories for project {} total (of {})".format(story_count, project['id'], needing_posting_count))
     #  add a summary to the email we are generating
     project_email_message += "    posted {} stories from db {}\n\n".format(story_count, page_count)
     return dict(
@@ -98,7 +101,7 @@ if __name__ == '__main__':
     download_models()
 
     with Flow("story-processor") as flow:
-        #flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=6)  # execute `map` calls in parallel
+        flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=6)  # execute `map` calls in parallel
         # read parameters
         stories_per_page = Parameter("stories_per_page", default=DEFAULT_STORIES_PER_PAGE)
         logger.info("    will request {} stories/page".format(stories_per_page))
