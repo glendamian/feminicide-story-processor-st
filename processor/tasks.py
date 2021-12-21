@@ -25,9 +25,10 @@ def _add_confidence_to_stories(project: Dict, stories: List[Dict]) -> List[Dict]
     probabilities = projects.classify_stories(project, stories)
     for idx, s in enumerate(stories):
         s['confidence'] = probabilities['model_scores'][idx]
+        # adding in some extra stuff for logging only (they get removed in `prep_stories_for_posting`)
         s['model_score'] = probabilities['model_scores'][idx]
-        s['model_1_score'] = probabilities['model_1_scores'][idx]
-        s['model_2_score'] = probabilities['model_2_scores'][idx]
+        s['model_1_score'] = probabilities['model_1_scores'][idx] if probabilities['model_1_scores'] is not None else None
+        s['model_2_score'] = probabilities['model_2_scores'][idx] if probabilities['model_2_scores'] is not None else None
     # keep an auditable log in our own local database
     stories_db.update_stories_processed_date_score(stories, project['id'])
     # remove data we aren't going to send to the server

@@ -6,8 +6,6 @@ from requests.exceptions import ConnectionError
 from typing import List, Dict
 from prefect import Flow, Parameter, task, unmapped
 from prefect.executors import LocalDaskExecutor
-import threading
-
 import processor.database.stories_db as stories_db
 import processor.database.projects_db as projects_db
 from processor.classifiers import download_models
