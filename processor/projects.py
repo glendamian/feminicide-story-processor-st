@@ -41,8 +41,11 @@ def load_project_list(force_reload: bool = False, overwrite_last_story=False) ->
                 json.dump(projects_list, f)
             logger.info("  updated config file from main server")
         # load and return the (perhaps updated) locally cached file
-        with open(_path_to_config_file(), "r") as f:
-            _all_projects = json.load(f)
+        if os.path.exists(_path_to_config_file()):
+            with open(_path_to_config_file(), "r") as f:
+                _all_projects = json.load(f)
+        else:
+            _all_projects = []
         # update the local history file, which tracks the latest processed_stories_id we've run for each project
         for project in _all_projects:
             project_history = projects_db.get_history(project['id'])

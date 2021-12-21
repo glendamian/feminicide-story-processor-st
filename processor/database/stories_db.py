@@ -85,8 +85,8 @@ def recent_stories(project_id: int, above_threshold: bool, limit: int = 5) -> Li
 
 
 def stories_by_day(project_id: int, above_threshold: bool, limit: int = 20) -> List:
-    query = "SELECT date_trunc('day', processed_date) as day, count(*) as stories from stories " \
-            "where project_id={} and above_threshold is {} " \
+    query = "select date_trunc('day', processed_date) as day, count(*) as stories from stories " \
+            "where (project_id={}) and (above_threshold is {}) and (processed_date is not Null) " \
             "group by 1 order by 1 DESC limit {}".format(project_id, 'True' if above_threshold else 'False', limit)
     data = []
     with engine.begin() as connection:

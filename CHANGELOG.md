@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### 1.7.4
+
+* Fix web ui bugs related to first run of new deployment
+
 ### 1.7.3
 
 * Add web-based UI for monitoring story volume
