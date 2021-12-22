@@ -1,2 +1,2 @@
 #!/bin/sh
-gunicorn processor.server:app
+gunicorn -w 4 -k gevent --timeout 500 processor.server:app

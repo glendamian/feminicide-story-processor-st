@@ -14,6 +14,7 @@ Here is a history of what was changed in each version.
 ### 1.7.4
 
 * Fix web ui bugs related to first run of new deployment
+* Run web server with multiple workers and gevent 
 
 ### 1.7.3
 

@@ -16,3 +16,4 @@ alembic~=1.7.5
 python-dateutil~=2.8.2
 amqp~=5.0.9
 prefect~=0.15.9
+gevent~=21.12.0
