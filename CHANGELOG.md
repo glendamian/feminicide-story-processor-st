@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### 1.8.0
+
+* Full UI for monitoring story ingest and orocessing
+
 ### 1.7.4
 
 * Fix web ui bugs related to first run of new deployment

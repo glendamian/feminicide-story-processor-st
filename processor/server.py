@@ -79,6 +79,9 @@ def a_project(project_id_str):
     mc = get_mc_client()
     stories = mc.storyList("stories_id:({})".format(" ".join([str(s) for s in story_ids])))
     story_lookup = {s['stories_id']: s for s in stories}
+    # sometimes Media Cloud doesn't return info for a story :-(
+    stories_above = [s for s in stories_above if s.stories_id in story_lookup]
+    stories_below = [s for s in stories_below if s.stories_id in story_lookup]
 
     # some other stats
     unposted_above_story_count = stories_db.unposted_above_story_count(project_id)
