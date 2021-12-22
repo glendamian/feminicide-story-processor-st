@@ -30,7 +30,7 @@ def update_config():
     return jsonify(config)
 
 
-def _prep_for_graph(counts_1: Dict[str, int], count_2: Dict[str, int], type1: str, type2: str) -> List[Dict]:
+def _prep_for_graph(counts_1: List, count_2: List, type1: str, type2: str) -> List[Dict]:
     data1 = {r['day'].strftime("%Y-%m-%d"): r['stories'] for r in counts_1}
     data2 = {r['day'].strftime("%Y-%m-%d"): r['stories'] for r in count_2}
     dates = set(data1.keys() | data2.keys())
@@ -49,6 +49,39 @@ def _prep_for_graph(counts_1: Dict[str, int], count_2: Dict[str, int], type1: st
     return stories_by_day_data
 
 
+@app.route("/projects/<project_id_str>/processed-by-day", methods=['GET'])
+def project_processed_by_day(project_id_str):
+    project_id = int(project_id_str)
+    data = _prep_for_graph(
+        stories_db.stories_by_processed_day(project_id, True, None),
+        stories_db.stories_by_processed_day(project_id, False, None),
+        'above threshold', 'below threshold'
+    )
+    return jsonify(data)
+
+
+@app.route("/projects/<project_id_str>/published-by-day", methods=['GET'])
+def project_published_by_day(project_id_str):
+    project_id = int(project_id_str)
+    data = _prep_for_graph(
+        stories_db.stories_by_published_day(project_id, True),
+        stories_db.stories_by_published_day(project_id, False),
+        'above threshold', 'below threshold'
+    )
+    return jsonify(data)
+
+
+@app.route("/projects/<project_id_str>/posted-by-day", methods=['GET'])
+def project_posted_by_day(project_id_str):
+    project_id = int(project_id_str)
+    data = _prep_for_graph(
+        stories_db.stories_by_processed_day(project_id, True, True),
+        stories_db.stories_by_processed_day(project_id, True, False),
+        'sent to main server', 'not sent to main server'
+    )
+    return jsonify(data)
+
+
 @app.route("/projects/<project_id_str>", methods=['GET'])
 def a_project(project_id_str):
     project_id = int(project_id_str)
@@ -56,21 +89,6 @@ def a_project(project_id_str):
     project = [p for p in load_project_list() if p['id'] == project_id][0]
 
     # get some stats
-    processed_by_day_data = _prep_for_graph(
-        stories_db.stories_by_procesed_day(project_id, True, None),
-        stories_db.stories_by_procesed_day(project_id, False, None),
-        'above threshold', 'below threshold'
-    )
-    published_by_day_data = _prep_for_graph(
-        stories_db.stories_by_published_day(project_id, True),
-        stories_db.stories_by_published_day(project_id, False),
-        'above threshold', 'below threshold'
-    )
-    posted_by_day_data = _prep_for_graph(
-        stories_db.stories_by_procesed_day(project_id, True, True),
-        stories_db.stories_by_procesed_day(project_id, True, False),
-        'sent to main server', 'not sent to main server'
-    )
 
     # show some recent story results
     stories_above = stories_db.recent_stories(project_id, True)
@@ -101,10 +119,8 @@ def a_project(project_id_str):
                            project=project,
                            stories_above=stories_above,
                            stories_below=stories_below,
-                           story_lookup=story_lookup,
-                           processed_by_day_data=processed_by_day_data,
-                           published_by_day_data=published_by_day_data,
-                           posted_by_day_data=posted_by_day_data)
+                           story_lookup=story_lookup
+                           )
 
 
 if __name__ == "__main__":

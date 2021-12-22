@@ -66,7 +66,8 @@
 
 {% block page_scripts %}
 
-function renderStacked(data, divId, title){
+function renderStacked(data, selector, title){
+    showSpinner(selector);
     // draw a stacked bar chart of above/below threshold story volume by day
     vl.markBar({ tooltip: true })
     .width(950)
@@ -80,11 +81,12 @@ function renderStacked(data, divId, title){
     )
     .render()
     .then(viewElement => {
-      document.getElementById(divId).appendChild(viewElement);
+        $(selector).html("");
+        $(selector).append(viewElement);
     });
 }
 
-renderStacked({{processed_by_day_data | safe}}, 'processed-over-time', 'Story Classification Results by Date Processed');
-renderStacked({{posted_by_day_data | safe}}, 'posted-over-time', 'Above Threshold Stories by Status and Date Processed');
-renderStacked({{published_by_day_data | safe}}, 'published-over-time', 'Story Classification Results by Detected Date of Publication');
+renderStacked('/projects/{{ project['id'] }}/processed-by-day', '#processed-over-time', 'Story Classification Results by Date Processed');
+renderStacked('/projects/{{ project['id'] }}/posted-by-day', '#posted-over-time', 'Above Threshold Stories by Status and Date Processed');
+renderStacked('/projects/{{ project['id'] }}/published-by-day', '#published-over-time', 'Story Classification Results by Detected Date of Publication');
 {% endblock %}

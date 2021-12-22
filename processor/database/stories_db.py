@@ -84,10 +84,11 @@ def recent_stories(project_id: int, above_threshold: bool, limit: int = 5) -> Li
     return stories
 
 
-def stories_by_procesed_day(project_id: int, above_threshold: bool, is_posted: bool, limit: int = 20) -> List:
+def stories_by_processed_day(project_id: int, above_threshold: bool, is_posted: bool, limit: int = 20) -> List:
     query = "select processed_date::date as day, count(*) as stories from stories " \
-            "where (project_id={}) and (above_threshold is {}) and (processed_date is not Null) ".\
-        format(project_id, 'True' if above_threshold else 'False')
+            "where (project_id={}) and (above_threshold is {}) and (processed_date is not Null) " \
+            "and processed_date >= '2021-12-01'::DATE " \
+            .format(project_id, 'True' if above_threshold else 'False')
     if is_posted is not None:
         query += "and posted_date {} Null ".format("is not" if is_posted else "is")
     query += "group by 1 order by 1 DESC limit {}".format(limit)
@@ -97,6 +98,7 @@ def stories_by_procesed_day(project_id: int, above_threshold: bool, is_posted: b
 def stories_by_published_day(project_id: int, above_threshold: bool, limit: int = 20) -> List:
     query = "select published_date::date as day, count(*) as stories from stories " \
             "where (project_id={}) and (above_threshold is {}) and (published_date is not Null) " \
+            "and published_date >= '2021-12-01'::DATE " \
             "group by 1 order by 1 DESC limit {}".format(project_id, 'True' if above_threshold else 'False', limit)
     return _run_query(query)
 

@@ -48,7 +48,7 @@
 
 $("#update").click(function(){
 // show feedback while fetching results
-$('#results').html('<div style="text-align:center;"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
+showSpinner('#results');
 // ask server to update config
 $.post({
   url: "/update-config",
