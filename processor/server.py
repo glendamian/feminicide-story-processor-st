@@ -1,7 +1,7 @@
 import logging
 from flask import render_template, jsonify
 import json
-from typing import Dict
+from typing import Dict, List
 
 from processor import create_flask_app, VERSION, get_mc_client
 from processor.projects import load_project_list
@@ -30,6 +30,25 @@ def update_config():
     return jsonify(config)
 
 
+def _prep_for_graph(counts_1: Dict[str, int], count_2: Dict[str, int], type1: str, type2: str) -> List[Dict]:
+    data1 = {r['day'].strftime("%Y-%m-%d"): r['stories'] for r in counts_1}
+    data2 = {r['day'].strftime("%Y-%m-%d"): r['stories'] for r in count_2}
+    dates = set(data1.keys() | data2.keys())
+    stories_by_day_data = []
+    for d in dates:  # need to make sure there is a pair of entries for each date
+        stories_by_day_data.append(dict(
+            date=d,
+            type=type1,
+            count=data1[d] if d in data1 else 0
+        ))
+        stories_by_day_data.append(dict(
+            date=d,
+            type=type2,
+            count=data2[d] if d in data2 else 0
+        ))
+    return stories_by_day_data
+
+
 @app.route("/projects/<project_id_str>", methods=['GET'])
 def a_project(project_id_str):
     project_id = int(project_id_str)
@@ -37,21 +56,21 @@ def a_project(project_id_str):
     project = [p for p in load_project_list() if p['id'] == project_id][0]
 
     # get some stats
-    above_over_time = {r['day'].strftime("%Y-%m-%d"): r['stories'] for r in stories_db.stories_by_day(project_id, True)}
-    below_over_time = {r['day'].strftime("%Y-%m-%d"): r['stories'] for r in stories_db.stories_by_day(project_id, False)}
-    dates = set(above_over_time.keys() | below_over_time.keys())
-    stories_by_day_data = []
-    for d in dates:  # need to make sure there is a pair of entries for each date
-        stories_by_day_data.append(dict(
-            date=d,
-            type='above',
-            count=above_over_time[d] if d in above_over_time else 0
-        ))
-        stories_by_day_data.append(dict(
-            date=d,
-            type='below',
-            count=below_over_time[d] if d in below_over_time else 0
-        ))
+    processed_by_day_data = _prep_for_graph(
+        stories_db.stories_by_procesed_day(project_id, True, None),
+        stories_db.stories_by_procesed_day(project_id, False, None),
+        'above threshold', 'below threshold'
+    )
+    published_by_day_data = _prep_for_graph(
+        stories_db.stories_by_published_day(project_id, True),
+        stories_db.stories_by_published_day(project_id, False),
+        'above threshold', 'below threshold'
+    )
+    posted_by_day_data = _prep_for_graph(
+        stories_db.stories_by_procesed_day(project_id, True, True),
+        stories_db.stories_by_procesed_day(project_id, True, False),
+        'sent to main server', 'not sent to main server'
+    )
 
     # show some recent story results
     stories_above = stories_db.recent_stories(project_id, True)
@@ -70,7 +89,9 @@ def a_project(project_id_str):
                            stories_above=stories_above,
                            stories_below=stories_below,
                            story_lookup=story_lookup,
-                           stories_by_day_data=stories_by_day_data)
+                           processed_by_day_data=processed_by_day_data,
+                           published_by_day_data=published_by_day_data,
+                           posted_by_day_data=posted_by_day_data)
 
 
 if __name__ == "__main__":

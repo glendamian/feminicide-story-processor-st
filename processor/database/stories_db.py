@@ -84,9 +84,19 @@ def recent_stories(project_id: int, above_threshold: bool, limit: int = 5) -> Li
     return stories
 
 
-def stories_by_day(project_id: int, above_threshold: bool, limit: int = 20) -> List:
-    query = "select date_trunc('day', processed_date) as day, count(*) as stories from stories " \
-            "where (project_id={}) and (above_threshold is {}) and (processed_date is not Null) " \
+def stories_by_procesed_day(project_id: int, above_threshold: bool, is_posted: bool, limit: int = 20) -> List:
+    query = "select processed_date::date as day, count(*) as stories from stories " \
+            "where (project_id={}) and (above_threshold is {}) and (processed_date is not Null) ".\
+        format(project_id, 'True' if above_threshold else 'False')
+    if is_posted is not None:
+        query += "and posted_date {} Null ".format("is not" if is_posted else "is")
+    query += "group by 1 order by 1 DESC limit {}".format(limit)
+    return _run_query(query)
+
+
+def stories_by_published_day(project_id: int, above_threshold: bool, limit: int = 20) -> List:
+    query = "select published_date::date as day, count(*) as stories from stories " \
+            "where (project_id={}) and (above_threshold is {}) and (published_date is not Null) " \
             "group by 1 order by 1 DESC limit {}".format(project_id, 'True' if above_threshold else 'False', limit)
     return _run_query(query)
 
@@ -135,27 +145,3 @@ def unposted_stories(project_id: int):
     """
     return _run_query(query)
 
-
-def _windowed_query(q, column, windowsize: int):
-    """
-    Break a Query into chunks on a given column.
-    https://github.com/sqlalchemy/sqlalchemy/wiki/RangeQuery-and-WindowedRangeQuery
-    """
-
-    single_entity = q.is_single_entity
-    q = q.add_column(column).order_by(column)
-    last_id = None
-
-    while True:
-        subq = q
-        if last_id is not None:
-            subq = subq.filter(column > last_id)
-        chunk = subq.limit(windowsize).all()
-        if not chunk:
-            break
-        last_id = chunk[-1][-1]
-        for row in chunk:
-            if single_entity:
-                yield row[0]
-            else:
-                yield row[0:-1]

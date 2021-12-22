@@ -23,7 +23,17 @@
 <div class="row">
     <div class="col-lg-12">
         <h2>Recent Story Volume (by processed_date)</h2>
-        <div id="stories-over-time"></div>
+        <div id="processed-over-time"></div>
+        <div id="posted-over-time"></div>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-lg-12">
+        <h2>Recent Story Volume (by published_date)</h2>
+        <div id="published-over-time"></div>
     </div>
 </div>
 
@@ -56,19 +66,25 @@
 
 {% block page_scripts %}
 
-// draw a stacked bar chart of above/below threshold story volume by day
-vl.markBar({ tooltip: true })
-.width(950)
-.data({{stories_by_day_data | safe}})
-.encode(
-  vl.x().fieldT("date").axis({'format': "%m-%d"}),
-  vl.y().fieldQ("count"),
-  vl.color().fieldN("type"),
-  vl.tooltip([vl.fieldT("date"), vl.fieldN("type"), vl.fieldQ("count")])
-)
-.render()
-.then(viewElement => {
-  document.getElementById('stories-over-time').appendChild(viewElement);
-});
+function renderStacked(data, divId, title){
+    // draw a stacked bar chart of above/below threshold story volume by day
+    vl.markBar({ tooltip: true })
+    .width(950)
+    .data(data)
+    .title(title)
+    .encode(
+      vl.x().fieldT("date").axis({'format': "%m-%d"}),
+      vl.y().fieldQ("count"),
+      vl.color().fieldN("type"),
+      vl.tooltip([vl.fieldT("date"), vl.fieldN("type"), vl.fieldQ("count")])
+    )
+    .render()
+    .then(viewElement => {
+      document.getElementById(divId).appendChild(viewElement);
+    });
+}
 
+renderStacked({{processed_by_day_data | safe}}, 'processed-over-time', 'Story Classification Results by Date Processed');
+renderStacked({{posted_by_day_data | safe}}, 'posted-over-time', 'Above Threshold Stories by Status and Date Processed');
+renderStacked({{published_by_day_data | safe}}, 'published-over-time', 'Story Classification Results by Detected Date of Publication');
 {% endblock %}
