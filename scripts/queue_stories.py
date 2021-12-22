@@ -14,7 +14,7 @@ import processor.projects as projects
 import processor.tasks as tasks
 import processor.notifications as notifications
 
-DEFAULT_STORIES_PER_PAGE = 100  # I found this performs poorly if set higher than 100
+DEFAULT_STORIES_PER_PAGE = 150  # I found this performs poorly if set too high
 DEFAULT_MAX_STORIES_PER_PROJECT = 40 * 1000  # make sure we don't do too many stories each cron run (for testing)
 
 
@@ -81,7 +81,8 @@ def process_project_task(project: Dict, page_size: int, max_stories: int) -> Dic
     warnings = ""
     if story_count > (max_stories * 0.8):  # try to get our attention in the email
         warnings += "(⚠️️️ query might be too broad)"
-    project_email_message += "    found {} new stories (over {} pages) {}\n\n".format(story_count, page_count, warnings)
+    project_email_message += "    found {} new stories past {} (over {} pages) {}\n\n".format(
+        story_count, project_last_processed_stories_id, page_count, warnings)
     return dict(
         email_text=project_email_message,
         stories=story_count,
