@@ -15,7 +15,7 @@ import processor.tasks as tasks
 import processor.notifications as notifications
 
 DEFAULT_STORIES_PER_PAGE = 100  # I found this performs poorly if set higher than 100
-DEFAULT_MAX_STORIES_PER_PROJECT = 20 * 1000  # make sure we don't do too many stories each cron run (for testing)
+DEFAULT_MAX_STORIES_PER_PROJECT = 40 * 1000  # make sure we don't do too many stories each cron run (for testing)
 
 
 @task(name='load_projects')
