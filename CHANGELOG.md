@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### 1.8.1
+
+* Work on making UI faster, and including more tracking info for debugging
+
 ### 1.8.0
 
 * Full UI for monitoring story ingest and orocessing
