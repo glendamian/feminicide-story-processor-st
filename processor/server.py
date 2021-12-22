@@ -80,11 +80,21 @@ def a_project(project_id_str):
     stories = mc.storyList("stories_id:({})".format(" ".join([str(s) for s in story_ids])))
     story_lookup = {s['stories_id']: s for s in stories}
 
+    # some other stats
+    unposted_above_story_count = stories_db.unposted_above_story_count(project_id)
+    posted_above_story_count = stories_db.posted_above_story_count(project_id)
+    below_story_count = stories_db.below_story_count(project_id)
+    try:
+        above_threshold_pct = 100 * (unposted_above_story_count + posted_above_story_count) / below_story_count
+    except ZeroDivisionError:
+        above_threshold_pct = 100
+
     # render it all
     return render_template('project.html',
-                           unposted_above_story_count=stories_db.unposted_above_story_count(project_id),
-                           posted_above_story_count=stories_db.posted_above_story_count(project_id),
-                           below_story_count=stories_db.below_story_count(project_id),
+                           unposted_above_story_count=unposted_above_story_count,
+                           above_threshold_pct=above_threshold_pct,
+                           posted_above_story_count=posted_above_story_count,
+                           below_story_count=below_story_count,
                            project=project,
                            stories_above=stories_above,
                            stories_below=stories_below,

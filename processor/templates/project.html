@@ -10,7 +10,7 @@
     <div class="col-lg-12">
         <h2>Stats</h2>
         <ul>
-            <li>Average Above Threshold Percentage: {{ "%.2f"|format(100*(unposted_above_story_count + posted_above_story_count) / below_story_count)|float }}%</li>
+            <li>Average Above Threshold Percentage: {{ "%.2f"|format(above_threshold_pct)|float }}%</li>
             <li>Unposted Above Threshold Stories: {{ "{:,}".format(unposted_above_story_count) }}</li>
             <li>Posted Above Threshold Stories: {{ "{:,}".format(posted_above_story_count) }}</li>
             <li>Below Threshold Stories: {{ "{:,}".format(below_story_count) }}</li>
