@@ -1,3 +1,3 @@
-web: gunicorn processor.server:app
+web: gunicorn processor.server:app --timeout 300
 worker: celery -A processor worker -l debug --concurrency=4
 fetcher: python -m scripts.queue_stories
