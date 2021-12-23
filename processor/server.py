@@ -95,8 +95,11 @@ def a_project(project_id_str):
     stories_below = stories_db.recent_stories(project_id, False)
     story_ids = list(set([s.stories_id for s in stories_above]) | set([s.stories_id for s in stories_below]))
     mc = get_mc_client()
-    stories = mc.storyList("stories_id:({})".format(" ".join([str(s) for s in story_ids])))
-    story_lookup = {s['stories_id']: s for s in stories}
+    if len(story_ids) > 0:
+        stories = mc.storyList("stories_id:({})".format(" ".join([str(s) for s in story_ids])))
+        story_lookup = {s['stories_id']: s for s in stories}
+    else:
+        story_lookup = {}
     # sometimes Media Cloud doesn't return info for a story :-(
     stories_above = [s for s in stories_above if s.stories_id in story_lookup]
     stories_below = [s for s in stories_below if s.stories_id in story_lookup]
