@@ -117,3 +117,4 @@ data.json
 files/models/*.p
 logs/*.json
 *.db
+*.tgz
