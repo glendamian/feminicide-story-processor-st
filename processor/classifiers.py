@@ -13,8 +13,7 @@ import processor.apiclient as apiclient
 
 logger = logging.getLogger(__name__)
 
-test_fixture_dir = os.path.join(base_dir, "processor", "test", "fixtures")
-
+# where are the models held?
 FILES_DIR = os.path.join(base_dir, "files")
 MODEL_DIR = os.path.join(base_dir, "files", "models")
 CONFIG_DIR = os.path.join(base_dir, "config")
@@ -33,6 +32,10 @@ TFHUB_MODEL_PATH = '/tmp/models/'
 
 
 class Classifier:
+    """
+    This is a wrapper around all our classifiers, so the implementation details don't matter to the consumer. Based on
+    the model the project refers to, it decides how to load and run the associated models.
+    """
 
     def __init__(self, model_config: Dict, project: Dict):
         self.config = model_config
@@ -81,6 +84,14 @@ class Classifier:
                     self.config['vectorizer_type_2'], self.project['id']))
 
     def classify(self, stories: List[Dict]) -> Dict[str, List[float]]:
+        """
+
+        :param stories:
+        :return: a dict with 3 entries:
+                * `model_1_scores`: scores from model 1 (None if only one model)
+                * `model_2_scores`: scores from model 2 (None if only one model)
+                * `model_scores`: list of single, or combined model scores
+        """
         story_texts = [s['story_text'] for s in stories]
         # Classifier 1 always exists
         # vectorize first (turn words/sentences into vectors)
@@ -128,7 +139,7 @@ class Classifier:
 
 def for_project(project: Dict) -> Classifier:
     """
-    This is a factory method to return a model for the project based on the `language_model_id`
+    This is a factory method to return a Classifer for the project based on the `language_model_id`
     """
     model_list = get_model_list()
     try:
@@ -144,13 +155,17 @@ def for_project(project: Dict) -> Classifier:
 
 
 def get_model_list() -> List[Dict]:
+    """
+    Get the locally cached list of models
+    :return:
+    """
     with open(os.path.join(CONFIG_DIR, 'language-models.json'), 'r') as f:
         return json.load(f)
 
 
 def update_model_list():
     """
-    The list of models is on the central server.
+    Fetch and save list of models from the central server.
     """
     model_list = apiclient.get_language_models_list()
     with open(os.path.join(CONFIG_DIR, 'language-models.json'), 'w') as f:

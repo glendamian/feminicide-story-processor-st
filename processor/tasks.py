@@ -65,8 +65,20 @@ def classify_and_post_worker(self, project: Dict, stories: List[Dict]):
     """
     Take a page of stories matching a project and run them through the classifier for that project.
     :param self:
-    :param project:
-    :param stories:
+    :param project: a dict with the project info from the main server
+    :param stories: a list of stories, each with the following properties (see `projects.prep_stories_for_posting`):
+                    * `stories_id`: a unique id for the story
+                    * `story_text`: raw text content for classification
+                    * `processed_stories_id`: another id on the story
+                    * `language`: two letter language story is in
+                    * `media_id`: a unique id for the publisher
+                    * `media_url`: the url of the publisher
+                    * `media_name`: the name of the publisher
+                    * `publish_date`: the extracted date of publication for the story
+                    * `story_tags`: a list of Dicts with metadata about story (entities, etc)
+                    * `title`: the extracted title of the story
+                    * `url`: the full URL of the story
+
     """
     try:
         logger.debug('{}: classify {} stories (model {})'.format(project['id'], len(stories),

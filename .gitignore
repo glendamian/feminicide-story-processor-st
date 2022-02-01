@@ -118,3 +118,4 @@ files/models/*.p
 logs/*.json
 *.db
 *.tgz
+.DS_Store

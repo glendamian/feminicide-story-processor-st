@@ -4,7 +4,7 @@ Deploying
 This is built to deploy via [dokku](http://dokku.viewdocs.io/dokku/). This takes a few rounds of configuration to set up
 correctly. There are a few components:
 * The fetcher app - ingest stories from Media Cloud and queues them up processing
-* The loggin DB - to help us interrogate and debug, we keep track of stories as they move through the pipeline in a DB
+* The logging DB - to help us interrogate and debug, we keep track of stories as they move through the pipeline in a DB
 * The worker queue - this holds batches of stories needing classification & posting to the central server
 * The queue monitor - lets us keep an eye on queue servicing speeds
 * External [News-Entity-Server install](https://github.com/dataculturegroup/news-entity-server) - you need a url to an install of that service running

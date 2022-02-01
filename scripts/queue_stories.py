@@ -15,7 +15,7 @@ import processor.tasks as tasks
 import processor.notifications as notifications
 
 DEFAULT_STORIES_PER_PAGE = 150  # I found this performs poorly if set too high
-DEFAULT_MAX_STORIES_PER_PROJECT = 40 * 1000  # make sure we don't do too many stories each cron run (for testing)
+DEFAULT_MAX_STORIES_PER_PROJECT = 200 #40 * 1000  # make sure we don't do too many stories each cron run (for testing)
 
 
 @task(name='load_projects')
@@ -39,9 +39,9 @@ def process_project_task(project: Dict, page_size: int, max_stories: int) -> Dic
         project['search_terms'],
         project['language'],
         " ".join([str(tid) for tid in project['media_collections']]))
-# HACK - we need to query from *after* the Nov Media Cloud crash (for now), otherwise paging doesn't work
+# HACK - we need to query from *after* the Xmas Media Cloud crash (for now), otherwise paging doesn't work
     # start_date = dateparser.parse(project['start_date'])
-    start_date = dateparser.parse("2021-12-01")
+    start_date = dateparser.parse("2021-12-25")
     now = date.today()
     fq = mc.dates_as_query_clause(start_date, now)
     # page through any new stories

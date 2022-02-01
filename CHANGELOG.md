@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### 1.8.4
+
+* Update handling of Media Cloud crashes
+
 ### 1.8.3
 
 * Fix a small no-data bug
