@@ -116,7 +116,7 @@ if __name__ == '__main__':
     logger = logging.getLogger(__name__)
     logger.info("Starting story fetch job")
 
-    # important to do because there might new models on the server!
+    # important to do because there might be new models on the server!
     logger.info("  Checking for any new models we need")
     download_models()
 
@@ -124,9 +124,9 @@ if __name__ == '__main__':
         flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=6)  # execute `map` calls in parallel
         # 1. list all the project we need to work on
         projects_list = load_projects_task()
-        # 2. fetch all the urls from Google Alerts RSS feeds
+        # 2. fetch all the urls from Google Alerts RSS feeds (will happen in parallel by project)
         stories = fetch_project_stories_task.map(projects_list)
-        # 3. fetch webpage text and parse all the stories
+        # 3. fetch webpage text and parse all the stories (will happen in parallel by story)
         stories_with_text = fetch_text_task.map(stories)
         # 4. post batches of stories for classification
         project_statuses = queue_stories_for_classification_task(projects_list, stories_with_text)
