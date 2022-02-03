@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### 2.0.0
+
+* Add initial support for fetching via Google Alerts RSS feeds.
+
 ### 1.8.4
 
 * Update handling of Media Cloud crashes

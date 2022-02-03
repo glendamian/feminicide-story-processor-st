@@ -1,6 +1,8 @@
 from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, BigInteger, Integer, DateTime, Float, Boolean
+from sqlalchemy import Column, BigInteger, Integer, DateTime, Float, Boolean, String
 from dateutil.parser import parse
+
+import processor
 
 Base = declarative_base()
 
@@ -20,14 +22,16 @@ class Story(Base):
     processed_date = Column(DateTime)
     posted_date = Column(DateTime)
     above_threshold = Column(Boolean)
+    source = Column(String)
 
     def __repr__(self):
         return '<Story id={}>'.format(self.id)
 
     @staticmethod
-    def from_mc_story(story):
+    def from_source(story, source):
         s = Story()
-        s.stories_id = story['stories_id']
+        if source == processor.SOURCE_MEDIA_CLOUD:
+            s.stories_id = story['stories_id']
         s.published_date = parse(story['publish_date'])
         return s
 
@@ -37,8 +41,9 @@ class ProjectHistory(Base):
 
     id = Column(Integer, primary_key=True)
     last_processed_id = Column(BigInteger)
+    last_publish_date = Column(DateTime)
     created_at = Column(DateTime)
     updated_at = Column(DateTime)
 
     def __repr__(self):
-        return '<Story id={}>'.format(self.id)
+        return '<ProjectHistory id={}>'.format(self.id)
