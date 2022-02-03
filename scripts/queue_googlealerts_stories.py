@@ -20,7 +20,7 @@ import processor.tasks as tasks
 import processor.notifications as notifications
 
 DEFAULT_STORIES_PER_PAGE = 150  # I found this performs poorly if set too high
-DEFAULT_MAX_STORIES_PER_PROJECT = 200  #40 * 1000  # make sure we don't do too many stories each cron run (for testing)
+DEFAULT_MAX_STORIES_PER_PROJECT = 200  # 40 * 1000  # make sure we don't do too many stories each cron run (for testing)
 
 
 def _url_from_google_alert_link(rss_item) -> str:
@@ -41,8 +41,15 @@ def load_projects_task() -> List[Dict]:
 def fetch_project_stories_task(project: Dict) -> List[Dict]:
     feed = feedparser.parse(project['google_alert_rss'])
     results = []
+    valid_stories = 0
     logger.info("Project {}/{} - {} stories".format(project['id'], project['title'], len(feed.entries)))
+    history = projects_db.get_history(project['id'])
     for item in feed.entries:
+        # only process stories published after the last check we ran
+        published_date = dateutil.parser.parse(item['published'])
+        if history.last_publish_date and (published_date < history.last_publish_date):
+            continue
+        # story was published more recently than latest one we saw, so process it
         real_url = _url_from_google_alert_link(item['link'])
         info = dict(
             url=real_url,
@@ -54,6 +61,8 @@ def fetch_project_stories_task(project: Dict) -> List[Dict]:
             media_name=domains.get_canonical_mediacloud_domain(real_url)
         )
         results.append(info)
+        valid_stories += 1
+    logger.info("  project {} - {} valid stories (after {})".format(project['id'], valid_stories, history.last_publish_date))
     return results
 
 
@@ -90,22 +99,23 @@ def queue_stories_for_classification_task(projects: List[Dict], stories: List[Di
         logger.info("  queued {} stories for project {}/{}".format(total_stories, p['id'], p['title']))
     return dict(
         email_text=email_message,
+        project_count=len(projects),
         stories=total_stories
     )
 
 
 @task(name='send_email')
-def send_email_task(project_details: Dict):
+def send_email_task(summary: Dict):
     email_message = ""
-    email_message += "Checking {} projects.\n\n".format(len(project_details))
-    email_message += project_details['email_text']
+    email_message += "Checking {} projects.\n\n".format(summary['project_count'])
+    email_message += summary['email_text']
     email_message += "Done - pulled {} stories.\n\n" \
                      "(An automated email from your friendly neighborhood Google Alert story processor)" \
-        .format(project_details['stories'])
+        .format(summary['stories'])
     if is_email_configured():
         email_config = get_email_config()
         notifications.send_email(email_config['notify_emails'],
-                                 "Feminicide Google Alerts Update: {} stories".format(stories),
+                                 "Feminicide Google Alerts Update: {} stories".format(summary['stories']),
                                  email_message)
     else:
         logger.info("Not sending any email updates")
@@ -129,9 +139,9 @@ if __name__ == '__main__':
         # 3. fetch webpage text and parse all the stories (will happen in parallel by story)
         stories_with_text = fetch_text_task.map(stories)
         # 4. post batches of stories for classification
-        project_statuses = queue_stories_for_classification_task(projects_list, stories_with_text)
+        results_data = queue_stories_for_classification_task(projects_list, stories_with_text)
         # 5. send email with results of operations
-        send_email_task(project_statuses)
+        send_email_task(results_data)
 
     # run the whole thing
     flow.run()
