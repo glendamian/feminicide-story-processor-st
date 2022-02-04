@@ -45,6 +45,7 @@ class ProjectHistory(Base):
     id = Column(Integer, primary_key=True)
     last_processed_id = Column(BigInteger)
     last_publish_date = Column(DateTime)
+    last_url = Column(String)
     created_at = Column(DateTime)
     updated_at = Column(DateTime)
 

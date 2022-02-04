@@ -45,12 +45,16 @@ def fetch_project_stories_task(project_list: Dict) -> List[Dict]:
         logger.info("Project {}/{} - {} stories".format(p['id'], p['title'], len(feed.entries)))
         history = projects_db.get_history(p['id'])
         for item in feed.entries:
-            # only process stories published after the last check we ran
+            # only process stories published after the last check we ran?
             #published_date = dateutil.parser.parse(item['published'])
             #if history.last_publish_date and (published_date < history.last_publish_date):
             #    continue
-            # story was published more recently than latest one we saw, so process it
+            # or maybe stop when we hit a url we've processed already?
             real_url = _url_from_google_alert_link(item['link'])
+            if history.last_url == real_url:
+                logger.info("  Found last_url on {}, skipping the rest".format(p['id']))
+                break
+            # story was published more recently than latest one we saw, so process it
             info = dict(
                 url=real_url,
                 google_publish_date=item['published'],
@@ -85,22 +89,23 @@ def queue_stories_for_classification_task(project_list: List[Dict], stories: Lis
     total_stories = 0
     email_message = ""
     for p in project_list:
-        email_message += "Project {} - {}:\n".format(p['id'], p['title'])
         project_stories = [s for s in stories if (s is not None) and (s['project_id'] == p['id'])]
-        email_message += "  {} stories\n".format(p['id'], len(project_stories))
+        email_message += "Project {} - {}: {} stories\n".format(p['id'], p['title'], len(project_stories))
         total_stories += len(project_stories)
         if len(project_stories) > 0:
             # and log that we got and queued them all
             inserted_ids = stories_db.add_stories(project_stories, p, processor.SOURCE_GOOGLE_ALERTS)
             for idx in range(0, len(inserted_ids)):
                 project_stories[idx]['stories_id'] = inserted_ids[idx]
+                # Google is probably better at guessing publication dates than we are!
+                project_stories[idx]['publish_date'] = project_stories[idx]['google_publish_date']
             # important to do this *after* we add the stories_id here
             tasks.classify_and_post_worker.delay(p, project_stories)
             # important to write this update now, because we have queued up the task to process these stories
             # the task queue will manage retrying with the stories if it fails with this batch
-            publish_dates = [dateutil.parser.parse(s['publish_date']) for s in project_stories]
+            publish_dates = [dateutil.parser.parse(s['google_publish_date']) for s in project_stories]
             latest_date = max(publish_dates)
-            projects_db.update_history(p['id'], last_publish_date=latest_date)
+            projects_db.update_history(p['id'], last_publish_date=latest_date, last_url=project_stories[0]['url'])
         logger.info("  queued {} stories for project {}/{}".format(total_stories, p['id'], p['title']))
     return dict(
         email_text=email_message,
@@ -114,7 +119,7 @@ def send_email_task(summary: Dict):
     email_message = ""
     email_message += "Checking {} projects.\n\n".format(summary['project_count'])
     email_message += summary['email_text']
-    email_message += "Done - pulled {} stories.\n\n" \
+    email_message += "\nDone - pulled {} stories.\n\n" \
                      "(An automated email from your friendly neighborhood Google Alert story processor)" \
         .format(summary['stories'])
     if is_email_configured():
