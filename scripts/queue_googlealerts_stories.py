@@ -74,7 +74,7 @@ def fetch_text_task(story: Dict) -> Dict:
     parsed = entities.content_from_url(story['url'])
     updated_story = copy.copy(story)
     if parsed['status'] == 'ok':
-        updated_story['text'] = parsed['results']['text']
+        updated_story['story_text'] = parsed['results']['text']
         updated_story['publish_date'] = parsed['results']['publish_date']
         return updated_story
     return None
@@ -135,7 +135,7 @@ if __name__ == '__main__':
     download_models()
 
     with Flow("story-processor") as flow:
-        flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=6)  # execute `map` calls in parallel
+        flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=16)  # execute `map` calls in parallel
         # 1. list all the project we need to work on
         projects_list = load_projects_task()
         # 2. fetch all the urls from Google Alerts RSS feeds
