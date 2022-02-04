@@ -90,11 +90,12 @@ def queue_stories_for_classification_task(project_list: List[Dict], stories: Lis
         email_message += "  {} stories\n".format(p['id'], len(project_stories))
         total_stories += len(project_stories)
         if len(project_stories) > 0:
-            tasks.classify_and_post_worker.delay(p, project_stories)
             # and log that we got and queued them all
             inserted_ids = stories_db.add_stories(project_stories, p, processor.SOURCE_GOOGLE_ALERTS)
             for idx in range(0, len(inserted_ids)):
                 project_stories[idx]['stories_id'] = inserted_ids[idx]
+            # important to do this *after* we add the stories_id here
+            tasks.classify_and_post_worker.delay(p, project_stories)
             # important to write this update now, because we have queued up the task to process these stories
             # the task queue will manage retrying with the stories if it fails with this batch
             publish_dates = [dateutil.parser.parse(s['publish_date']) for s in project_stories]

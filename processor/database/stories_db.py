@@ -4,10 +4,10 @@ from typing import List, Dict
 from sqlalchemy import and_, text
 from sqlalchemy.orm import sessionmaker
 
-from processor import engine
+import processor
 from processor.database.models import Story
 
-Session = sessionmaker(bind=engine)
+Session = sessionmaker(bind=processor.engine)
 
 
 def add_stories(source_story_list: List, project: Dict, source: str) -> List[int]:
@@ -31,7 +31,15 @@ def add_stories(source_story_list: List, project: Dict, source: str) -> List[int
     session = Session()
     session.add_all(db_stories_to_insert)
     session.commit()
-    return [s.id for s in db_stories_to_insert]
+    ids = [s.id for s in db_stories_to_insert]
+    # and for ones without stories_ids, add those too
+    if source == processor.SOURCE_GOOGLE_ALERTS:
+        session = Session()
+        new_stories = session.query(Story).filter(Story.id.in_((ids))).all()
+        for s in new_stories:
+            s.stories_id = s.id
+        session.commit()
+    return ids
 
 
 def update_stories_processed_date_score(stories: List, project_id: int) -> None:
