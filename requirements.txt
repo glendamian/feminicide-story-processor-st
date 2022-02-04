@@ -19,4 +19,3 @@ prefect==0.15.9
 gevent==21.12.0
 feedparser==6.0.8
 tldextract==3.1.2
-langdetect==1.0.9

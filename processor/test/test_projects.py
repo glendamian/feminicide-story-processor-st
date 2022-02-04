@@ -16,6 +16,7 @@ class TestProjects(unittest.TestCase):
         for p in project_list:
             assert 'id' in p
             assert 'language_model_id' in p
+            assert 'rss_url' in p
 
     def test_classify_stories(self):
         # english

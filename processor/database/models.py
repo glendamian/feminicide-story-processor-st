@@ -23,6 +23,7 @@ class Story(Base):
     posted_date = Column(DateTime)
     above_threshold = Column(Boolean)
     source = Column(String)
+    url = Column(String)
 
     def __repr__(self):
         return '<Story id={}>'.format(self.id)
@@ -33,6 +34,8 @@ class Story(Base):
         if source == processor.SOURCE_MEDIA_CLOUD:
             s.stories_id = story['stories_id']
         s.published_date = parse(story['publish_date'])
+        s.url = story['url']
+        s.source = source
         return s
 
 
