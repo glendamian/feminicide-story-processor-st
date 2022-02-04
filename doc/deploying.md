@@ -13,12 +13,13 @@ Create the Dokku apps
 ---------------------
 
 1. [install Dokku](http://dokku.viewdocs.io/dokku/getting-started/installation/)
-2. install the [Dokku rabbitmq plugin](https://github.com/dokku/dokku-rabbitmq) 
-3. setup a rabbitmq queue: `dokku rabbitmq:create story-processor-q`
-4. create an app: `dokku apps:create story-processor`
-5. link the app to the rabbit queue: `dokku rabbitmq:link story-processor-q story-processor`
-6. create a postgres database: `dokku postgres:create story-processor-db`
-7. link the app to the postgres database: `dokku postgres:link story-processor-db story-processor`
+2. install the [Dokku rabbitmq plugin](https://github.com/dokku/dokku-rabbitmq)
+3. install the [Dokku postgres plugin](https://github.com/dokku/dokku-postgres)
+4. setup a rabbitmq queue: `dokku rabbitmq:create story-processor-q`
+5. setup a postgres database: `dokku postgres:create story-processor-db`
+6. create an app: `dokku apps:create story-processor`
+7. link the app to the rabbit queue: `dokku rabbitmq:link story-processor-q story-processor`
+8. link the app to the postgres database: `dokku postgres:link story-processor-db story-processor`
 
 Release the worker app
 ----------------------
@@ -33,12 +34,12 @@ Setup the fetcher
 -----------------
 
 1. scale it to get a fetcher (dokku doesn't add one by default): `dokku ps:scale story-processor fetcher=1` (this will run the script once)
-2. add a cron job something like this to fetch new stories every night: `0 8 * * * dokku --rm run story-processor fetcher /app/run-fetch.sh >> /var/tmp/story-processor-cron.log 2>&1`
+2. add a cron job something like this to fetch new stories every night: `0 8 * * * dokku --rm run story-processor fetcher /app/run-fetch-googlealerts.sh >> /var/tmp/story-processor-cron.log 2>&1`
 
 Setup Database Backups
 ----------------------
 
 The local logging database is useful for future interrogation, so we back it up.
 
-1. `dokku postgres:backup-auth mc-story-processor-db AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY`
-2. `dokku postgres:backup-schedule mc-story-processor-db "0 9 * * *" df-server-backup`
+1. `dokku postgres:backup-auth story-processor-db AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY`
+2. `dokku postgres:backup-schedule story-processor-db "0 9 * * *" df-server-backup`
