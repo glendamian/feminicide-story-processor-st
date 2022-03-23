@@ -162,7 +162,7 @@ def stories_by_published_day(project_id: int, above_threshold: bool, limit: int 
 
 def _run_query(query: str) -> List:
     data = []
-    with engine.begin() as connection:
+    with processor.engine.begin() as connection:
         result = connection.execute(text(query))
         for row in result:
             data.append(row)
