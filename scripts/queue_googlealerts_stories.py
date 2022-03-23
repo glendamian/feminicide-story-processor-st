@@ -1,12 +1,11 @@
 import logging
-from typing import List, Dict
+from typing import List, Dict, Optional
 import feedparser
 import copy
 import dateutil.parser
+import mcmetadata as metadata
 
 import processor
-import processor.entities as entities
-import processor.util.domains as domains
 from urllib.parse import urlparse, parse_qs
 from prefect import Flow, task
 from prefect.executors import LocalDaskExecutor
@@ -57,13 +56,13 @@ def fetch_project_stories_task(project_list: Dict) -> List[Dict]:
             # story was published more recently than latest one we saw, so process it
             info = dict(
                 url=real_url,
-                google_publish_date=item['published'],
+                source_publish_date=item['published'],
                 title=item['title'],
                 source=processor.SOURCE_GOOGLE_ALERTS,
                 project_id=p['id'],
                 language=p['language'],
-                media_url=domains.get_canonical_mediacloud_domain(real_url),
-                media_name=domains.get_canonical_mediacloud_domain(real_url)
+                media_url=metadata.domains.from_url(real_url),
+                media_name=metadata.domains.from_url(real_url)
             )
             project_stories.append(info)
             valid_stories += 1
@@ -74,8 +73,9 @@ def fetch_project_stories_task(project_list: Dict) -> List[Dict]:
 
 
 @task(name='fetch_text')
-def fetch_text_task(story: Dict) -> Dict:
-    parsed = entities.content_from_url(story['url'])
+def fetch_text_task(story: Dict) -> Optional[Dict]:
+    html = metadata.webpages.fetch(story['url'])
+    parsed = metadata.content.from_html(story['url'], html)
     updated_story = copy.copy(story)
     if parsed['status'] == 'ok':
         updated_story['story_text'] = parsed['results']['text']
@@ -98,12 +98,12 @@ def queue_stories_for_classification_task(project_list: List[Dict], stories: Lis
             for idx in range(0, len(inserted_ids)):
                 project_stories[idx]['stories_id'] = inserted_ids[idx]
                 # Google is probably better at guessing publication dates than we are!
-                project_stories[idx]['publish_date'] = project_stories[idx]['google_publish_date']
+                project_stories[idx]['publish_date'] = project_stories[idx]['source_publish_date']
             # important to do this *after* we add the stories_id here
             tasks.classify_and_post_worker.delay(p, project_stories)
             # important to write this update now, because we have queued up the task to process these stories
             # the task queue will manage retrying with the stories if it fails with this batch
-            publish_dates = [dateutil.parser.parse(s['google_publish_date']) for s in project_stories]
+            publish_dates = [dateutil.parser.parse(s['source_publish_date']) for s in project_stories]
             latest_date = max(publish_dates)
             projects_db.update_history(p['id'], last_publish_date=latest_date, last_url=project_stories[0]['url'])
         logger.info("  queued {} stories for project {}/{}".format(total_stories, p['id'], p['title']))

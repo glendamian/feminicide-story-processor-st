@@ -3,7 +3,7 @@ import json
 import unittest
 
 import processor.tasks as tasks
-from processor import get_mc_client
+from processor import get_mc_client, SOURCE_MEDIA_CLOUD
 from processor.test import test_fixture_dir
 from processor.test.test_projects import TEST_EN_PROJECT
 
@@ -21,6 +21,8 @@ class TestTasks(unittest.TestCase):
         mc = get_mc_client()
         stories_with_text = mc.storyList("stories_id:({})".format(" ".join([str(id) for id in story_ids])),
                                          text=True, rows=100)
+        for s in stories_with_text:
+            s['source'] = SOURCE_MEDIA_CLOUD
         classified_stories = tasks._add_confidence_to_stories(project, stories_with_text)
         assert len(classified_stories) == len(stories_with_text)
         return classified_stories
