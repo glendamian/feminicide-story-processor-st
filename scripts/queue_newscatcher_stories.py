@@ -21,7 +21,7 @@ newscatcherapi = NewsCatcherApiClient(x_api_key=processor.NEWSCATCHER_API_KEY)
 def load_projects_task() -> List[Dict]:
     project_list = projects.load_project_list(force_reload=True, overwrite_last_story=False)
     logger.info("  Checking {} projects".format(len(project_list)))
-    return [p for p in project_list if p['rss_url'] and (len(p['rss_url']) > 0)]
+    return project_list
 
 
 @task(name='fetch_project_stories')
