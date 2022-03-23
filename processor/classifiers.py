@@ -50,9 +50,9 @@ class Classifier:
 
     def _init(self):
         # Classifier 1 is always defined
-        with open(self._path_to_file('1_model'), 'rb') as m: # load model
+        with open(self._path_to_file('1_model'), 'rb') as m:  # load model
             self._model_1 = pickle.load(m)
-        if self.config['vectorizer_type_1'] == VECTORIZER_TF_IDF: # load vectorizer
+        if self.config['vectorizer_type_1'] == VECTORIZER_TF_IDF:  # load vectorizer
             with open(self._path_to_file('1_vectorizer'), 'rb') as v:
                 self._vectorizer_1 = pickle.load(v)
         elif self.config['vectorizer_type_1'] == VECTORIZER_EMBEDDINGS:
@@ -64,12 +64,12 @@ class Classifier:
                     TFHUB_MODEL_PATH))
         else:
             raise RuntimeError("Unknown vectorizer 1 type '{}' for project {}".format(self.config['vectorizer_type_1'],
-                                                                                    self.project['id']))
+                                                                                      self.project['id']))
         # Classifier 2 could also exist
         if self.config['chained_models']:
-            with open(self._path_to_file('2_model'), 'rb') as m: # load model
+            with open(self._path_to_file('2_model'), 'rb') as m:  # load model
                 self._model_2 = pickle.load(m)
-            if self.config['vectorizer_type_2'] == VECTORIZER_TF_IDF: # load vectorizer
+            if self.config['vectorizer_type_2'] == VECTORIZER_TF_IDF:  # load vectorizer
                 with open(self._path_to_file('2_vectorizer'), 'rb') as v:
                     self._vectorizer_2 = pickle.load(v)
             elif self.config['vectorizer_type_2'] == VECTORIZER_EMBEDDINGS:
@@ -99,6 +99,10 @@ class Classifier:
             vectorized_data_1 = self._vectorizer_1.transform(story_texts)
         elif self.config['vectorizer_type_1'] == VECTORIZER_EMBEDDINGS:
             vectorized_data_1 = self._vectorizer_1(story_texts)
+        else:
+            raise RuntimeError("Unknonwn vectorizer1 type of {} on project {}".format(
+                self.config['vectorizer_type_1'], self.project['id']
+            ))
         # now run model against vectors (turn vectors into probabilities)
         try:
             predictions_1 = self._model_1.predict_proba(vectorized_data_1)
@@ -119,6 +123,10 @@ class Classifier:
             vectorized_data_2 = self._vectorizer_2.transform(story_texts)
         elif self.config['vectorizer_type_2'] == VECTORIZER_EMBEDDINGS:
             vectorized_data_2 = self._vectorizer_2(story_texts)
+        else:
+            raise RuntimeError("Unknonwn vectorizer2 type of {} on project {}".format(
+                self.config['vectorizer_type_2'], self.project['id']
+            ))
         # now run model against vectors (turn vectors into probabilities)
         try:
             predictions_2 = self._model_2.predict_proba(vectorized_data_2)
@@ -147,10 +155,10 @@ def for_project(project: Dict) -> Classifier:
         model_config = matching_models[0]
         logger.debug("Project {} - model {}".format(project['id'], model_config['id']))
     except:
-        logger.warning("Can't find model for project {}, language_model_id {}".format(
+        logger.exception("Can't find model for project {}, language_model_id {}".format(
             project['id'], project['language_model_id']
         ))
-        raise RuntimeError()
+        raise RuntimeError("Can't find model for oproec")
     return Classifier(model_config, project)
 
 

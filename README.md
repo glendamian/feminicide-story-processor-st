@@ -1,7 +1,8 @@
-Feminicide Media Cloud Story Processor
-======================================
+Feminicide Story Processor
+==========================
 
-Grab stories from Media Cloud, run them against "feminicide story" classifiers, post results to feminicide server.
+Grab stories from Media Cloud or Google Alerts, run them against "feminicide story" classifiers, post results to a 
+central server.
 
 Install for Development
 -----------------------
@@ -14,7 +15,8 @@ Create a database called "mc-story-processor" in Postgres, then run `alembic upg
 Running
 -------
 
-To fill up the queue with new stories based on the monitor config, execute `run-fetch.sh`.
+To fill up the queue with new stories based on the monitor config, execute `run-fetch-mediacloud.sh` or 
+`run-fetch-googlealerts.sh`.
 
 To start the workers that process queued up jobs to classify and post story results, execute `run-workers.sh`.
 

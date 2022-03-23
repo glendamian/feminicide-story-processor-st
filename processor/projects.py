@@ -111,15 +111,15 @@ def prep_stories_for_posting(project: Dict, stories: List[Dict]) -> List[Dict]:
     prepped_stories = []
     for s in stories:
         story = dict(
-            # list a bunch of Media Cloud story metadata
             stories_id=s['stories_id'],
-            processed_stories_id=s['processed_stories_id'],
+            source=s['source'],
+            processed_stories_id=s['processed_stories_id'] if 'processed_stories_id' in s else None,
             language=s['language'],
-            media_id=s['media_id'],
+            media_id=s['media_id'] if 'media_id' in s else None,
             media_url=s['media_url'],
             media_name=s['media_name'],
             publish_date=s['publish_date'],
-            story_tags=s['story_tags'],
+            story_tags=s['story_tags'] if 'story_tags' in s else None,
             title=s['title'],
             url=s['url'],
             # add in the entities we parsed out via news-entity-server

@@ -6,6 +6,8 @@ from requests.exceptions import ConnectionError
 from typing import List, Dict
 from prefect import Flow, Parameter, task, unmapped
 from prefect.executors import LocalDaskExecutor
+
+import processor
 import processor.database.stories_db as stories_db
 import processor.database.projects_db as projects_db
 from processor.classifiers import download_models
@@ -15,7 +17,7 @@ import processor.tasks as tasks
 import processor.notifications as notifications
 
 DEFAULT_STORIES_PER_PAGE = 150  # I found this performs poorly if set too high
-DEFAULT_MAX_STORIES_PER_PROJECT = 200 #40 * 1000  # make sure we don't do too many stories each cron run (for testing)
+DEFAULT_MAX_STORIES_PER_PROJECT = 200  #40 * 1000  # make sure we don't do too many stories each cron run (for testing)
 
 
 @task(name='load_projects')
@@ -52,6 +54,8 @@ def process_project_task(project: Dict, page_size: int, max_stories: int) -> Dic
         try:
             page_of_stories = mc.storyList(q, fq, last_processed_stories_id=project_last_processed_stories_id,
                                            text=True, rows=page_size)
+            for s in page_of_stories:
+                s['source'] = processor.SOURCE_MEDIA_CLOUD
             logger.info("    {} - page {}: ({}) stories".format(project['id'], page_count, len(page_of_stories)))
         except ConnectionError as ce:
             logger.error("  Connection failed on project {}. Skipping project.".format(project['id']))
@@ -69,10 +73,10 @@ def process_project_task(project: Dict, page_size: int, max_stories: int) -> Dic
             tasks.classify_and_post_worker.delay(project, page_of_stories)
             project_last_processed_stories_id = page_of_stories[-1]['processed_stories_id']
             # and log that we got and queued them all
-            stories_db.add_stories(page_of_stories, project)
+            stories_db.add_stories(page_of_stories, project, processor.SOURCE_MEDIA_CLOUD)
             # important to write this update now, because we have queued up the task to process these stories
             # the task queue will manage retrying with the stories if it fails with this batch
-            projects_db.update_history(project['id'], project_last_processed_stories_id)
+            projects_db.update_history(project['id'], last_processed_stories_id=project_last_processed_stories_id)
         else:
             more_stories = False
     logger.info("  queued {} stories for project {}/{} (in {} pages)".format(story_count, project['id'],

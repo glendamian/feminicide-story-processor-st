@@ -26,17 +26,22 @@ def add_history(project_id: int, last_processed_stories_id: int) -> None:
     session.commit()
 
 
-def update_history(project_id: int, last_processed_stories_id: int) -> None:
+def update_history(project_id: int, last_processed_stories_id: int = None, last_publish_date: dt.datetime = None,
+                   last_url: str = None) -> None:
     """
     Once we've processed a batch of stories, use this to save in the database the id of the lastest story
     we've processed (so that we don't redo stories we have already done).
     :param project_id:
     :param last_processed_stories_id:
+    :param last_publish_date:
+    :param last_url:
     :return:
     """
     session = Session()
     project_history = session.query(ProjectHistory).get(project_id)
     project_history.last_processed_id = last_processed_stories_id
+    project_history.last_publish_date = last_publish_date
+    project_history.last_url = last_url
     project_history.updated_at = dt.datetime.now()
     session.commit()
 

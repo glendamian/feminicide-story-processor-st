@@ -10,7 +10,9 @@ from sentry_sdk import init
 from typing import Dict
 from sqlalchemy import create_engine
 
-VERSION = "1.8.3"
+VERSION = "2.1.0"
+SOURCE_GOOGLE_ALERTS = "google-alerts"
+SOURCE_MEDIA_CLOUD = "media-cloud"
 
 load_dotenv()  # load config from .env file (local) or env vars (production)
 

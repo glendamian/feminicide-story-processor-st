@@ -4,23 +4,24 @@ from typing import List, Dict
 from sqlalchemy import and_, text
 from sqlalchemy.orm import sessionmaker
 
-from processor import engine
-from processor.database import Story
+import processor
+from processor.database.models import Story
 
-Session = sessionmaker(bind=engine)
+Session = sessionmaker(bind=processor.engine)
 
 
-def add_stories(mc_story_list: List, project: Dict) -> None:
+def add_stories(source_story_list: List, project: Dict, source: str) -> List[int]:
     """
     Logging: Track metadata about all the stories we process we so we can audit it later (like a log file).
-    :param mc_story_list:
+    :param source_story_list:
     :param project:
-    :return:
+    :param source:
+    :return: list of ids of objects inserted
     """
     now = dt.datetime.now()
     db_stories_to_insert = []
-    for mc_story in mc_story_list:
-        db_story = Story.from_mc_story(mc_story)
+    for mc_story in source_story_list:
+        db_story = Story.from_source(mc_story, source)
         db_story.project_id = project['id']
         db_story.model_id = project['language_model_id']
         db_story.queued_date = now
@@ -30,6 +31,15 @@ def add_stories(mc_story_list: List, project: Dict) -> None:
     session = Session()
     session.add_all(db_stories_to_insert)
     session.commit()
+    ids = [s.id for s in db_stories_to_insert]
+    # and for ones without stories_ids, add those too
+    if source == processor.SOURCE_GOOGLE_ALERTS:
+        session = Session()
+        new_stories = session.query(Story).filter(Story.id.in_((ids))).all()
+        for s in new_stories:
+            s.stories_id = s.id
+        session.commit()
+    return ids
 
 
 def update_stories_processed_date_score(stories: List, project_id: int) -> None:
