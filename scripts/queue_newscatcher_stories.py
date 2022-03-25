@@ -1,4 +1,5 @@
 import logging
+import math
 from typing import List, Dict
 import mcmetadata as metadata
 import datetime as dt
@@ -11,8 +12,8 @@ from processor.classifiers import download_models
 import processor.projects as projects
 import scripts.tasks as prefect_tasks
 
-DEFAULT_STORIES_PER_PAGE = 150  # I found this performs poorly if set too high
-DEFAULT_MAX_STORIES_PER_PROJECT = 200  # 40 * 1000  # make sure we don't do too many stories each cron run (for testing)
+PAGE_SIZE = 100
+DAY_WINDOW = 3
 
 newscatcherapi = NewsCatcherApiClient(x_api_key=processor.NEWSCATCHER_API_KEY)
 
@@ -24,6 +25,17 @@ def load_projects_task() -> List[Dict]:
     return project_list
 
 
+def _fetch_results(project: Dict, start_date, end_date, page: int = 1) -> Dict:
+    return newscatcherapi.get_search(
+        q=project['search_terms'],
+        lang=project['language'],
+        countries=project['country'],
+        page_size=PAGE_SIZE,
+        from_=start_date.strftime("%Y-%m-%d"),
+        to_=end_date.strftime("%Y-%m-%d"),
+    )
+
+
 @task(name='fetch_project_stories')
 def fetch_project_stories_task(project_list: Dict, data_source: str) -> List[Dict]:
     combined_stories = []
@@ -31,42 +43,45 @@ def fetch_project_stories_task(project_list: Dict, data_source: str) -> List[Dic
         project_stories = []
         valid_stories = 0
         history = projects_db.get_history(p['id'])
-        today = dt.date.today()
-        yesterday = today - dt.timedelta(days=1)
-        results = newscatcherapi.get_search(
-            q=p['search_terms'],
-            lang=p['language'],
-            countries='UY',  # TBD - this needs to be set on each project
-            page_size=100,
-            to_=today.strftime("%Y-%m-%d"),
-            from_=yesterday.strftime("%Y-%m-%d"),
-        )
-        logger.info("Project {}/{} - {} stories".format(p['id'], p['title'], len(results)))
-        for item in results['articles']:
-            # only process stories published after the last check we ran?
-            # or maybe stop when we hit a url we've processed already?
-            real_url = item['link']
-            if history.last_url == real_url:
-                logger.info("  Found last_url on {}, skipping the rest".format(p['id']))
-                break
-            # story was published more recently than latest one we saw, so process it
-            info = dict(
-                stories_id=item['id'], # TODO: double check this
-                url=real_url,
-                source_publish_date=item['published'],
-                title=item['title'],
-                source=data_source,
-                project_id=p['id'],
-                language=p['language'],
-                authors=item['authors'],
-                media_url=metadata.domains.from_url(real_url),
-                media_name=metadata.domains.from_url(real_url)
-            )
-            project_stories.append(info)
-            valid_stories += 1
-        logger.info("  project {} - {} valid stories (after {})".format(p['id'], valid_stories,
-                                                                        history.last_publish_date))
-        combined_stories += project_stories
+        end_date = dt.date.today()
+        start_date = end_date - dt.timedelta(days=DAY_WINDOW)
+        page_number = 1
+        current_page = _fetch_results(p, start_date, end_date, page_number)
+        total_hits = current_page['total_hits']
+        logger.info("Project {}/{} - {} total stories".format(p['id'], p['title'], total_hits))
+        if total_hits > 0:
+            page_count = math.ceil(total_hits / current_page)
+            keep_going = True;
+            while keep_going:
+                for item in current_page['articles']:
+                    logger.info("  {} - page {}: {} stories".format(p['id'], page_number, len(current_page['articles'])))
+                    # maybe stop when we hit a url we've processed already
+                    real_url = item['link']
+                    if history.last_url == real_url:
+                        logger.info("  Found last_url on {}, skipping the rest".format(p['id']))
+                        keep_going = False
+                        break # out of the for loop of all articles on page, back to while "more pages"
+                    # story was published more recently than latest one we saw, so process it
+                    info = dict(
+                        url=real_url,
+                        source_publish_date=item['published'],
+                        title=item['title'],
+                        source=data_source,
+                        project_id=p['id'],
+                        language=p['language'],
+                        authors=item['authors'],
+                        media_url=metadata.domains.from_url(real_url),
+                        media_name=metadata.domains.from_url(real_url)
+                        # too bad there isn't somewher we can store the `id` (string)
+                    )
+                    project_stories.append(info)
+                    valid_stories += 1
+                if keep_going:  # check after page is processed
+                    keep_going = page_number <= page_count
+                    _fetch_results(p, start_date, end_date, page_number)
+            logger.info("  project {} - {} valid stories (after {})".format(p['id'], valid_stories,
+                                                                            history.last_publish_date))
+            combined_stories += project_stories
     return combined_stories
 
 
