@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### 2.1.3
+
+* Logging tweaks.
+
 ### 2.1.2
 
 * Various small bug fixes for prod deployment.
