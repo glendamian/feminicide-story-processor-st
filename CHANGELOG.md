@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### 2.1.1
+
+* Support 64 bit story ids
+
 ### 2.1.0
 
 * Check last processed URL within an RSS to make sure we don't re-process stories.

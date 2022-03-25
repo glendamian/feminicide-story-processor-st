@@ -1,6 +1,5 @@
 import logging
-import dateparser
-from datetime import date
+import datetime as dt
 from mediacloud.error import MCException
 from requests.exceptions import ConnectionError
 from typing import List, Dict
@@ -17,7 +16,7 @@ import processor.tasks as tasks
 import processor.notifications as notifications
 
 DEFAULT_STORIES_PER_PAGE = 150  # I found this performs poorly if set too high
-DEFAULT_MAX_STORIES_PER_PROJECT = 200  #40 * 1000  # make sure we don't do too many stories each cron run (for testing)
+DEFAULT_MAX_STORIES_PER_PROJECT = 20 * 1000  # make sure we don't do too many stories each cron run (for testing)
 
 
 @task(name='load_projects')
@@ -43,8 +42,8 @@ def process_project_task(project: Dict, page_size: int, max_stories: int) -> Dic
         " ".join([str(tid) for tid in project['media_collections']]))
 # HACK - we need to query from *after* the Xmas Media Cloud crash (for now), otherwise paging doesn't work
     # start_date = dateparser.parse(project['start_date'])
-    start_date = dateparser.parse("2021-12-25")
-    now = date.today()
+    start_date = dt.date(2021, 12, 25)
+    now = dt.date.today()
     fq = mc.dates_as_query_clause(start_date, now)
     # page through any new stories
     story_count = 0
