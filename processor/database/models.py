@@ -11,7 +11,7 @@ class Story(Base):
     __tablename__ = 'stories'
 
     id = Column(Integer, primary_key=True)
-    stories_id = Column(Integer)
+    stories_id = Column(BigInteger)
     project_id = Column(Integer)
     model_id = Column(Integer)
     model_score = Column(Float)
