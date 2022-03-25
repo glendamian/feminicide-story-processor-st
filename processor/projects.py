@@ -85,7 +85,7 @@ def post_results(project: Dict, stories: List[Dict]) -> None:
                 raise RuntimeError("Tried to post to project {} but got an error code {}".format(
                     project['id'], response.status_code))
     else:
-        logger.debug("  no stories to send for project {}".format(project['id']))
+        logger.info("  no stories to send for project {}".format(project['id']))
 
 
 def remove_low_confidence_stories(confidence_threshold: float, stories: List[Dict]) -> List[Dict]:
