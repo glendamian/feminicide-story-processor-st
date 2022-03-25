@@ -30,7 +30,7 @@ def load_projects_task() -> List[Dict]:
 
 
 @task(name='fetch_project_stories')
-def fetch_project_stories_task(project_list: Dict) -> List[Dict]:
+def fetch_project_stories_task(project_list: Dict, data_source: str) -> List[Dict]:
     combined_stories = []
     for p in project_list:
         feed = feedparser.parse(p['rss_url'])
@@ -43,7 +43,7 @@ def fetch_project_stories_task(project_list: Dict) -> List[Dict]:
             #published_date = dateutil.parser.parse(item['published'])
             #if history.last_publish_date and (published_date < history.last_publish_date):
             #    continue
-            # or maybe stop when we hit a url we've processed already?
+            # Stop when we've hit a url we've processed already?
             real_url = _url_from_google_alert_link(item['link'])
             if history.last_url == real_url:
                 logger.info("  Found last_url on {}, skipping the rest".format(p['id']))
@@ -53,7 +53,7 @@ def fetch_project_stories_task(project_list: Dict) -> List[Dict]:
                 url=real_url,
                 source_publish_date=item['published'],
                 title=item['title'],
-                source=processor.SOURCE_GOOGLE_ALERTS,
+                source=data_source,
                 project_id=p['id'],
                 language=p['language'],
                 media_url=metadata.domains.from_url(real_url),
@@ -78,11 +78,11 @@ if __name__ == '__main__':
 
     with Flow("story-processor") as flow:
         flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=16)  # execute `map` calls in parallel
-        data_source_name = Parameter("data_source", default=processor.SOURCE_GOOGLE_ALERTS)
+        data_source_name = Parameter("data_source", default="")
         # 1. list all the project we need to work on
         projects_list = load_projects_task()
         # 2. fetch all the urls from Google Alerts RSS feeds
-        all_stories = fetch_project_stories_task(projects_list)
+        all_stories = fetch_project_stories_task(projects_list, data_source_name)
         # 3. fetch webpage text and parse all the stories (will happen in parallel by story)
         stories_with_text = prefect_tasks.fetch_text_task.map(all_stories)
         # 4. post batches of stories for classification

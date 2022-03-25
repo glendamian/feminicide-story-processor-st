@@ -25,7 +25,7 @@ def load_projects_task() -> List[Dict]:
 
 
 @task(name='fetch_project_stories')
-def fetch_project_stories_task(project_list: Dict) -> List[Dict]:
+def fetch_project_stories_task(project_list: Dict, data_source: str) -> List[Dict]:
     combined_stories = []
     for p in project_list:
         project_stories = []
@@ -51,10 +51,11 @@ def fetch_project_stories_task(project_list: Dict) -> List[Dict]:
                 break
             # story was published more recently than latest one we saw, so process it
             info = dict(
+                stories_id=item['id'], # TODO: double check this
                 url=real_url,
                 source_publish_date=item['published'],
                 title=item['title'],
-                source=processor.SOURCE_NEWSCATCHER,
+                source=data_source,
                 project_id=p['id'],
                 language=p['language'],
                 authors=item['authors'],
@@ -80,11 +81,11 @@ if __name__ == '__main__':
 
     with Flow("story-processor") as flow:
         #flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=16)  # execute `map` calls in parallel
-        data_source_name = Parameter("data_source", default=processor.SOURCE_NEWSCATCHER)
+        data_source_name = Parameter("data_source", default="")
         # 1. list all the project we need to work on
         projects_list = load_projects_task()
         # 2. fetch all the urls from for each project from newscatcher
-        all_stories = fetch_project_stories_task(projects_list)
+        all_stories = fetch_project_stories_task(projects_list, data_source_name)
         # 3. fetch webpage text and parse all the stories (will happen in parallel by story)
         stories_with_text = prefect_tasks.fetch_text_task.map(all_stories)
         # 4. post batches of stories for classification
