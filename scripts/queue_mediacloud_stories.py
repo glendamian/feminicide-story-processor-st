@@ -46,8 +46,8 @@ def process_project_task(project: Dict, page_size: int, max_stories: int) -> Dic
     now = dt.date.today()
     fq = mc.dates_as_query_clause(start_date, now)
     # debug output total story count
-    total_stories = mc.storyCount(q, fq)['count']
-    logger.info("  project {} - total {} stories".format(project['id'], total_stories))
+    #total_stories = mc.storyCount(q, fq)['count']
+    #logger.info("  project {} - total {} stories".format(project['id'], total_stories))
     # return dict(email_text="", stories=total_stories, pages=0) # helpful for debugging
     # page through any new stories
     story_count = 0
