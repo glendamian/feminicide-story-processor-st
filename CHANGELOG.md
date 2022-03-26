@@ -3,9 +3,17 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### 2.1.3
+
+* Logging tweaks.
+
+### 2.1.2
+
+* Various small bug fixes for prod deployment.
+
 ### 2.1.1
 
-* Support 64 bit story ids
+* First work on support for 64 bit story ids.
 
 ### 2.1.0
 

@@ -10,7 +10,7 @@ from sentry_sdk import init
 from typing import Dict
 from sqlalchemy import create_engine
 
-VERSION = "2.1.1"
+VERSION = "2.1.3"
 SOURCE_GOOGLE_ALERTS = "google-alerts"
 SOURCE_MEDIA_CLOUD = "media-cloud"
 SOURCE_NEWSCATCHER = "newscatcher"
@@ -63,7 +63,7 @@ SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 if SQLALCHEMY_DATABASE_URI is None:
     logger.error("  No SQLALCHEMY_DATABASE_URI is specified. Bailing because we can't save things to a DB for tracking")
     sys.exit(1)
-engine = create_engine(SQLALCHEMY_DATABASE_URI, pool_size=10)
+engine = create_engine(SQLALCHEMY_DATABASE_URI, pool_size=20, max_overflow=20) # bumped pool size up for parallel tasks
 
 
 ENTITY_SERVER_URL = os.environ['ENTITY_SERVER_URL']

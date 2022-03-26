@@ -94,7 +94,7 @@ def classify_and_post_worker(self, project: Dict, stories: List[Dict]):
         # mark the stories in the local DB that we intend to send
         stories_db.update_stories_above_threshold(stories_to_send, project['id'])
         # now actually post them
-        logger.debug('{}: {} stories to post'.format(project['id'], len(stories_to_send)))
+        logger.info('{}: {} stories to post'.format(project['id'], len(stories_to_send)))
         projects.post_results(project, stories_to_send)
         for s in stories_to_send:  # for auditing, keep a log in the container of the results posted to main server
             logger.debug("  post: {}/{} - {} - {}".format(s['project_id'], s['language_model_id'],

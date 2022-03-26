@@ -1,4 +1,6 @@
 import logging
+
+import mediacloud.error
 from flask import render_template, jsonify
 import json
 from typing import Dict, List
@@ -91,18 +93,25 @@ def a_project(project_id_str):
     # get some stats
 
     # show some recent story results
-    stories_above = stories_db.recent_stories(project_id, True)
-    stories_below = stories_db.recent_stories(project_id, False)
-    story_ids = list(set([s.stories_id for s in stories_above]) | set([s.stories_id for s in stories_below]))
-    mc = get_mc_client()
-    if len(story_ids) > 0:
-        stories = mc.storyList("stories_id:({})".format(" ".join([str(s) for s in story_ids])))
-        story_lookup = {s['stories_id']: s for s in stories}
-    else:
+    try:
+        stories_above = stories_db.recent_stories(project_id, True)
+        stories_below = stories_db.recent_stories(project_id, False)
+        story_ids = list(set([s.stories_id for s in stories_above]) | set([s.stories_id for s in stories_below]))
+        mc = get_mc_client()
+        if len(story_ids) > 0:
+            stories = mc.storyList("stories_id:({})".format(" ".join([str(s) for s in story_ids])))
+            story_lookup = {s['stories_id']: s for s in stories}
+        else:
+            story_lookup = {}
+        # sometimes Media Cloud doesn't return info for a story :-(
+        stories_above = [s for s in stories_above if s.stories_id in story_lookup]
+        stories_below = [s for s in stories_below if s.stories_id in story_lookup]
+    except mediacloud.error.MCException as mce:
+        # we currently can't query for BIGINT story ids with a stories_id clause in the query
+        stories_above = []
+        stories_below = []
         story_lookup = {}
-    # sometimes Media Cloud doesn't return info for a story :-(
-    stories_above = [s for s in stories_above if s.stories_id in story_lookup]
-    stories_below = [s for s in stories_below if s.stories_id in story_lookup]
+        pass
 
     # some other stats
     unposted_above_story_count = stories_db.unposted_above_story_count(project_id)

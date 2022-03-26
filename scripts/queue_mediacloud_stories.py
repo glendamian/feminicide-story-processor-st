@@ -16,7 +16,7 @@ import processor.tasks as tasks
 import processor.notifications as notifications
 
 DEFAULT_STORIES_PER_PAGE = 150  # I found this performs poorly if set too high
-DEFAULT_MAX_STORIES_PER_PROJECT = 20 * 1000  # make sure we don't do too many stories each cron run (for testing)
+DEFAULT_MAX_STORIES_PER_PROJECT = 10000  # make sure we don't do too many stories each cron run (for testing)
 
 
 @task(name='load_projects')
@@ -33,18 +33,22 @@ def process_project_task(project: Dict, page_size: int, max_stories: int) -> Dic
     project_email_message = ""
     logger.info("Checking project {}/{} (last processed_stories_id={})".format(project['id'], project['title'],
                                                                                project_last_processed_stories_id))
-    logger.info("  {} stories/page up to {}".format(page_size, max_stories))
+    logger.debug("  {} stories/page up to {}".format(page_size, max_stories))
     project_email_message += "Project {} - {}:\n".format(project['id'], project['title'])
     # setup queries to filter by language too so we only get stories the model can process
     q = "({}) AND language:{} AND tags_id_media:({})".format(
         project['search_terms'],
         project['language'],
         " ".join([str(tid) for tid in project['media_collections']]))
-# HACK - we need to query from *after* the Xmas Media Cloud crash (for now), otherwise paging doesn't work
+# HACK - we need to query from *after* the Jan Media Cloud migration to AWS (for now), otherwise paging doesn't work
     # start_date = dateparser.parse(project['start_date'])
-    start_date = dt.date(2021, 12, 25)
+    start_date = dt.date(2021, 3, 22)  # to reduce load and processing, for now
     now = dt.date.today()
     fq = mc.dates_as_query_clause(start_date, now)
+    # debug output total story count
+    #total_stories = mc.storyCount(q, fq)['count']
+    #logger.info("  project {} - total {} stories".format(project['id'], total_stories))
+    # return dict(email_text="", stories=total_stories, pages=0) # helpful for debugging
     # page through any new stories
     story_count = 0
     page_count = 0
