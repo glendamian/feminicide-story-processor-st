@@ -21,8 +21,10 @@ newscatcherapi = NewsCatcherApiClient(x_api_key=processor.NEWSCATCHER_API_KEY)
 @task(name='load_projects')
 def load_projects_task() -> List[Dict]:
     project_list = projects.load_project_list(force_reload=True, overwrite_last_story=False)
-    logger.info("  Checking {} projects".format(len(project_list)))
-    return project_list
+    projects_with_countries = [p for p in project_list if (p['country'] is not None) and len(p['country']) == 2]
+    logger.info("  Found {} projects, checking {} with countries set".format(len(project_list),
+                                                                             len(projects_with_countries)))
+    return projects_with_countries
 
 
 def _fetch_results(project: Dict, start_date, end_date, page: int = 1) -> Dict:
