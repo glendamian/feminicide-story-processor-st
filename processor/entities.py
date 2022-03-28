@@ -14,13 +14,13 @@ def content_from_url(url: str) -> Dict:
     return response.json()
 
 
-def from_content(text: str, language: str) -> Dict:
+def from_content(text: str, language: str, url: str) -> Dict:
     target_url = ENTITY_SERVER_URL + 'entities/from-content'
-    response = requests.post(target_url, data=dict(text=text, language=language))
+    response = requests.post(target_url, data=dict(text=text, language=language, url=url))
     return response.json()
 
 
-def from_url(url: str, language:str) -> Dict:
+def from_url(url: str, language: str) -> Dict:
     target_url = ENTITY_SERVER_URL + 'entities/from-url'
     response = requests.post(target_url, data=dict(url=url, language=language))
     return response.json()
