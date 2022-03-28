@@ -31,14 +31,7 @@ def _add_confidence_to_stories(project: Dict, stories: List[Dict]) -> List[Dict]
         s['model_2_score'] = probabilities['model_2_scores'][idx] if probabilities['model_2_scores'] is not None else None
     # keep an auditable log in our own local database
     stories_db.update_stories_processed_date_score(stories, project['id'])
-    # remove data we aren't going to send to the server
-    results = projects.prep_stories_for_posting(project, stories)
-    if projects.LOG_LAST_POST_TO_FILE:  # helpful for debugging (the last project post will written to a file)
-        with open(os.path.join(path_to_log_dir,
-                               '{}-all-stories-{}.json'.format(project['id'], time.strftime("%Y%m%d-%H%M%S"))),
-                  'w', encoding='utf-8') as f:
-            json.dump(results, f, ensure_ascii=False, indent=4)
-    return results
+    return stories
 
 
 def _add_entities_to_stories(stories: List[Dict]):
@@ -46,8 +39,8 @@ def _add_entities_to_stories(stories: List[Dict]):
         story_entities = None
         if entities.server_address_set():
             try:
-                response = entities.from_content(s['title'] + " " + s['story_text'], s['language'])
-                story_entities = [item['text'].lower() for item in response['results']
+                response = entities.from_content(s['title'] + " " + s['story_text'], s['language'], s['url'])
+                story_entities = [item['text'].lower() for item in response['results']['entities']
                                   if item['type'] in ACCEPTED_ENTITY_TYPES]
             except JSONDecodeError:
                 # the entity extractor failed, so don't return any entities
@@ -83,14 +76,23 @@ def classify_and_post_worker(self, project: Dict, stories: List[Dict]):
     try:
         logger.debug('{}: classify {} stories (model {})'.format(project['id'], len(stories),
                                                                  project['language_model_id']))
-        # now classify the stories again the model specified for the project
+        # now classify the stories again the model specified for the project (this cleans up the story dicts too)
         stories_with_confidence = _add_confidence_to_stories(project, stories)
         for s in stories_with_confidence:
-            logger.debug("  classify: {}/{} - {} - {}".format(s['project_id'], s['language_model_id'],
+            logger.debug("  classify: {}/{} - {} - {}".format(project['id'], project['language_model_id'],
                                                               s['stories_id'], s['confidence']))
         # only stories above project score threshold should be posted
-        stories_to_send = projects.remove_low_confidence_stories(project.get('min_confidence', 0),
-                                                                 stories_with_confidence)
+        stories_above_threshold = projects.remove_low_confidence_stories(project.get('min_confidence', 0),
+                                                                         stories_with_confidence)
+        # pull out entities, if there is an env-var to a server set (only do this on above-threshold stories)
+        stories_with_entities = _add_entities_to_stories(stories_above_threshold)
+        # remove data we aren't going to send to the server (and log)
+        stories_to_send = projects.prep_stories_for_posting(project, stories_with_entities)
+        if projects.LOG_LAST_POST_TO_FILE:  # helpful for debugging (the last project post will be written to a file)
+            with open(os.path.join(path_to_log_dir,
+                                   '{}-all-stories-{}.json'.format(project['id'], time.strftime("%Y%m%d-%H%M%S"))),
+                      'w', encoding='utf-8') as f:
+                json.dump(stories_to_send, f, ensure_ascii=False, indent=4)
         # mark the stories in the local DB that we intend to send
         stories_db.update_stories_above_threshold(stories_to_send, project['id'])
         # now actually post them
