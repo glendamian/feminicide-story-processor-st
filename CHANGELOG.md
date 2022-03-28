@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.2.0
+
+* Add entities to each story posted (via news-entity-server)
+
 ### 2.1.3
 
 * Logging tweaks.
