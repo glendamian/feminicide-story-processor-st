@@ -11,8 +11,8 @@ class TestEntities(unittest.TestCase):
     def test_entities_from_url(self):
         with open(os.path.join(test_fixture_dir, "aapf_samples.json")) as f:
             samples = json.load(f)
-        for s in samples[:5]:  # don't test to many of them
-            response = entities.from_url(s['url'], s['language'])
+        for s in samples[:5]:  # don't test too many of them
+            response = entities.from_url(s['url'])
             assert 'status' in response
             if response['status'] == 'ok':
                 assert 'results' in response
