@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.0
+
+* Initial integration with newscatcher (triggered by having a filling in "country" property)
+
 ### v2.2.0
 
 * Add entities to each story posted (via news-entity-server)
