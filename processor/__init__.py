@@ -13,6 +13,7 @@ from sqlalchemy import create_engine
 VERSION = "2.2.0"
 SOURCE_GOOGLE_ALERTS = "google-alerts"
 SOURCE_MEDIA_CLOUD = "media-cloud"
+SOURCE_NEWSCATCHER = "newscatcher"
 
 load_dotenv()  # load config from .env file (local) or env vars (production)
 
@@ -68,6 +69,11 @@ engine = create_engine(SQLALCHEMY_DATABASE_URI, pool_size=20, max_overflow=20) #
 ENTITY_SERVER_URL = os.environ['ENTITY_SERVER_URL']
 if ENTITY_SERVER_URL is None:
     logger.info("  No ENTITY_SERVER_URL is specified. You won't get entities in the stories sent to the  main server.")
+
+
+NEWSCATCHER_API_KEY = os.environ['NEWSCATCHER_API_KEY']
+if NEWSCATCHER_API_KEY is None:
+    logger.info("  No NEWSCATCHER_API_KEY is specified. We won't be fetching from Newscatcher.")
 
 
 def get_mc_client() -> mediacloud.api.AdminMediaCloud:
