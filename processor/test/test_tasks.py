@@ -32,8 +32,6 @@ class TestTasks(unittest.TestCase):
         project['language_model_id'] = 3
         story_ids = self._sample_story_ids()
         classified_stories = self._classify_story_ids(project, story_ids)
-        for s in classified_stories:
-            assert 'story_text' not in s
         matching_stories = [s for s in classified_stories if s['stories_id'] == 1957814773]
         assert len(matching_stories) == 1
         assert round(matching_stories[0]['confidence'], 5) == 0.35770
