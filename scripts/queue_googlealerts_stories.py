@@ -3,10 +3,10 @@ from typing import List, Dict
 import feedparser
 import mcmetadata as metadata
 from prefect import Flow, task, Parameter
-
-import processor
 from urllib.parse import urlparse, parse_qs
 from prefect.executors import LocalDaskExecutor
+
+import processor
 import processor.database.projects_db as projects_db
 from processor.classifiers import download_models
 import processor.projects as projects
