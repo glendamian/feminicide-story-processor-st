@@ -35,8 +35,8 @@ def load_projects_task() -> List[Dict]:
 def _fetch_results(project: Dict, start_date, end_date, page: int = 1) -> Dict:
     return newscatcherapi.get_search(
         q=project['search_terms'],
-        lang=project['language'],  # TODO: split this by comma and trim
-        countries=project['country'],
+        lang=project['language'],
+        countries=[p.strip() for p in project['country'].split(",")],
         page_size=PAGE_SIZE,
         from_=start_date.strftime("%Y-%m-%d"),
         to_=end_date.strftime("%Y-%m-%d"),
