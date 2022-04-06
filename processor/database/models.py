@@ -2,10 +2,13 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, BigInteger, Integer, DateTime, Float, Boolean, String
 from dateutil.parser import parse
 import datetime as dt
+import logging
 
 import processor
 
 Base = declarative_base()
+
+logger = logging.getLogger(__name__)
 
 
 class Story(Base):
@@ -36,8 +39,11 @@ class Story(Base):
             s.stories_id = story['stories_id']
         if not isinstance(story['publish_date'], dt.datetime):
             s.published_date = parse(story['publish_date'])
-        else:
+        elif story['publish_date'] is not None:
             s.published_date = story['publish_date']
+        else:  # if it is None then default to now, so we get some date
+            s.published_date = dt.datetime.now()
+            logger.warning("Used today as publish date for story that didn't have date on it: {}".format(s['url']))
         s.url = story['url']
         s.source = source
         return s

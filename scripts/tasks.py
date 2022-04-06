@@ -28,7 +28,7 @@ def fetch_text_task(story: Dict) -> Optional[Dict]:
         parsed = _cached_metadata_extract(story['url'])
         updated_story = copy.copy(story)
         updated_story['story_text'] = parsed['text_content']
-        updated_story['publish_date'] = parsed['publication_date'] # this is a date object
+        updated_story['publish_date'] = parsed['publication_date']  # this is a date object
         return updated_story
     except Exception as _:
         # this is probably an HTTP, or content parsing error

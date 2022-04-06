@@ -1,5 +1,6 @@
 import datetime as dt
 from typing import List, Dict
+import logging
 
 from sqlalchemy import and_, text
 from sqlalchemy.orm import sessionmaker
@@ -8,6 +9,8 @@ import processor
 from processor.database.models import Story
 
 Session = sessionmaker(bind=processor.engine)
+
+logger = logging.getLogger(__name__)
 
 
 def add_stories(source_story_list: List, project: Dict, source: str) -> List[int]:
@@ -21,12 +24,15 @@ def add_stories(source_story_list: List, project: Dict, source: str) -> List[int
     now = dt.datetime.now()
     db_stories_to_insert = []
     for mc_story in source_story_list:
-        db_story = Story.from_source(mc_story, source)
-        db_story.project_id = project['id']
-        db_story.model_id = project['language_model_id']
-        db_story.queued_date = now
-        db_story.above_threshold = False
-        db_stories_to_insert.append(db_story)
+        try:
+            db_story = Story.from_source(mc_story, source)
+            db_story.project_id = project['id']
+            db_story.model_id = project['language_model_id']
+            db_story.queued_date = now
+            db_story.above_threshold = False
+            db_stories_to_insert.append(db_story)
+        except Exception as e:
+            logger.error("Unable to save story due to {}. Continuing to try and finish.".format(e))
     # now insert in batch to the database
     session = Session()
     session.add_all(db_stories_to_insert)
