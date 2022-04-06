@@ -15,7 +15,7 @@ import processor.projects as projects
 import scripts.tasks as prefect_tasks
 
 PAGE_SIZE = 100
-DAY_WINDOW = 3
+DEFAULT_DAY_WINDOW = 3
 WORKER_COUNT = 16
 MAX_CALLS_PER_SEC = 5
 DELAY_SECS = 1 / MAX_CALLS_PER_SEC
@@ -48,12 +48,16 @@ def _fetch_results(project: Dict, start_date, end_date, page: int = 1) -> Dict:
 def fetch_project_stories_task(project_list: Dict, data_source: str) -> List[Dict]:
     combined_stories = []
     end_date = dt.date.today()
-    start_date = end_date - dt.timedelta(days=DAY_WINDOW)
     for p in project_list:
         project_stories = []
         valid_stories = 0
         history = projects_db.get_history(p['id'])
         page_number = 1
+        # only search stories since the last search (if we've done one before)
+        if history.last_publish_date is not None:
+            start_date = history.last_publish_date
+        else:
+            start_date = end_date - dt.timedelta(days=DEFAULT_DAY_WINDOW)
         current_page = _fetch_results(p, start_date, end_date, page_number)
         total_hits = current_page['total_hits']
         logger.info("Project {}/{} - {} total stories".format(p['id'], p['title'], total_hits))

@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.3
+
+* Respect last check date in newscatcher fetching
+
 ### v2.3.2
 
 * Small bug fixes to make it more robust
