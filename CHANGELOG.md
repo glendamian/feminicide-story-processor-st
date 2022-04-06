@@ -3,6 +3,11 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.1
+
+* Time how long a fetch takes, and include in email report
+* Fixes for newscatcher integration
+
 ### v2.3.0
 
 * Initial integration with newscatcher (triggered by having a filling in "country" property)
