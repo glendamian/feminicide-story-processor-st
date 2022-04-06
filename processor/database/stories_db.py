@@ -39,7 +39,7 @@ def add_stories(source_story_list: List, project: Dict, source: str) -> List[int
     session.commit()
     ids = [s.id for s in db_stories_to_insert]
     # and for ones without stories_ids, add those too
-    if source == processor.SOURCE_GOOGLE_ALERTS:
+    if source in [processor.SOURCE_GOOGLE_ALERTS, processor.SOURCE_NEWSCATCHER]:
         session = Session()
         new_stories = session.query(Story).filter(Story.id.in_((ids))).all()
         for s in new_stories:
