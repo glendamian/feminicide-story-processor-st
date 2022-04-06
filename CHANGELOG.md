@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.4
+
+* Fix logging for stories with no unique ID from their source
+
 ### v2.3.3
 
 * Respect last check date in newscatcher fetching
