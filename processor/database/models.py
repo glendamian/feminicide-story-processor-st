@@ -1,6 +1,7 @@
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, BigInteger, Integer, DateTime, Float, Boolean, String
 from dateutil.parser import parse
+import datetime as dt
 
 import processor
 
@@ -33,7 +34,10 @@ class Story(Base):
         s = Story()
         if source == processor.SOURCE_MEDIA_CLOUD:
             s.stories_id = story['stories_id']
-        s.published_date = parse(story['publish_date'])
+        if not isinstance(story['publish_date'], dt.datetime):
+            s.published_date = parse(story['publish_date'])
+        else:
+            s.published_date = story['publish_date']
         s.url = story['url']
         s.source = source
         return s

@@ -24,7 +24,7 @@ path_to_log_dir = os.path.join(base_dir, 'logs')
 logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(levelname)s | %(name)s | %(message)s')
 logger = logging.getLogger(__name__)
 logger.info("------------------------------------------------------------------------")
-logger.info("Starting up Feminicide MC Story Processor v{}".format(VERSION))
+logger.info("Starting up Feminicide Story Processor v{}".format(VERSION))
 
 # read in environment variables
 MC_API_KEY = os.environ.get('MC_API_KEY', None)  # sensitive, so don't log it

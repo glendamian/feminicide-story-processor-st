@@ -1,9 +1,11 @@
 import copy
+import time
 from typing import Dict, Optional, List
 import logging
 import dateutil.parser
 import mcmetadata as metadata
 from prefect import task
+from functools import lru_cache
 
 from processor import is_email_configured, get_email_config
 import processor.tasks as celery_tasks
@@ -14,14 +16,19 @@ from processor.database import projects_db as projects_db
 logger = logging.getLogger(__name__)
 
 
+@lru_cache(maxsize=50000)
+def _cached_metadata_extract(url: str) -> dict:
+    # Smart to cache here, because this URL might be in multiple projects!
+    return metadata.extract(url)
+
+
 @task(name='fetch_text')
 def fetch_text_task(story: Dict) -> Optional[Dict]:
     try:
-        html, _ = metadata.webpages.fetch(story['url'])
-        parsed = metadata.content.from_html(story['url'], html)
+        parsed = _cached_metadata_extract(story['url'])
         updated_story = copy.copy(story)
-        updated_story['story_text'] = parsed['results']['text']
-        updated_story['publish_date'] = parsed['results']['publish_date']
+        updated_story['story_text'] = parsed['text_content']
+        updated_story['publish_date'] = parsed['publication_date'] # this is a date object
         return updated_story
     except Exception as _:
         # this is probably an HTTP, or content parsing error
@@ -30,7 +37,9 @@ def fetch_text_task(story: Dict) -> Optional[Dict]:
 
 
 @task(name='send_email')
-def send_email_task(summary: Dict, data_source: str):
+def send_email_task(summary: Dict, data_source: str, start_time: float):
+    duration_secs = time.time() - start_time
+    duration_mins = str(round(duration_secs / 60, 2))
     email_message = ""
     email_message += "Checking {} projects.\n\n".format(summary['project_count'])
     email_message += summary['email_text']
@@ -40,7 +49,9 @@ def send_email_task(summary: Dict, data_source: str):
     if is_email_configured():
         email_config = get_email_config()
         notifications.send_email(email_config['notify_emails'],
-                                 "Feminicide {} Update: {} stories".format(data_source, summary['stories']),
+                                 "Feminicide {} Update: {} stories ({} mins)".format(data_source,
+                                                                                     summary['stories'],
+                                                                                     duration_mins),
                                  email_message)
     else:
         logger.info("Not sending any email updates")

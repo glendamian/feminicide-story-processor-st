@@ -100,7 +100,7 @@ def fetch_project_stories_task(project_list: Dict, data_source: str) -> List[Dic
 if __name__ == '__main__':
 
     logger = logging.getLogger(__name__)
-    logger.info("Starting story fetch job")
+    logger.info("Starting {} story fetch job".format(processor.SOURCE_NEWSCATCHER))
 
     # important to do because there might be new models on the server!
     logger.info("  Checking for any new models we need")
@@ -108,8 +108,9 @@ if __name__ == '__main__':
 
     with Flow("story-processor") as flow:
         if WORKER_COUNT > 1:
-            flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=WORKER_COUNT)  # execute `map` calls in parallel
+            flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=WORKER_COUNT)
         data_source_name = Parameter("data_source", default="")
+        start_time = Parameter("start_time", default=time.time())
         # 1. list all the project we need to work on
         projects_list = load_projects_task()
         # 2. fetch all the urls from for each project from newscatcher (not mapped, so we can respect rate limiting)
@@ -120,9 +121,10 @@ if __name__ == '__main__':
         results_data = prefect_tasks.queue_stories_for_classification_task(projects_list, stories_with_text,
                                                                            data_source_name)
         # 5. send email with results of operations
-        prefect_tasks.send_email_task(results_data, data_source_name)
+        prefect_tasks.send_email_task(results_data, data_source_name, start_time)
 
     # run the whole thing
     flow.run(parameters={
-        'data_source': processor.SOURCE_NEWSCATCHER
+        'data_source': processor.SOURCE_NEWSCATCHER,
+        'start_time': time.time(),
     })

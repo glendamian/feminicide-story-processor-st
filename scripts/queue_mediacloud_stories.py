@@ -3,6 +3,7 @@ import datetime as dt
 from mediacloud.error import MCException
 from requests.exceptions import ConnectionError
 from typing import List, Dict
+import time
 from prefect import Flow, Parameter, task, unmapped
 from prefect.executors import LocalDaskExecutor
 
@@ -17,6 +18,8 @@ import processor.notifications as notifications
 
 DEFAULT_STORIES_PER_PAGE = 150  # I found this performs poorly if set too high
 DEFAULT_MAX_STORIES_PER_PROJECT = 20000  # make sure we don't do too many stories each cron run (for testing)
+
+WORKER_COUNT = 6
 
 
 @task(name='load_projects')
@@ -98,7 +101,9 @@ def process_project_task(project: Dict, page_size: int, max_stories: int) -> Dic
 
 
 @task(name='send_email')
-def send_email_task(project_details: List[Dict]):
+def send_email_task(project_details: List[Dict], start_time: float):
+    duration_secs = time.time() - start_time
+    duration_mins = str(round(duration_secs/60, 2))
     total_new_stories = sum([s['stories'] for s in project_details])
     total_pages = sum([s['pages'] for s in project_details])
     email_message = ""
@@ -108,12 +113,14 @@ def send_email_task(project_details: List[Dict]):
     logger.info("Done with {} projects".format(len(project_details)))
     logger.info("  {} stories over {} pages".format(total_new_stories, total_pages))
     email_message += "Done - pulled {} stories over {} pages total.\n\n" \
-                     "(An automated email from your friendly neighborhood Media Cloud story processor)" \
-        .format(total_new_stories, total_pages)
+                     "(An automated email from your friendly neighborhood {} story processor)" \
+        .format(total_new_stories, total_pages, processor.SOURCE_MEDIA_CLOUD)
     if is_email_configured():
         email_config = get_email_config()
         notifications.send_email(email_config['notify_emails'],
-                                 "Feminicide Media Cloud Update: {} stories".format(total_new_stories),
+                                 "Feminicide {} Update: {} stories ({} mins)".format(processor.SOURCE_MEDIA_CLOUD,
+                                                                                     total_new_stories,
+                                                                                     duration_mins),
                                  email_message)
     else:
         logger.info("Not sending any email updates")
@@ -122,17 +129,19 @@ def send_email_task(project_details: List[Dict]):
 if __name__ == '__main__':
 
     logger = logging.getLogger(__name__)
-    logger.info("Starting story fetch job")
+    logger.info("Starting {} story fetch job".format(processor.SOURCE_MEDIA_CLOUD))
 
     # important to do because there might new models on the server!
     logger.info("  Checking for any new models we need")
     download_models()
 
     with Flow("story-processor") as flow:
-        flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=6)  # execute `map` calls in parallel
+        if WORKER_COUNT > 1:
+            flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=WORKER_COUNT)
         # read parameters
         stories_per_page = Parameter("stories_per_page", default=DEFAULT_STORIES_PER_PAGE)
         max_stories_per_project = Parameter("max_stories_per_project", default=DEFAULT_MAX_STORIES_PER_PROJECT)
+        start_time = Parameter("start_time", default=time.time())
         logger.info("    will request {} stories/page (up to {})".format(stories_per_page, max_stories_per_project))
         # 1. list all the project we need to work on
         projects_list = load_projects_task()
@@ -141,10 +150,11 @@ if __name__ == '__main__':
                                                     page_size=unmapped(stories_per_page),
                                                     max_stories=unmapped(max_stories_per_project))
         # 3. send email with results of operations
-        send_email_task(project_statuses)
+        send_email_task(project_statuses, start_time)
 
     # run the whole thing
     flow.run(parameters={
         'stories_per_page': DEFAULT_STORIES_PER_PAGE,
         'max_stories_per_project': DEFAULT_MAX_STORIES_PER_PROJECT,
+        'start_time': time.time(),
     })
