@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.2
+
+* Small bug fixes to make it more robust
+
 ### v2.3.1
 
 * Time how long a fetch takes, and include in email report
