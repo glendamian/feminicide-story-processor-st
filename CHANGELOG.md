@@ -3,6 +3,11 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.5
+
+* Fix Media Cloud quert start date to avoid getting older stories by accident (because we need to reprocess older
+  feeds to backfill some gaps in our main databse, and those would have new high processed_stories_id values).
+
 ### v2.3.4
 
 * Fix logging for stories with no unique ID from their source
