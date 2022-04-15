@@ -45,7 +45,7 @@ def process_project_task(project: Dict, page_size: int, max_stories: int) -> Dic
         " ".join([str(tid) for tid in project['media_collections']]))
 # HACK - we need to query from *after* the Jan Media Cloud migration to AWS (for now), otherwise paging doesn't work
     # start_date = dateparser.parse(project['start_date'])
-    start_date = dt.date(2021, 3, 25)  # to reduce load and processing, for now
+    start_date = dt.date(2022, 4, 1)  # to reduce load and processing, for now
     now = dt.date.today()
     fq = mc.dates_as_query_clause(start_date, now)
     # debug output total story count
