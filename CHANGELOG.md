@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.6
+
+* Work on dependency problems.
+
 ### v2.3.5
 
 * Fix Media Cloud quert start date to avoid getting older stories by accident (because we need to reprocess older
