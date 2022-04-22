@@ -3,6 +3,12 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.7
+
+* Change Media Cloud processor to err on the side of recentness over completeness, specifically by only querying
+  for stories published within the last few days. This should ensure we don't fall too many days behind on projects
+  that have lots of results. The downside is that for those projects it could miss stories each day.
+
 ### v2.3.6
 
 * Work on dependency problems.
