@@ -19,7 +19,11 @@ import processor.notifications as notifications
 DEFAULT_STORIES_PER_PAGE = 150  # I found this performs poorly if set too high
 DEFAULT_MAX_STORIES_PER_PROJECT = 20000  # make sure we don't do too many stories each cron run (for testing)
 
-WORKER_COUNT = 6
+WORKER_COUNT = 6  # scale of parallel processing (of project queries)
+
+# use this to make sure we don't fall behind on recent stories, even if a project query is producing more than
+# DEFAULT_MAX_STORIES_PER_PROJECT stories a day
+DEFAULT_DAY_WINDOW = 2
 
 
 @task(name='load_projects')
@@ -43,14 +47,12 @@ def process_project_task(project: Dict, page_size: int, max_stories: int) -> Dic
         project['search_terms'],
         project['language'],
         " ".join([str(tid) for tid in project['media_collections']]))
-# HACK - we need to query from *after* the Jan Media Cloud migration to AWS (for now), otherwise paging doesn't work
-    # start_date = dateparser.parse(project['start_date'])
-    start_date = dt.date(2022, 4, 1)  # to reduce load and processing, for now
     now = dt.date.today()
+    start_date = now - dt.timedelta(days=DEFAULT_DAY_WINDOW)  # err on the side of recentness over completeness
     fq = mc.dates_as_query_clause(start_date, now)
-    # debug output total story count
-    #total_stories = mc.storyCount(q, fq)['count']
-    #logger.info("  project {} - total {} stories".format(project['id'], total_stories))
+    # debug output total story count, removed because it slows things down
+    # total_stories = mc.storyCount(q, fq)['count']
+    # logger.info("  project {} - total {} stories".format(project['id'], total_stories))
     # return dict(email_text="", stories=total_stories, pages=0) # helpful for debugging
     # page through any new stories
     story_count = 0
