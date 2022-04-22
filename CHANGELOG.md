@@ -3,6 +3,11 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.8
+
+* Add charts to show discovery/ingest by platform on homepage and project pages.
+* Show list of recent URLs discovered by project.
+
 ### v2.3.7
 
 * Change Media Cloud processor to err on the side of recentness over completeness, specifically by only querying

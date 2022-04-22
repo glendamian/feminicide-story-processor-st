@@ -22,6 +22,16 @@
 
 <div class="row">
     <div class="col-lg-12">
+        <h2>Recent Story Volume (by published_date)</h2>
+        <div id="discovery-history"></div>
+        <div id="published-over-time"></div>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-lg-12">
         <h2>Recent Story Volume (by processed_date)</h2>
         <div id="processed-over-time"></div>
         <div id="posted-over-time"></div>
@@ -32,23 +42,14 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h2>Recent Story Volume (by published_date)</h2>
-        <div id="published-over-time"></div>
-    </div>
-</div>
-
-<hr />
-
-<div class="row">
-    <div class="col-lg-12">
         <h2>Latest Stories</h2>
         <h4>Above Threshold</h4>
         {% with stories=stories_above %}
-            {% include '_story_table.html' %}
+            {% include '_simple_story_table.html' %}
         {% endwith %}
         <h4>Below Threshold</h4>
         {% with stories=stories_below %}
-            {% include '_story_table.html' %}
+            {% include '_simple_story_table.html' %}
         {% endwith %}
     </div>
 </div>
@@ -65,28 +66,8 @@
 {% endblock %}
 
 {% block page_scripts %}
-
-function renderStacked(data, selector, title){
-    showSpinner(selector);
-    // draw a stacked bar chart of above/below threshold story volume by day
-    vl.markBar({ tooltip: true })
-    .width(950)
-    .data(data)
-    .title(title)
-    .encode(
-      vl.x().fieldT("date").axis({'format': "%m-%d"}),
-      vl.y().fieldQ("count"),
-      vl.color().fieldN("type"),
-      vl.tooltip([vl.fieldT("date"), vl.fieldN("type"), vl.fieldQ("count")])
-    )
-    .render()
-    .then(viewElement => {
-        $(selector).html("");
-        $(selector).append(viewElement);
-    });
-}
-
 renderStacked('/projects/{{ project['id'] }}/processed-by-day', '#processed-over-time', 'Story Classification Results by Date Processed');
-renderStacked('/projects/{{ project['id'] }}/posted-by-day', '#posted-over-time', 'Above Threshold Stories by Status and Date Processed');
+// renderStacked('/projects/{{ project['id'] }}/posted-by-day', '#posted-over-time', 'Above Threshold Stories by Status and Date Processed');
 renderStacked('/projects/{{ project['id'] }}/published-by-day', '#published-over-time', 'Story Classification Results by Detected Date of Publication');
+renderStacked({{ ingest_data | safe }}, '#discovery-history', 'Discovered Stories by Platform');
 {% endblock %}
