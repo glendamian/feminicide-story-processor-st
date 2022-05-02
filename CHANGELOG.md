@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.9
+
+* Update dependencies to try and fix website timeout error on query to Media Cloud. 
+
 ### v2.3.8
 
 * Add charts to show discovery/ingest by platform on homepage and project pages.
