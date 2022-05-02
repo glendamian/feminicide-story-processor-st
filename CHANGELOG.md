@@ -3,9 +3,13 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.10
+
+* More work on web dashboard errors
+
 ### v2.3.9
 
-* Update dependencies to try and fix website timeout error on query to Media Cloud. 
+* Update dependencies to try and fix dashboard website timeout error on query to Media Cloud. 
 
 ### v2.3.8
 

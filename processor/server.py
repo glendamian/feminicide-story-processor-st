@@ -5,6 +5,7 @@ from flask import render_template, jsonify
 import json
 from typing import Dict, List
 from itertools import chain
+import requests.exceptions
 
 from processor import create_flask_app, VERSION, get_mc_client, PLATFORMS, SOURCE_MEDIA_CLOUD
 from processor.projects import load_project_list
@@ -106,6 +107,10 @@ def a_project(project_id_str):
             story_lookup = {s['stories_id']: s for s in stories}
         else:
             story_lookup = {}
+    except requests.exceptions.ReadTimeout as rte:
+        # maybe Media Cloud is down?
+        story_lookup = {}
+        pass
     except mediacloud.error.MCException as mce:
         # we currently can't query for BIGINT story ids with a stories_id clause in the query
         story_lookup = {}
