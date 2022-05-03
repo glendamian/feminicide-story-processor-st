@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.12
+
+* Remove debugging statements 
+
 ### v2.3.11
 
 * Tweaking NewsCatcher ingest to work on odd behavior we're seeing

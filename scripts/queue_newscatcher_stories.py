@@ -16,7 +16,7 @@ import scripts.tasks as prefect_tasks
 
 PAGE_SIZE = 100
 DEFAULT_DAY_WINDOW = 3
-WORKER_COUNT = 1
+WORKER_COUNT = 16
 MAX_CALLS_PER_SEC = 5
 DELAY_SECS = 1 / MAX_CALLS_PER_SEC
 
@@ -29,7 +29,8 @@ def load_projects_task() -> List[Dict]:
     projects_with_countries = [p for p in project_list if (p['country'] is not None) and len(p['country']) == 2]
     logger.info("  Found {} projects, checking {} with countries set".format(len(project_list),
                                                                              len(projects_with_countries)))
-    return [p for p in projects_with_countries if p['id']==21]
+    #return [p for p in projects_with_countries if p['id']==21]
+    return projects_with_countries
 
 
 def _fetch_results(project: Dict, start_date: dt.datetime, end_date: dt.datetime, page: int = 1) -> Dict:
