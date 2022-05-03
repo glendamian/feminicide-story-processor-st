@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.11
+
+* Tweaking NewsCatcher ingest to work on odd behavior we're seeing
+
 ### v2.3.10
 
 * More work on web dashboard errors
