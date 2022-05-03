@@ -16,7 +16,7 @@ import scripts.tasks as prefect_tasks
 
 PAGE_SIZE = 100
 DEFAULT_DAY_WINDOW = 3
-WORKER_COUNT = 16
+WORKER_COUNT = 1
 MAX_CALLS_PER_SEC = 5
 DELAY_SECS = 1 / MAX_CALLS_PER_SEC
 
@@ -29,10 +29,10 @@ def load_projects_task() -> List[Dict]:
     projects_with_countries = [p for p in project_list if (p['country'] is not None) and len(p['country']) == 2]
     logger.info("  Found {} projects, checking {} with countries set".format(len(project_list),
                                                                              len(projects_with_countries)))
-    return projects_with_countries
+    return [p for p in projects_with_countries if p['id']==21]
 
 
-def _fetch_results(project: Dict, start_date, end_date, page: int = 1) -> Dict:
+def _fetch_results(project: Dict, start_date: dt.datetime, end_date: dt.datetime, page: int = 1) -> Dict:
     return newscatcherapi.get_search(
         q=project['search_terms'],
         lang=project['language'],
@@ -47,33 +47,38 @@ def _fetch_results(project: Dict, start_date, end_date, page: int = 1) -> Dict:
 @task(name='fetch_project_stories')
 def fetch_project_stories_task(project_list: Dict, data_source: str) -> List[Dict]:
     combined_stories = []
-    end_date = dt.date.today()
+    end_date = dt.datetime.now()
     for p in project_list:
         project_stories = []
         valid_stories = 0
         history = projects_db.get_history(p['id'])
         page_number = 1
         # only search stories since the last search (if we've done one before)
+        start_date = end_date - dt.timedelta(days=DEFAULT_DAY_WINDOW)
         if history.last_publish_date is not None:
-            start_date = history.last_publish_date
-        else:
-            start_date = end_date - dt.timedelta(days=DEFAULT_DAY_WINDOW)
+            # make sure we don't accidently cut off a half day we haven't queried against yet
+            # this is OK because duplicates will get screened out later in the pipeline
+            local_start_date = history.last_publish_date - dt.timedelta(days=1)
+            start_date = min(local_start_date, start_date)
         current_page = _fetch_results(p, start_date, end_date, page_number)
         total_hits = current_page['total_hits']
-        logger.info("Project {}/{} - {} total stories".format(p['id'], p['title'], total_hits))
+        logger.info("Project {}/{} - {} total stories (since {})".format(p['id'], p['title'], total_hits, start_date))
         if total_hits > 0:
             page_count = math.ceil(total_hits / PAGE_SIZE)
             keep_going = True
             while keep_going:
                 logger.debug("  {} - page {}: {} stories".format(p['id'], page_number, len(current_page['articles'])))
                 for item in current_page['articles']:
-                    # maybe stop when we hit a url we've processed already
                     real_url = item['link']
+                    # removing this check for now, because I'm not sure if stories are ordered consistently
+                    """
+                    # stop when we've hit a url we've processed already
                     if history.last_url == real_url:
                         logger.info("  Found last_url on {}, skipping the rest".format(p['id']))
                         keep_going = False
                         break  # out of the for loop of all articles on page, back to while "more pages"
                     # story was published more recently than latest one we saw, so process it
+                    """
                     info = dict(
                         url=real_url,
                         source_publish_date=item['published_date'],

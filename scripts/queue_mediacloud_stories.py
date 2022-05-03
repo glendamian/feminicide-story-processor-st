@@ -47,7 +47,7 @@ def process_project_task(project: Dict, page_size: int, max_stories: int) -> Dic
         project['search_terms'],
         project['language'],
         " ".join([str(tid) for tid in project['media_collections']]))
-    now = dt.date.today()
+    now = dt.datetime.now()
     start_date = now - dt.timedelta(days=DEFAULT_DAY_WINDOW)  # err on the side of recentness over completeness
     fq = mc.dates_as_query_clause(start_date, now)
     # debug output total story count, removed because it slows things down
