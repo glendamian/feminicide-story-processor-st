@@ -145,7 +145,7 @@ def stories_by_processed_day(project_id: int, above_threshold: bool, is_posted: 
     :return:
     """
     earliest_date = dt.date.today() - dt.timedelta(days=limit)
-    query = "select processed_date::date as day, count(*) as stories from stories " \
+    query = "select processed_date::date as day, count(1) as stories from stories " \
             "where (project_id={}) and (above_threshold is {}) and (processed_date is not Null) " \
             "and processed_date >= '{}'::DATE " \
             .format(project_id, 'True' if above_threshold else 'False', earliest_date)
@@ -172,7 +172,7 @@ def stories_by_published_day(project_id: int = None, platform: str = None, above
         clauses.append("(source='{}')".format(platform))
     if above_threshold is not None:
         clauses.append("(above_threshold is {})".format('True' if above_threshold else 'False'))
-    query = "select published_date::date as day, count(*) as stories from stories " \
+    query = "select published_date::date as day, count(1) as stories from stories " \
             "where (published_date is not Null) and (published_date >= '{}'::DATE) and {} " \
             "group by 1 order by 1 DESC".format(earliest_date, " AND ".join(clauses))
     return _run_query(query)
@@ -198,7 +198,7 @@ def unposted_above_story_count(project_id: int) -> int:
     :param project_id:
     :return:
     """
-    query = "select count(*) from stories where project_id={} and posted_date is Null and above_threshold is True".\
+    query = "select count(1) from stories where project_id={} and posted_date is Null and above_threshold is True".\
         format(project_id)
     return _run_count_query(query)
 
@@ -209,7 +209,7 @@ def posted_above_story_count(project_id: int) -> int:
     :param project_id:
     :return:
     """
-    query = "select count(*) from stories where project_id={} and posted_date is not Null and above_threshold is True". \
+    query = "select count(1) from stories where project_id={} and posted_date is not Null and above_threshold is True". \
         format(project_id)
     return _run_count_query(query)
 
@@ -220,7 +220,7 @@ def below_story_count(project_id: int) -> int:
     :param project_id:
     :return:
     """
-    query = "select count(*) from stories where project_id={} and above_threshold is False".\
+    query = "select count(1) from stories where project_id={} and above_threshold is False".\
         format(project_id)
     return _run_count_query(query)
 
