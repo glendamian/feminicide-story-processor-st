@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.13
+
+* Work on better error reporting 
+
 ### v2.3.12
 
 * Remove debugging statements 
