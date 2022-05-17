@@ -62,20 +62,14 @@ def process_project_task(project: Dict, page_size: int, max_stories: int) -> Dic
         try:
             page_of_stories = mc.storyList(q, fq, last_processed_stories_id=project_last_processed_stories_id,
                                            text=True, rows=page_size)
-            for s in page_of_stories:
-                s['source'] = processor.SOURCE_MEDIA_CLOUD
             logger.info("    {} - page {}: ({}) stories".format(project['id'], page_count, len(page_of_stories)))
-        except ConnectionError as ce:
-            logger.error("  Connection failed on project {}. Skipping project.".format(project['id']))
-            logger.exception(ce)
-            more_stories = False
-            continue  # fail gracefully by going to the next project; maybe next cron run it'll work?
-        except MCException as mce:
-            logger.error("  Query failed on project {}. Skipping project.".format(project['id']))
-            logger.exception(mce)
+        except Exception as e:
+            logger.error("  Story list error on project {}. Skipping for now. {}".format(project['id'], e))
             more_stories = False
             continue  # fail gracefully by going to the next project; maybe next cron run it'll work?
         if len(page_of_stories) > 0:
+            for s in page_of_stories:
+                s['source'] = processor.SOURCE_MEDIA_CLOUD
             page_count += 1
             story_count += len(page_of_stories)
             tasks.classify_and_post_worker.delay(project, page_of_stories)
