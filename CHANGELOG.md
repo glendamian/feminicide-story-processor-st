@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.14
+
+* Tweak to try and resolve missing stories_id issue on newscatcher-sourced stories
+
 ### v2.3.13
 
 * Work on better error reporting 
