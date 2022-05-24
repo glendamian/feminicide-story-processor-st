@@ -68,6 +68,9 @@ def queue_stories_for_classification_task(project_list: List[Dict], stories: Lis
         if len(project_stories) > 0:
             # and log that we got and queued them all
             inserted_ids = stories_db.add_stories(project_stories, p, datasource)
+            if len(inserted_ids) != len(project_stories):
+                raise RuntimeError("have {} stories, but only {} db ids".format(
+                    len(project_stories), len(inserted_ids)))
             for idx in range(0, len(inserted_ids)):
                 project_stories[idx]['stories_id'] = inserted_ids[idx]
                 # Newscatcher might be better at guessing publication dates than we are?
