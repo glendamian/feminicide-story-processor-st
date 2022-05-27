@@ -2,7 +2,7 @@ import logging
 from typing import List, Dict
 import feedparser
 import time
-import mcmetadata as metadata
+import mcmetadata.urls as urls
 from prefect import Flow, task, Parameter
 from urllib.parse import urlparse, parse_qs
 from prefect.executors import LocalDaskExecutor
@@ -58,8 +58,8 @@ def fetch_project_stories_task(project_list: Dict, data_source: str) -> List[Dic
                 source=data_source,
                 project_id=p['id'],
                 language=p['language'],
-                media_url=metadata.domains.from_url(real_url),
-                media_name=metadata.domains.from_url(real_url)
+                media_url=urls.canonical_domain(real_url),
+                media_name=urls.canonical_domain(real_url)
             )
             project_stories.append(info)
             valid_stories += 1

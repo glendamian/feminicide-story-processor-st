@@ -2,7 +2,7 @@ import logging
 import math
 from typing import List, Dict
 import time
-import mcmetadata as metadata
+import mcmetadata.urls as urls
 import datetime as dt
 from prefect import Flow, task, Parameter
 from newscatcherapi import NewsCatcherApiClient
@@ -18,7 +18,7 @@ PAGE_SIZE = 100
 DEFAULT_DAY_WINDOW = 3
 WORKER_COUNT = 16
 MAX_CALLS_PER_SEC = 5
-MAX_STORIES_PER_PROJECT = 10000
+MAX_STORIES_PER_PROJECT = 5  # 10000
 DELAY_SECS = 1 / MAX_CALLS_PER_SEC
 
 newscatcherapi = NewsCatcherApiClient(x_api_key=processor.NEWSCATCHER_API_KEY)
@@ -30,7 +30,7 @@ def load_projects_task() -> List[Dict]:
     projects_with_countries = [p for p in project_list if (p['country'] is not None) and len(p['country']) == 2]
     logger.info("  Found {} projects, checking {} with countries set".format(len(project_list),
                                                                              len(projects_with_countries)))
-    return projects_with_countries
+    return projects_with_countries[:1]
 
 
 def _fetch_results(project: Dict, start_date: dt.datetime, end_date: dt.datetime, page: int = 1) -> Dict:
@@ -88,8 +88,8 @@ def fetch_project_stories_task(project_list: Dict, data_source: str) -> List[Dic
                         project_id=p['id'],
                         language=p['language'],
                         authors=item['authors'],
-                        media_url=metadata.domains.from_url(real_url),
-                        media_name=metadata.domains.from_url(real_url)
+                        media_url=urls.canonical_domain(real_url),
+                        media_name=urls.canonical_domain(real_url)
                         # too bad there isn't somewhere we can store the `id` (string)
                     )
                     project_stories.append(info)
