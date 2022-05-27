@@ -66,12 +66,12 @@ def queue_stories_for_classification_task(project_list: List[Dict], stories: Lis
         email_message += "Project {} - {}: {} stories\n".format(p['id'], p['title'], len(project_stories))
         total_stories += len(project_stories)
         if len(project_stories) > 0:
+            # Newscatcher/Google might be better at guessing publication dates than we are?
+            for s in project_stories:
+                s['publish_date'] = s['source_publish_date']
             # and log that we got and queued them all
             project_stories = stories_db.add_stories(project_stories, p, datasource)
-            for s in project_stories:
-                # Newscatcher might be better at guessing publication dates than we are?
-                s['publish_date'] = s['source_publish_date']
-            if len(project_stories) > 0: # don't queue up unnecessary tasks
+            if len(project_stories) > 0:  # don't queue up unnecessary tasks
                 # important to do this *after* we add the stories_id here
                 celery_tasks.classify_and_post_worker.delay(p, project_stories)
                 # important to write this update now, because we have queued up the task to process these stories

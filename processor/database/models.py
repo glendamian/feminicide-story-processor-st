@@ -34,19 +34,27 @@ class Story(Base):
 
     @staticmethod
     def from_source(story, source):
-        s = Story()
-        if source == processor.SOURCE_MEDIA_CLOUD:
-            s.stories_id = story['stories_id']
-        if not isinstance(story['publish_date'], dt.datetime):
-            s.published_date = parse(story['publish_date'])
-        elif story['publish_date'] is not None:
-            s.published_date = story['publish_date']
-        else:  # if it is None then default to now, so we get some date
-            s.published_date = dt.datetime.now()
-            logger.warning("Used today as publish date for story that didn't have date on it: {}".format(s['url']))
-        s.url = story['url']
-        s.source = source
-        return s
+        db_story = Story()
+        if source == processor.SOURCE_MEDIA_CLOUD:  # backwards compatability
+            db_story.stories_id = story['stories_id']
+        db_story.url = story['url']
+        db_story.source = source
+        # carefully parse date, with fallback to today so we at least get something close to right
+        use_fallback_date = False
+        try:
+            if not isinstance(story['publish_date'], dt.datetime):
+                db_story.published_date = parse(story['publish_date'])
+            elif story['publish_date'] is not None:
+                db_story.published_date = story['publish_date']
+            else:
+                use_fallback_date = True
+        except Exception as e:
+            use_fallback_date = True
+        if use_fallback_date:
+            db_story.published_date = dt.datetime.now()
+            logger.warning("Used today as publish date for story that didn't have date ({}) on it: {}".format(
+                story['publish_date'], db_story['url']))
+        return db_story
 
 
 class ProjectHistory(Base):
