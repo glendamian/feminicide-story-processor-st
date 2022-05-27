@@ -3,6 +3,12 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.16
+
+* Refactor database chain to be more consistent in use of log_db_id for lookups
+* Make sure to add a stories_id if there isn't one there
+* Add max stories per project to NewsCatcher fetcher
+
 ### v2.3.15
 
 * Upgrade requirements
