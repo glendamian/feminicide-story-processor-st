@@ -2,9 +2,10 @@ import datetime as dt
 from typing import List, Dict
 import logging
 import copy
+import sys
 
 from sqlalchemy.sql import func
-from sqlalchemy import and_, text
+from sqlalchemy import text
 from sqlalchemy.orm import sessionmaker
 
 import processor
@@ -59,6 +60,8 @@ def update_stories_processed_date_score(stories: List, project_id: int) -> None:
     :param project_id:
     :return:
     """
+    if 'unittest' in sys.modules.keys():
+        return
     now = dt.datetime.now()
     session = Session()
     for s in stories:
