@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 def add_stories(source_story_list: List[Dict], project: Dict, source: str) -> List[Dict]:
     """
-    Logging: Track metadata about all the stories we process we so we can audit it later (like a log file).
+    Logging: Track metadata about all the stories we process we, so we can audit it later (like a log file).
     :param source_story_list:
     :param project:
     :param source:
@@ -75,8 +75,8 @@ def update_stories_processed_date_score(stories: List) -> None:
 
 def update_stories_above_threshold(stories: List) -> None:
     """
-    Logging: Also keep track which stories were above the classifier score threshold on the project right now. Ones above should
-    be sent to the server.
+    Logging: Also keep track which stories were above the classifier score threshold on the project right now.
+    Ones above should be sent to the server.
     :param stories:
     :return:
     """
@@ -194,7 +194,8 @@ def posted_above_story_count(project_id: int) -> int:
     :param project_id:
     :return:
     """
-    query = "select count(1) from stories where project_id={} and posted_date is not Null and above_threshold is True". \
+    query = "select count(1) from stories " \
+            "where project_id={} and posted_date is not Null and above_threshold is True".\
         format(project_id)
     return _run_count_query(query)
 
@@ -216,7 +217,8 @@ def unposted_stories(project_id: int):
     :param project_id:
     :return:
     """
-    query = "select * from stories where project_id={} and posted_date is Null and above_threshold is True".format(project_id)
+    query = "select * from stories " \
+            "where project_id={} and posted_date is Null and above_threshold is True".format(project_id)
     """
     session = Session()
     q = session.query(Story). \
