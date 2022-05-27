@@ -3,6 +3,11 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.17
+
+* Update dependencies
+* Fix date parsing bug
+
 ### v2.3.16
 
 * Refactor database chain to be more consistent in use of log_db_id for lookups
