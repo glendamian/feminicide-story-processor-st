@@ -59,8 +59,6 @@ def update_stories_processed_date_score(stories: List) -> None:
     :param stories:
     :return:
     """
-    if 'unittest' in sys.modules.keys():
-        return
     now = dt.datetime.now()
     session = Session()
     for s in stories:
