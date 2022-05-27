@@ -53,11 +53,10 @@ def add_stories(source_story_list: List[Dict], project: Dict, source: str) -> Li
     return new_source_story_list
 
 
-def update_stories_processed_date_score(stories: List, project_id: int) -> None:
+def update_stories_processed_date_score(stories: List) -> None:
     """
     Logging: Once we have run the stories through the classifier models we want to save the scores.
     :param stories:
-    :param project_id:
     :return:
     """
     if 'unittest' in sys.modules.keys():
@@ -74,12 +73,11 @@ def update_stories_processed_date_score(stories: List, project_id: int) -> None:
     session.commit()
 
 
-def update_stories_above_threshold(stories: List, project_id:id) -> None:
+def update_stories_above_threshold(stories: List) -> None:
     """
     Logging: Also keep track which stories were above the classifier score threshold on the project right now. Ones above should
     be sent to the server.
     :param stories:
-    :param project_id:
     :return:
     """
     session = Session()
@@ -88,11 +86,10 @@ def update_stories_above_threshold(stories: List, project_id:id) -> None:
     session.commit()
 
 
-def update_stories_posted_date(stories: List, project_id: int) -> None:
+def update_stories_posted_date(stories: List) -> None:
     """
     Logging: Keep track of when we sent stories above threshold to the main server.
     :param stories:
-    :param project_id:
     :return:
     """
     now = dt.datetime.now()
@@ -142,7 +139,8 @@ def stories_by_processed_day(project_id: int, above_threshold: bool, is_posted: 
     return _run_query(query)
 
 
-def stories_by_published_day(project_id: int = None, platform: str = None, above_threshold: bool = None, limit: int = 30) -> List:
+def stories_by_published_day(project_id: int = None, platform: str = None, above_threshold: bool = None,
+                             limit: int = 30) -> List:
     """
     UI: chart of stories we processed by date of publication
     :param project_id:

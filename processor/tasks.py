@@ -22,15 +22,15 @@ ACCEPTED_ENTITY_TYPES = ["PERSON", "PER", "GPE", "LOC", "FAC", "DATE", "TIME", "
 
 
 def _add_confidence_to_stories(project: Dict, stories: List[Dict]) -> List[Dict]:
-    probabilities = projects.classify_stories(project, stories)
+    probs = projects.classify_stories(project, stories)
     for idx, s in enumerate(stories):
-        s['confidence'] = probabilities['model_scores'][idx]
+        s['confidence'] = probs['model_scores'][idx]
         # adding in some extra stuff for logging only (they get removed in `prep_stories_for_posting`)
-        s['model_score'] = probabilities['model_scores'][idx]
-        s['model_1_score'] = probabilities['model_1_scores'][idx] if probabilities['model_1_scores'] is not None else None
-        s['model_2_score'] = probabilities['model_2_scores'][idx] if probabilities['model_2_scores'] is not None else None
+        s['model_score'] = probs['model_scores'][idx]
+        s['model_1_score'] = probs['model_1_scores'][idx] if probs['model_1_scores'] is not None else None
+        s['model_2_score'] = probs['model_2_scores'][idx] if probs['model_2_scores'] is not None else None
     # keep an auditable log in our own local database
-    stories_db.update_stories_processed_date_score(stories, project['id'])
+    stories_db.update_stories_processed_date_score(stories)
     return stories
 
 
@@ -94,7 +94,7 @@ def classify_and_post_worker(self, project: Dict, stories: List[Dict]):
                       'w', encoding='utf-8') as f:
                 json.dump(stories_to_send, f, ensure_ascii=False, indent=4)
         # mark the stories in the local DB that we intend to send
-        stories_db.update_stories_above_threshold(stories_to_send, project['id'])
+        stories_db.update_stories_above_threshold(stories_to_send)
         # now actually post them
         logger.info('{}: {} stories to post'.format(project['id'], len(stories_to_send)))
         projects.post_results(project, stories_to_send)
@@ -102,7 +102,7 @@ def classify_and_post_worker(self, project: Dict, stories: List[Dict]):
             logger.debug("  post: {}/{} - {} - {}".format(s['project_id'], s['language_model_id'],
                                                           s['stories_id'], s['confidence']))
         # and track that we posted the stories that we did in our local debug DB
-        stories_db.update_stories_posted_date(stories_to_send, project['id'])
+        stories_db.update_stories_posted_date(stories_to_send)
     except requests.exceptions.HTTPError as err:
         # on failure requeue to try again
         logger.warning("{}: Failed to post {} results".format(project['id'], len(stories)))
