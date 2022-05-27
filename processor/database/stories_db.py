@@ -1,6 +1,7 @@
 import datetime as dt
 from typing import List, Dict
 import logging
+import copy
 
 from sqlalchemy.sql import func
 from sqlalchemy import and_, text
@@ -14,7 +15,7 @@ Session = sessionmaker(bind=processor.engine)
 logger = logging.getLogger(__name__)
 
 
-def add_stories(source_story_list: List, project: Dict, source: str) -> List[int]:
+def add_stories(source_story_list: List[Dict], project: Dict, source: str) -> List[Dict]:
     """
     Logging: Track metadata about all the stories we process we so we can audit it later (like a log file).
     :param source_story_list:
@@ -22,31 +23,33 @@ def add_stories(source_story_list: List, project: Dict, source: str) -> List[int
     :param source:
     :return: list of ids of objects inserted
     """
+    new_source_story_list = copy.copy(source_story_list)
     now = dt.datetime.now()
-    db_stories_to_insert = []
-    for mc_story in source_story_list:
-        try:
-            db_story = Story.from_source(mc_story, source)
-            db_story.project_id = project['id']
-            db_story.model_id = project['language_model_id']
-            db_story.queued_date = now
-            db_story.above_threshold = False
-            db_stories_to_insert.append(db_story)
-        except Exception as e:
-            logger.error("Unable to save story due to {}. Continuing to try and finish.".format(e))
+    for mc_story in new_source_story_list:
+        db_story = Story.from_source(mc_story, source)
+        db_story.project_id = project['id']
+        db_story.model_id = project['language_model_id']
+        db_story.queued_date = now
+        db_story.above_threshold = False
+        mc_story['db_story'] = db_story
     # now insert in batch to the database
     session = Session()
-    session.add_all(db_stories_to_insert)
+    session.add_all([s['db_story'] for s in new_source_story_list])
     session.commit()
-    ids = [s.id for s in db_stories_to_insert]
-    # and for ones without stories_ids, add those too
+    # only keep ones that inserted correctly
+    new_source_story_list = [s for s in new_source_story_list if ('db_story' in s) and s['db_story'].id]
+    for s in new_source_story_list:
+        s['log_db_id'] = s['db_story'].id  # keep track of the db id, so we can use it later to update this story
+        s['stories_id'] = s['db_story'].id
     if source != processor.SOURCE_MEDIA_CLOUD:
+        # these stories don't have a stories_id, which we use later, so set it to the id and save
         session = Session()
-        new_stories = session.query(Story).filter(Story.id.in_((ids))).all()
-        for s in new_stories:
-            s.stories_id = s.id
+        for s in new_source_story_list:
+            session.query(Story).filter_by(id=s['log_db_id']).update({"stories_id": s['log_db_id']})
         session.commit()
-    return ids
+    for s in new_source_story_list:  # free the DB objects back for GC
+        del s['db_story']
+    return new_source_story_list
 
 
 def update_stories_processed_date_score(stories: List, project_id: int) -> None:
@@ -58,20 +61,13 @@ def update_stories_processed_date_score(stories: List, project_id: int) -> None:
     """
     now = dt.datetime.now()
     session = Session()
-    db_stories = session.query(Story).filter(
-        and_(
-            Story.project_id == project_id,
-            Story.stories_id.in_(set([s['stories_id'] for s in stories])),
-        )
-    ).all()
-    for db_story in db_stories:
-        matching_mc_story = [s for s in stories if
-                             (s['stories_id'] == db_story.stories_id) and (project_id == db_story.project_id)]
-        mc_story = matching_mc_story[0]
-        db_story.model_score = mc_story['model_score']
-        db_story.model_1_score = mc_story['model_1_score']
-        db_story.model_2_score = mc_story['model_2_score']
-        db_story.processed_date = now
+    for s in stories:
+        session.query(Story).filter_by(id=s['log_db_id']).update({
+            "model_score": s['model_score'],
+            "model_1_score": s['model_1_score'],
+            "model_2_score": s['model_2_score'],
+            "processed_date": now,
+        })
     session.commit()
 
 
@@ -84,14 +80,8 @@ def update_stories_above_threshold(stories: List, project_id:id) -> None:
     :return:
     """
     session = Session()
-    db_stories = session.query(Story).filter(
-        and_(
-            Story.project_id == project_id,
-            Story.stories_id.in_(set([s['stories_id'] for s in stories])),
-        )
-    ).all()
-    for db_story in db_stories:
-        db_story.above_threshold = True
+    for s in stories:
+        session.query(Story).filter_by(id=s['log_db_id']).update({"above_threshold": True})
     session.commit()
 
 
@@ -104,14 +94,8 @@ def update_stories_posted_date(stories: List, project_id: int) -> None:
     """
     now = dt.datetime.now()
     session = Session()
-    db_stories = session.query(Story).filter(
-        and_(
-            Story.project_id == project_id,
-            Story.stories_id.in_(set([s['stories_id'] for s in stories])),
-        )
-    ).all()
-    for db_story in db_stories:
-        db_story.posted_date = now
+    for s in stories:
+        session.query(Story).filter_by(id=s['log_db_id']).update({"posted_date": now})
     session.commit()
 
 

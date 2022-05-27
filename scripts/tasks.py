@@ -67,21 +67,18 @@ def queue_stories_for_classification_task(project_list: List[Dict], stories: Lis
         total_stories += len(project_stories)
         if len(project_stories) > 0:
             # and log that we got and queued them all
-            inserted_ids = stories_db.add_stories(project_stories, p, datasource)
-            if len(inserted_ids) != len(project_stories):
-                raise RuntimeError("have {} stories, but only {} db ids".format(
-                    len(project_stories), len(inserted_ids)))
-            for idx in range(0, len(inserted_ids)):
-                project_stories[idx]['stories_id'] = inserted_ids[idx]
+            project_stories = stories_db.add_stories(project_stories, p, datasource)
+            for s in project_stories:
                 # Newscatcher might be better at guessing publication dates than we are?
-                project_stories[idx]['publish_date'] = project_stories[idx]['source_publish_date']
-            # important to do this *after* we add the stories_id here
-            celery_tasks.classify_and_post_worker.delay(p, project_stories)
-            # important to write this update now, because we have queued up the task to process these stories
-            # the task queue will manage retrying with the stories if it fails with this batch
-            publish_dates = [dateutil.parser.parse(s['source_publish_date']) for s in project_stories]
-            latest_date = max(publish_dates)
-            projects_db.update_history(p['id'], last_publish_date=latest_date, last_url=project_stories[0]['url'])
+                s['publish_date'] = s['source_publish_date']
+            if len(project_stories) > 0: # don't queue up unnecessary tasks
+                # important to do this *after* we add the stories_id here
+                celery_tasks.classify_and_post_worker.delay(p, project_stories)
+                # important to write this update now, because we have queued up the task to process these stories
+                # the task queue will manage retrying with the stories if it fails with this batch
+                publish_dates = [dateutil.parser.parse(s['source_publish_date']) for s in project_stories]
+                latest_date = max(publish_dates)
+                projects_db.update_history(p['id'], last_publish_date=latest_date, last_url=project_stories[0]['url'])
         logger.info("  queued {} stories for project {}/{}".format(total_stories, p['id'], p['title']))
     return dict(
         email_text=email_message,

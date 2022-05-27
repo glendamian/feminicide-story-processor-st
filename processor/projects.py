@@ -127,6 +127,7 @@ def prep_stories_for_posting(project: Dict, stories: List[Dict]) -> List[Dict]:
             # add in the probability from the model
             confidence=s['confidence'],
             # throw in some metadata for good measure
+            log_db_id=s['log_db_id'],
             project_id=project['id'],
             language_model_id=project['language_model_id']
         )
