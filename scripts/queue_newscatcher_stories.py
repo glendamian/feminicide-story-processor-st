@@ -30,7 +30,7 @@ def load_projects_task() -> List[Dict]:
     projects_with_countries = [p for p in project_list if (p['country'] is not None) and len(p['country']) == 2]
     logger.info("  Found {} projects, checking {} with countries set".format(len(project_list),
                                                                              len(projects_with_countries)))
-    return projects_with_countries[:1]
+    return projects_with_countries
 
 
 def _fetch_results(project: Dict, start_date: dt.datetime, end_date: dt.datetime, page: int = 1) -> Dict:
