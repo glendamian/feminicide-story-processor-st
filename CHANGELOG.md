@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.3.18
+
+* Update Media Cloud fetching to use new log database id as main key for updating stories
+
 ### v2.3.17
 
 * Update dependencies
