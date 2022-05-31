@@ -72,10 +72,10 @@ def process_project_task(project: Dict, page_size: int, max_stories: int) -> Dic
                 s['source'] = processor.SOURCE_MEDIA_CLOUD
             page_count += 1
             story_count += len(page_of_stories)
-            tasks.classify_and_post_worker.delay(project, page_of_stories)
-            project_last_processed_stories_id = page_of_stories[-1]['processed_stories_id']
             # and log that we got and queued them all
-            stories_db.add_stories(page_of_stories, project, processor.SOURCE_MEDIA_CLOUD)
+            stories_to_queue = stories_db.add_stories(page_of_stories, project, processor.SOURCE_MEDIA_CLOUD)
+            tasks.classify_and_post_worker.delay(project, stories_to_queue)
+            project_last_processed_stories_id = stories_to_queue[-1]['processed_stories_id']
             # important to write this update now, because we have queued up the task to process these stories
             # the task queue will manage retrying with the stories if it fails with this batch
             projects_db.update_history(project['id'], last_processed_stories_id=project_last_processed_stories_id)

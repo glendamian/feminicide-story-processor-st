@@ -41,11 +41,11 @@ def add_stories(source_story_list: List[Dict], project: Dict, source: str) -> Li
     new_source_story_list = [s for s in new_source_story_list if ('db_story' in s) and s['db_story'].id]
     for s in new_source_story_list:
         s['log_db_id'] = s['db_story'].id  # keep track of the db id, so we can use it later to update this story
-        s['stories_id'] = s['db_story'].id
     if source != processor.SOURCE_MEDIA_CLOUD:
         # these stories don't have a stories_id, which we use later, so set it to the id and save
         session = Session()
         for s in new_source_story_list:
+            s['stories_id'] = s['db_story'].id  # since these don't have a stories_id, set it to the database PK id
             session.query(Story).filter_by(id=s['log_db_id']).update({"stories_id": s['log_db_id']})
         session.commit()
     for s in new_source_story_list:  # free the DB objects back for GC
