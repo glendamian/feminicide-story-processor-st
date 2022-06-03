@@ -26,8 +26,8 @@ app.jinja_env.filters['as_pretty_json'] = as_pretty_json
 def home():
     projects = load_project_list()
     # show overall ingest over last two weeks
-    data_for_graph = _prep_for_graph([stories_db.stories_by_published_day(platform=p, limit=30) for p in PLATFORMS],
-                                     PLATFORMS)
+    data_for_graph = _prep_for_stacked_graph([stories_db.stories_by_published_day(platform=p, limit=30) for p in PLATFORMS],
+                                             PLATFORMS)
     return render_template('home.html', projects=projects, version=VERSION, ingest_data=data_for_graph)
 
 
@@ -37,7 +37,7 @@ def update_config():
     return jsonify(config)
 
 
-def _prep_for_graph(counts: List[List], names: List[str]) -> List[Dict]:
+def _prep_for_stacked_graph(counts: List[List], names: List[str]) -> List[Dict]:
     cleaned_data = [{r['day'].strftime("%Y-%m-%d"): r['stories'] for r in series} for series in counts]
     dates = set(chain(*[series.keys() for series in cleaned_data]))
     stories_by_day_data = []
@@ -54,7 +54,7 @@ def _prep_for_graph(counts: List[List], names: List[str]) -> List[Dict]:
 @app.route("/projects/<project_id_str>/processed-by-day", methods=['GET'])
 def project_processed_by_day(project_id_str):
     project_id = int(project_id_str)
-    data = _prep_for_graph(
+    data = _prep_for_stacked_graph(
         [stories_db.stories_by_processed_day(project_id, True, None),
          stories_db.stories_by_processed_day(project_id, False, None)],
         ['above threshold', 'below threshold']
@@ -65,7 +65,7 @@ def project_processed_by_day(project_id_str):
 @app.route("/projects/<project_id_str>/published-by-day", methods=['GET'])
 def project_published_by_day(project_id_str):
     project_id = int(project_id_str)
-    data = _prep_for_graph(
+    data = _prep_for_stacked_graph(
         [stories_db.stories_by_published_day(project_id=project_id, above_threshold=True),
          stories_db.stories_by_published_day(project_id=project_id, above_threshold=False)],
         ['above threshold', 'below threshold']
@@ -76,11 +76,18 @@ def project_published_by_day(project_id_str):
 @app.route("/projects/<project_id_str>/posted-by-day", methods=['GET'])
 def project_posted_by_day(project_id_str):
     project_id = int(project_id_str)
-    data = _prep_for_graph(
+    data = _prep_for_stacked_graph(
         [stories_db.stories_by_processed_day(project_id, True, True),
          stories_db.stories_by_processed_day(project_id, True, False)],
         ['sent to main server', 'not sent to main server']
     )
+    return jsonify(data)
+
+
+@app.route("/projects/<project_id_str>/binned-model-scores", methods=['GET'])
+def project_model_scores(project_id_str):
+    project_id = int(project_id_str)
+    data = stories_db.project_binned_model_scores(project_id)
     return jsonify(data)
 
 
@@ -91,8 +98,8 @@ def a_project(project_id_str):
     project = [p for p in load_project_list() if p['id'] == project_id][0]
 
     # show overall ingest over last two weeks
-    data_for_graph = _prep_for_graph([stories_db.stories_by_published_day(platform=p, project_id=project_id, limit=30)
-                                      for p in PLATFORMS], PLATFORMS)
+    data_for_graph = _prep_for_stacked_graph([stories_db.stories_by_published_day(platform=p, project_id=project_id, limit=30)
+                                              for p in PLATFORMS], PLATFORMS)
 
     # show some recent story results
     stories_above = stories_db.recent_stories(project_id, True)

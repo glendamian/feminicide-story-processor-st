@@ -166,13 +166,13 @@ def _run_query(query: str) -> List:
     with processor.engine.begin() as connection:
         result = connection.execute(text(query))
         for row in result:
-            data.append(row)
+            data.append(dict(row))
     return data
 
 
 def _run_count_query(query: str) -> int:
     data = _run_query(query)
-    return data[0][0]
+    return data[0]['count']
 
 
 def unposted_above_story_count(project_id: int) -> int:
@@ -225,4 +225,15 @@ def unposted_stories(project_id: int):
         filter(Story.posted_date is None)
     return q.all()
     """
+    return _run_query(query)
+
+
+def project_binned_model_scores(project_id: int) -> List:
+    query = """
+        select ROUND(CAST(model_score as numeric), 1) as value, count(1) as frequency
+        from stories
+        where project_id={} and model_score is not NULL
+        group by 1
+        order by 1
+    """.format(project_id)
     return _run_query(query)
