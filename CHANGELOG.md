@@ -3,10 +3,14 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.4.0
+
+* Add model score histogram to project page
+
 ### v2.3.18
 
 * Update Media Cloud fetching to use new log database id as main key for updating stories
-* Fix bug limiting NewsCatcher stories
+* Fix bug limiting NewsCatcher stories`
 
 ### v2.3.17
 
