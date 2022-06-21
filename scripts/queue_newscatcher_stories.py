@@ -7,6 +7,7 @@ import datetime as dt
 from prefect import Flow, task, Parameter
 from newscatcherapi import NewsCatcherApiClient
 from prefect.executors import LocalDaskExecutor
+import requests.exceptions
 
 import processor
 import processor.database.projects_db as projects_db
@@ -34,15 +35,22 @@ def load_projects_task() -> List[Dict]:
 
 
 def _fetch_results(project: Dict, start_date: dt.datetime, end_date: dt.datetime, page: int = 1) -> Dict:
-    return newscatcherapi.get_search(
-        q=project['search_terms'],
-        lang=project['language'],
-        countries=[p.strip() for p in project['country'].split(",")],
-        page_size=PAGE_SIZE,
-        from_=start_date.strftime("%Y-%m-%d"),
-        to_=end_date.strftime("%Y-%m-%d"),
-        page=page
-    )
+    try:
+        results = newscatcherapi.get_search(
+            q=project['search_terms'],
+            lang=project['language'],
+            countries=[p.strip() for p in project['country'].split(",")],
+            page_size=PAGE_SIZE,
+            from_=start_date.strftime("%Y-%m-%d"),
+            to_=end_date.strftime("%Y-%m-%d"),
+            page=page
+        )
+    except requests.exceptions.JSONDecodeError as jse:
+        logger.error("Couldn't parse response on project {}".format(project['id']))
+        logger.exception(jse)
+        # just ignore and keep going so at least we can get stories processed through the pipeline for other projects
+        results = []
+    return results
 
 
 @task(name='fetch_project_stories')
