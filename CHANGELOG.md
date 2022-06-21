@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.4.1
+
+* Make newscatcher fetching a bit more robust
+
 ### v2.4.0
 
 * Add model score histogram to project page
