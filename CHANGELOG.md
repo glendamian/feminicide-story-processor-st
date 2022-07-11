@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.4.2
+
+* New homepage chart for stories above threshold across system over time
+
 ### v2.4.1
 
 * Make newscatcher fetching a bit more robust
