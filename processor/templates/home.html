@@ -17,8 +17,9 @@
 
 <div class="row">
     <div class="col-12">
-        <h2>Discovery History</h2>
+        <h2>History</h2>
         <div id="discovery-history"></div>
+        <div id="posted-history"></div>
     </div>
 </div>
 
@@ -57,7 +58,9 @@
 
 {% block page_scripts %}
 
-renderStacked({{ ingest_data | safe }}, '#discovery-history', 'Discovered Stories by Platform');
+renderStacked("/processed-by-day", '#discovery-history', 'Discovered Stories by Platform');
+
+renderStacked("/posted-by-day", '#posted-history', 'Above Threshold Stories by Day');
 
 $("#update").click(function(){
     // show feedback while fetching results

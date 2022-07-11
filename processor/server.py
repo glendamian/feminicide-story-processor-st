@@ -25,10 +25,27 @@ app.jinja_env.filters['as_pretty_json'] = as_pretty_json
 @app.route("/", methods=['GET'])
 def home():
     projects = load_project_list()
-    # show overall ingest over last two weeks
-    data_for_graph = _prep_for_stacked_graph([stories_db.stories_by_published_day(platform=p, limit=30) for p in PLATFORMS],
-                                             PLATFORMS)
-    return render_template('home.html', projects=projects, version=VERSION, ingest_data=data_for_graph)
+    return render_template('home.html', projects=projects, version=VERSION)
+
+
+@app.route("/processed-by-day", methods=['GET'])
+def processed_by_day():
+    # show overall ingest over last month
+    data_for_graph = _prep_for_stacked_graph(
+        [stories_db.stories_by_published_day(platform=p, limit=30) for p in PLATFORMS],
+        PLATFORMS)
+    return jsonify(data_for_graph)
+
+
+@app.route("/posted-by-day", methods=['GET'])
+def posted_by_day():
+    # show stories above threshold over last month
+    data = _prep_for_stacked_graph(
+        [stories_db.stories_by_published_day(above_threshold=True),
+         stories_db.stories_by_published_day(above_threshold=False)],
+        ['above threshold', 'below threshold']
+    )
+    return jsonify(data)
 
 
 @app.route("/update-config", methods=['POST'])
