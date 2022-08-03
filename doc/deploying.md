@@ -15,20 +15,36 @@ Create the Dokku apps
 1. [install Dokku](http://dokku.viewdocs.io/dokku/getting-started/installation/)
 2. install the [Dokku rabbitmq plugin](https://github.com/dokku/dokku-rabbitmq)
 3. install the [Dokku postgres plugin](https://github.com/dokku/dokku-postgres)
-4. setup a rabbitmq queue: `dokku rabbitmq:create story-processor-q`
+4. setup rabbitmq queues:
+  * `dokku rabbitmq:create story-processor-q-nc`
+  * `dokku rabbitmq:create story-processor-q-mc`
 5. setup a postgres database: `dokku postgres:create story-processor-db`
-6. create an app: `dokku apps:create story-processor`
-7. link the app to the rabbit queue: `dokku rabbitmq:link story-processor-q story-processor`
-8. link the app to the postgres database: `dokku postgres:link story-processor-db story-processor`
+6. create an app:
+  * `dokku apps:create story-processor-mc`
+  * `dokku apps:create story-processor-nc`
+7. link the app to the rabbit queue:
+  * `dokku rabbitmq:link story-processor-q-nc story-processor-nc`
+  * `dokku rabbitmq:link story-processor-q-mc story-processor-mc`
+8. link the app to the postgres database:
+  * `dokku postgres:link story-processor-db story-processor-nc`
+  * `dokku postgres:link story-processor-db story-processor-mc`
+9. setup the configuration on the dokku app:
+  * `dokku config:set story-processor-nc MC_API_KEY=1234 BROKER_URL=http://my.rabbitmq.url SENTRY_DSN=https://mydsn@sentry.io/123 CONFIG_FILE_URL=https://my.server/api/projects.json`
+  * `dokku config:set story-processor-mc MC_API_KEY=1234 BROKER_URL=http://my.rabbitmq.url SENTRY_DSN=https://mydsn@sentry.io/123 CONFIG_FILE_URL=https://my.server/api/projects.json`
 
 Release the worker app
 ----------------------
 
-1. setup the configuration on the dokku app: `dokku config:set MC_API_KEY=1234 BROKER_URL=http://my.rabbitmq.url SENTRY_DSN=https://mydsn@sentry.io/123 CONFIG_FILE_URL=https://my.server/api/projects.json`
-2. grab the code: `git clone git@github.mit.edu:data-feminism-lab/feminicide-mc-story-processor.git`
-3. add a remote: `git remote add mc dokku@feminicide.friends.mediacloud.org:story-processor`
-4. push the code to the server: `git push mc master`
-5. scale it to get a worker (dokku doesn't add one by default): `dokku ps:scale story-processor worker=1`
+1. grab the code: `git clone git@github.mit.edu:data-feminism-lab/feminicide-mc-story-processor.git`
+2. add a remote:
+  * `git remote add prod-nc dokku@feminicide.friends.mediacloud.org:story-processor-nc`
+  * `git remote add prod-mc dokku@feminicide.friends.mediacloud.org:story-processor-mc`
+3. push the code to the server:
+  * `git push prod-nc master`
+  * `git push prod-mc master`
+4. scale it to get a worker (dokku doesn't add one by default):
+  * `dokku ps:scale story-processor-nc worker=1`
+  * `dokku ps:scale story-processor-mc worker=1`
 
 Setup the fetcher
 -----------------
