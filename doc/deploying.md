@@ -37,8 +37,8 @@ Release the worker app
 
 1. grab the code: `git clone git@github.mit.edu:data-feminism-lab/feminicide-mc-story-processor.git`
 2. add a remote:
-  * `git remote add prod-nc dokku@feminicide.friends.mediacloud.org:story-processor-nc`
-  * `git remote add prod-mc dokku@feminicide.friends.mediacloud.org:story-processor-mc`
+  * `git remote add prod-nc dokku@my.server.edu:story-processor-nc`
+  * `git remote add prod-mc dokku@my.server.edu:story-processor-mc`
 3. push the code to the server:
   * `git push prod-nc master`
   * `git push prod-mc master`
@@ -50,7 +50,9 @@ Setup the fetcher
 -----------------
 
 1. scale it to get a fetcher (dokku doesn't add one by default): `dokku ps:scale story-processor fetcher=1` (this will run the script once)
-2. add a cron job something like this to fetch new stories every night: `0 8 * * * dokku --rm run story-processor fetcher-ga /app/run-fetch-googlealerts.sh >> /var/tmp/story-processor-cron.log 2>&1`
+2. add a cron job something like this to fetch new stories every night
+  * `0 4 * * * dokku run story-processor-nc fetcher-nc /app/run-fetch-newscatcher.sh >> /var/tmp/story-processor-cron-nc.log 2>&1`
+  * `0 2 * * * dokku run story-processor-mc fetcher-mc /app/run-fetch-mediacloud.sh >> /var/tmp/story-processor-cron-mc.log 2>&1`
 
 Setup Database Backups
 ----------------------
