@@ -1,12 +1,12 @@
 python-dotenv==0.21.*
 celery==5.2.*
-pytest==7.1.*
+pytest==7.2.*
 Flask==2.2.*
 mediacloud==3.13.*
 gunicorn==20.1.*
 dateparser==1.1.*
 scikit-learn==1.0.1  # freeze this here for model serialization compatability
-sentry-sdk[flask]==1.9.*
+sentry-sdk[flask]==1.11.*
 tensorflow-hub==0.12.*
 tensorflow==2.7.*
 psycopg2==2.9.*
@@ -15,7 +15,8 @@ alembic==1.8.*
 python-dateutil==2.8.*
 amqp==5.1.*
 prefect==1.4.*
-gevent==21.12.*
+gevent==22.10.*
 feedparser==6.0.*
-mediacloud-metadata==0.7.*
+mediacloud-metadata==0.8.*
 newscatcherapi==0.7.*
+wayback-news-search==1.0.*
