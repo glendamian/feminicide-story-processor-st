@@ -29,9 +29,9 @@ logger.info("-------------------------------------------------------------------
 logger.info("Starting up Feminicide Story Processor v{}".format(VERSION))
 
 # read in environment variables
-MC_API_KEY = os.environ.get('MC_API_KEY', None)  # sensitive, so don't log it
-if MC_API_KEY is None:
-    logger.error("  No MC_API_KEY env var specified. Pathetically refusing to start!")
+MC_API_TOKEN = os.environ.get('MC_API_TOKEN', None)  # sensitive, so don't log it
+if MC_API_TOKEN is None:
+    logger.error("  No MC_API_TOKEN env var specified. Pathetically refusing to start!")
     sys.exit(1)
 
 BROKER_URL = os.environ.get('BROKER_URL', None)
@@ -78,12 +78,12 @@ if NEWSCATCHER_API_KEY is None:
     logger.info("  No NEWSCATCHER_API_KEY is specified. We won't be fetching from Newscatcher.")
 
 
-def get_mc_client() -> mediacloud.api.AdminMediaCloud:
+def get_mc_client() -> mediacloud.api.DirectoryApi:
     """
     A central place to get the Media Cloud client
     :return: an admin media cloud client with the API key from the environment variable
     """
-    return mediacloud.api.AdminMediaCloud(MC_API_KEY)
+    return mediacloud.api.DirectoryApi(MC_API_TOKEN)
 
 
 def create_flask_app() -> Flask:
