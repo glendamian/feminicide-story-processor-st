@@ -66,9 +66,10 @@ def queue_stories_for_classification_task(project_list: List[Dict], stories: Lis
         email_message += "Project {} - {}: {} stories\n".format(p['id'], p['title'], len(project_stories))
         total_stories += len(project_stories)
         if len(project_stories) > 0:
-            # Newscatcher/Google might be better at guessing publication dates than we are?
+            # External source has guess dates (Newscatcher/Google), so use that
             for s in project_stories:
-                s['publish_date'] = s['source_publish_date']
+                if 'source_publish_date' in s:
+                    s['publish_date'] = s['source_publish_date']
             # and log that we got and queued them all
             project_stories = stories_db.add_stories(project_stories, p, datasource)
             if len(project_stories) > 0:  # don't queue up unnecessary tasks

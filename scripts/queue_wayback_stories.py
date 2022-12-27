@@ -20,7 +20,7 @@ import scripts.tasks as prefect_tasks
 PAGE_SIZE = 100
 DEFAULT_DAY_OFFEST = 4
 DEFAULT_DAY_WINDOW = 3
-WORKER_COUNT = 1
+WORKER_COUNT = 16
 MAX_CALLS_PER_SEC = 5
 MAX_STORIES_PER_PROJECT = 10000
 DELAY_SECS = 1 / MAX_CALLS_PER_SEC
@@ -96,14 +96,15 @@ def fetch_project_stories_task(project_list: Dict, data_source: str) -> List[Dic
                 media_url = item['domain'] if len(item['domain']) > 0 else urls.canonical_domain(item['url'])
                 info = dict(
                     url=item['url'],
-                    publish_date=item['publication_date'],
+                    source_publish_date=item['publication_date'],
                     title=item['title'],
                     source=data_source,
                     project_id=p['id'],
                     language=item['language'],
                     authors=None,
                     media_url=media_url,
-                    media_name=media_url
+                    media_name=media_url,
+                    article_url=item['article_url']
                 )
                 project_stories.append(info)
                 valid_stories += 1
@@ -114,9 +115,9 @@ def fetch_project_stories_task(project_list: Dict, data_source: str) -> List[Dic
 
 
 @task(name='fetch_text')
-def fetch_achived_text_task(story: Dict) -> Optional[Dict]:
+def fetch_archived_text_task(story: Dict) -> Optional[Dict]:
     story_details = requests.get(story['article_url']).json()
-    if story_details['detail'] == 'Not Found':
+    if ('detail' in story_details) and (story_details['detail'] == 'Not Found'):  # handle missing documents
         logger.warning("No details for story {}".format(story['article_url']))
         return None
     updated_story = copy.copy(story)
@@ -132,7 +133,7 @@ if __name__ == '__main__':
 
     # important to do because there might be new models on the server!
     logger.info("  Checking for any new models we need")
-    #download_models()
+    download_models()
 
     with Flow("story-processor") as flow:
         if WORKER_COUNT > 1:
@@ -146,7 +147,7 @@ if __name__ == '__main__':
         # 3. fetch all the urls from for each project from wayback machine (not mapped, so we can respect rate limiting)
         all_stories = fetch_project_stories_task(projects_with_domains, data_source_name)
         # 4. fetch pre-parsed content (will happen in parallel by story)
-        stories_with_text = fetch_achived_text_task.map(all_stories)
+        stories_with_text = fetch_archived_text_task.map(all_stories)
         # 5. post batches of stories for classification
         results_data = prefect_tasks.queue_stories_for_classification_task(projects_list, stories_with_text,
                                                                            data_source_name)
