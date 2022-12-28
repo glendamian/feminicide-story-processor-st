@@ -3,9 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
-### v2.5.0
+### v3.0.0
 
 * First pass at discovering stories via the new Wayback Machine online news archive.
+* Removes support for legacy Media Cloud story API.
 
 ### v2.4.3
 
