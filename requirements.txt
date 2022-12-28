@@ -8,7 +8,7 @@ dateparser==1.1.*
 scikit-learn==1.0.1  # freeze this here for model serialization compatability
 sentry-sdk[flask]==1.12.*
 tensorflow-hub==0.12.*
-tensorflow==2.7.*
+tensorflow==2.10.*
 psycopg2==2.9.*
 SQLAlchemy==1.4.*
 alembic==1.9.*
