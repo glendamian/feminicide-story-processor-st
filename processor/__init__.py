@@ -10,11 +10,12 @@ from sentry_sdk import init
 from typing import Dict
 from sqlalchemy import create_engine
 
-VERSION = "2.4.3"
+VERSION = "2.5.0"
 SOURCE_GOOGLE_ALERTS = "google-alerts"
 SOURCE_MEDIA_CLOUD = "media-cloud"
 SOURCE_NEWSCATCHER = "newscatcher"
-PLATFORMS = [SOURCE_GOOGLE_ALERTS, SOURCE_MEDIA_CLOUD, SOURCE_NEWSCATCHER]
+SOURCE_WAYBACK_MACHINE = "wayback-machine"
+PLATFORMS = [SOURCE_GOOGLE_ALERTS, SOURCE_MEDIA_CLOUD, SOURCE_NEWSCATCHER, SOURCE_WAYBACK_MACHINE]
 
 load_dotenv()  # load config from .env file (local) or env vars (production)
 
@@ -28,9 +29,9 @@ logger.info("-------------------------------------------------------------------
 logger.info("Starting up Feminicide Story Processor v{}".format(VERSION))
 
 # read in environment variables
-MC_API_KEY = os.environ.get('MC_API_KEY', None)  # sensitive, so don't log it
-if MC_API_KEY is None:
-    logger.error("  No MC_API_KEY env var specified. Pathetically refusing to start!")
+MC_API_TOKEN = os.environ.get('MC_API_TOKEN', None)  # sensitive, so don't log it
+if MC_API_TOKEN is None:
+    logger.error("  No MC_API_TOKEN env var specified. Pathetically refusing to start!")
     sys.exit(1)
 
 BROKER_URL = os.environ.get('BROKER_URL', None)
@@ -77,12 +78,12 @@ if NEWSCATCHER_API_KEY is None:
     logger.info("  No NEWSCATCHER_API_KEY is specified. We won't be fetching from Newscatcher.")
 
 
-def get_mc_client() -> mediacloud.api.AdminMediaCloud:
+def get_mc_client() -> mediacloud.api.DirectoryApi:
     """
     A central place to get the Media Cloud client
     :return: an admin media cloud client with the API key from the environment variable
     """
-    return mediacloud.api.AdminMediaCloud(MC_API_KEY)
+    return mediacloud.api.DirectoryApi(MC_API_TOKEN)
 
 
 def create_flask_app() -> Flask:

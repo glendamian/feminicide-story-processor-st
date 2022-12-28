@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v2.5.0
+
+* First pass at discovering stories via the new Wayback Machine online news archive.
+
 ### v2.4.3
 
 * Update required libraries
