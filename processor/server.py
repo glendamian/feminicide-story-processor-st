@@ -1,13 +1,11 @@
 import logging
 
-import mediacloud.error
 from flask import render_template, jsonify
 import json
 from typing import Dict, List
 from itertools import chain
-import requests.exceptions
 
-from processor import create_flask_app, VERSION, get_mc_client, PLATFORMS, SOURCE_MEDIA_CLOUD
+from processor import create_flask_app, VERSION, PLATFORMS
 from processor.projects import load_project_list
 import processor.database.stories_db as stories_db
 
@@ -121,24 +119,7 @@ def a_project(project_id_str):
     # show some recent story results
     stories_above = stories_db.recent_stories(project_id, True)
     stories_below = stories_db.recent_stories(project_id, False)
-    # story_ids = list(set([s.stories_id for s in stories_above]) | set([s.stories_id for s in stories_below]))
-    try:
-        mc_story_ids = list(set([s.stories_id for s in stories_above if s.source == SOURCE_MEDIA_CLOUD])
-                            | set([s.stories_id for s in stories_below if s.source == SOURCE_MEDIA_CLOUD]))
-        mc = get_mc_client()
-        if len(mc_story_ids) > 0:
-            stories = mc.storyList("stories_id:({})".format(" ".join([str(s) for s in mc_story_ids])))
-            story_lookup = {s['stories_id']: s for s in stories}
-        else:
-            story_lookup = {}
-    except requests.exceptions.ReadTimeout as rte:
-        # maybe Media Cloud is down?
-        story_lookup = {}
-        pass
-    except mediacloud.error.MCException as mce:
-        # we currently can't query for BIGINT story ids with a stories_id clause in the query
-        story_lookup = {}
-        pass
+    story_lookup = {}
 
     # some other stats
     unposted_above_story_count = stories_db.unposted_above_story_count(project_id)

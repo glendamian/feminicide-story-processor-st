@@ -15,8 +15,7 @@ Create a database called "mc-story-processor" in Postgres, then run `alembic upg
 Running
 -------
 
-To fill up the queue with new stories based on the monitor config, execute `run-fetch-mediacloud.sh` or 
-`run-fetch-googlealerts.sh`.
+To fill up the queue with new stories based on the monitor config, execute `run-fetch-PROVIDER.sh`.
 
 To start the workers that process queued up jobs to classify and post story results, execute `run-workers.sh`.
 
