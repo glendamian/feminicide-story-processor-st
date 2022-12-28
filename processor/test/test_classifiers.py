@@ -3,7 +3,6 @@ import unittest
 import json
 
 import processor.classifiers as classifiers
-from processor import get_mc_client
 from processor.test import test_fixture_dir
 from processor.test.test_projects import TEST_EN_PROJECT
 
@@ -105,8 +104,8 @@ class TestClassifierResults(unittest.TestCase):
         return results_by_model_id
 
     def test_classify_aapf2(self):
-        mc = get_mc_client()
-        story = mc.story(2008554915, text=True)
+        with open(os.path.join(test_fixture_dir, "mc-story-2008554915.json"), 'r') as f:
+            story = json.load(f)
         project = TEST_EN_PROJECT.copy()
         project['language_model_id'] = 5
         classifier = classifiers.for_project(project)

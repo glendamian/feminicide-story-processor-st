@@ -18,11 +18,12 @@ class TestTasks(unittest.TestCase):
         return story_ids
 
     def _classify_story_ids(self, project, story_ids):
-        mc = get_mc_client()
-        stories_with_text = mc.storyList("stories_id:({})".format(" ".join([str(id) for id in story_ids])),
-                                         text=True, rows=100)
-        for s in stories_with_text:
-            s['source'] = SOURCE_MEDIA_CLOUD
+        stories_with_text = []
+        for sid in story_ids:
+            with open(os.path.join(test_fixture_dir, f'mc-story-{sid}.json'), 'r') as f:
+                s = json.load(f)
+                s['source'] = SOURCE_MEDIA_CLOUD
+                stories_with_text.append(s)
         classified_stories = tasks._add_confidence_to_stories(project, stories_with_text)
         assert len(classified_stories) == len(stories_with_text)
         return classified_stories
@@ -48,10 +49,13 @@ class TestTasks(unittest.TestCase):
             # assert round(classified_stories[0]['confidence'], 5) == 0.78392
 
     def test_add_entities_to_stories(self):
-        mc = get_mc_client()
         story_ids = self._sample_story_ids()
-        stories_with_text = mc.storyList("stories_id:({})".format(" ".join([str(id) for id in story_ids])),
-                                         text=True, rows=100)
+        stories_with_text = []
+        for sid in story_ids:
+            with open(os.path.join(test_fixture_dir, f'mc-story-{sid}.json'), 'r') as f:
+                s = json.load(f)
+                s['source'] = SOURCE_MEDIA_CLOUD
+                stories_with_text.append(s)
         stories_with_entities = tasks._add_entities_to_stories(stories_with_text)
         for s in stories_with_entities:
             assert 'entities' in s

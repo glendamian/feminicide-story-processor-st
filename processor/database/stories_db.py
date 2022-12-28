@@ -62,12 +62,13 @@ def update_stories_processed_date_score(stories: List) -> None:
     now = dt.datetime.now()
     session = Session()
     for s in stories:
-        session.query(Story).filter_by(id=s['log_db_id']).update({
-            "model_score": s['model_score'],
-            "model_1_score": s['model_1_score'],
-            "model_2_score": s['model_2_score'],
-            "processed_date": now,
-        })
+        if 'log_db_id' in s:  # more gracefully fail in test scenarios
+            session.query(Story).filter_by(id=s['log_db_id']).update({
+                "model_score": s['model_score'],
+                "model_1_score": s['model_1_score'],
+                "model_2_score": s['model_2_score'],
+                "processed_date": now,
+            })
     session.commit()
 
 

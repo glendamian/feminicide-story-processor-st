@@ -1,0 +1,192 @@
+{
+    "collect_date": "2021-06-11 04:16:33.315940",
+    "description": "<p>World leaders gather for the G-7 summit in England, Chicago institutes a new foot-chase policy and more news to start your Friday.</p><img align=\"left\" alt=\"\" border=\"0\" height=\"1\" hspace=\"0\" src=\"http://rssfeeds.azcentral.com/~/i/654459132/0/phoenix/nation\" style=\"border: 0; float: left; margin: 0; padding: 0; width: 1px!important; height: 1px!important;\" width=\"1\" />\n<div class=\"fbz_enclosure\" style=\"clear: left;\"><a href=\"https://www.gannett-cdn.com/presto/2021/06/10/USAT/c6cbf7f7-dbc7-409e-8bbf-2c9c407b879a-Biden-Boris-pic2.jpg\" title=\"View image\"><img border=\"0\" src=\"https://www.gannett-cdn.com/presto/2021/06/10/USAT/c6cbf7f7-dbc7-409e-8bbf-2c9c407b879a-Biden-Boris-pic2.jpg\" /></a></div>\n<div style=\"clear: both; padding-top: 0.2em;\"><a href=\"http://rssfeeds.azcentral.com/_/28/654459132/phoenix/nation\" title=\"Like on Facebook\"><img height=\"20\" src=\"https://assets.feedblitz.com/i/fblike20.png\" style=\"border: 0; margin: 0; padding: 0;\" /></a>&#160;<a href=\"http://rssfeeds.azcentral.com/_/29/654459132/phoenix/nation,\" title=\"Pin it!\"><img height=\"20\" src=\"https://assets.feedblitz.com/i/pinterest20.png\" style=\"border: 0; margin: 0; padding: 0;\" /></a>&#160;<a href=\"http://rssfeeds.azcentral.com/_/24/654459132/phoenix/nation\" title=\"Tweet This\"><img height=\"20\" src=\"https://assets.feedblitz.com/i/twitter20.png\" style=\"border: 0; margin: 0; padding: 0;\" /></a>&#160;<a href=\"http://rssfeeds.azcentral.com/_/19/654459132/phoenix/nation\" title=\"Subscribe by email\"><img height=\"20\" src=\"https://assets.feedblitz.com/i/email20.png\" style=\"border: 0; margin: 0; padding: 0;\" /></a>&#160;<a href=\"http://rssfeeds.azcentral.com/_/20/654459132/phoenix/nation\" title=\"Subscribe by RSS\"><img height=\"20\" src=\"https://assets.feedblitz.com/i/rss20.png\" style=\"border: 0; margin: 0; padding: 0;\" /></a>&nbsp;&#160;</div>",
+    "full_text_rss": false,
+    "guid": "https://www.usatoday.com/story/news/2021/06/11/g-7-summit-new-chicago-police-policy-5-things-know-friday/7623274002/",
+    "is_fully_extracted": true,
+    "language": "en",
+    "media_id": 659003,
+    "normalized_title_hash": "08348405-5736-61d1-e7b4-8b625b12e1d4",
+    "publish_date": "2021-06-11 03:56:58",
+    "stories_id": 1957806911,
+    "story_tags": [
+        {
+            "stories_id": 1957806911,
+            "tag": "geonames_6252001",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 8878461
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "geonames_6269131",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 8878467
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "geonames_4887398",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 8878485
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "nyt_labeller_v1.0.0",
+            "tag_set": "nyt_labels_version",
+            "tag_sets_id": 1964,
+            "tags_id": 9360669
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "police",
+            "tag_set": "nyt_labels",
+            "tag_sets_id": 1963,
+            "tags_id": 9360881
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "taxation",
+            "tag_set": "nyt_labels",
+            "tag_sets_id": 1963,
+            "tags_id": 9360882
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "economic conditions and trends",
+            "tag_set": "nyt_labels",
+            "tag_sets_id": 1963,
+            "tags_id": 9360989
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "ABC",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9362473
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "Cristiano Ronaldo",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9363102
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "Joe Biden",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9363134
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "Hamilton",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9363382
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "ESPN",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9369219
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "Lin-Manuel Miranda",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9369428
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "UEFA",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9373215
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "Univision",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9384606
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "G-7",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9399067
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "Russell Taylor",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9921613
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "Anthony Ramos",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 10221248
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "Brian Truitt",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 10708773
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "Jon M. Chu",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 11806070
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "Anthony Alvarez",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 22168397
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "Adam Toledo",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 68119498
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "HBO Max",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 143734752
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "readability-lxml-0.8.1",
+            "tag_set": "extractor_version",
+            "tag_sets_id": 1354,
+            "tags_id": 228516910
+        },
+        {
+            "stories_id": 1957806911,
+            "tag": "cliff_clavin_v2.6.1",
+            "tag_set": "geocoder_version",
+            "tag_sets_id": 1937,
+            "tags_id": 228516911
+        }
+    ],
+    "story_text": "5 things to know Friday G-7 summit featuring Biden, other world leaders, to begin in England. President Joe Biden and other G-7 leaders\u00a0will have a lot to discuss when they gather in Carbis Bay in Cornwall, western England, for their seaside summit , starting Friday.\u00a0Climate change, defense and security\u00a0and getting the global economy back on track in the wake of the coronavirus pandemic are all on the agenda for the leaders\u2019 47th gathering.\u00a0The countries announced last week that they\u00a0agreed to back a minimum global corporate tax rate of at least 15% \u2013 a landmark deal that would mean multinational companies would pay more taxes in the countries where the operate. Besides the United States, the G-7 includes Canada, France, Germany, Italy, Japan and the U.K. The group\u2019s last face-to-face summit took place nearly two years ago in the seaside resort of Biarritz in southwest France. . . . Chicago revises foot-chase policy following fatal police shootings. Months after a pair of high-profile killings by officers in pursuit drew national attention and prompted protests in the city, Chicago police are adopting a new foot-chase policy . Thirteen-year-old Adam Toledo was fatally shot in the early hours of March 29\u00a0after an officer chased him down an alley on the city's west side. Two days later, on the northwest side, Anthony Alvarez, 22, was running away from police with his back facing an officer who fired multiple times at him. Under the new policy, which goes into effect Friday,\u00a0foot pursuits are \"appropriate only when there is probable cause for an arrest or it is believed an individual has committed, is committing or is about to commit a crime.\"\u00a0The policy prohibits foot pursuits stemming from minor traffic offenses or for criminal offenses less than a Class A misdemeanor, \"unless the person poses an obvious threat to the community or any person.\"\u00a0\u00a0\u00a0. Man charged in Capitol riot conspiracy to appear in court. A former California police chief and five other men have been indicted on conspiracy charges in the Jan. 6 attack on the U.S. Capitol, according to court documents made public Thursday. The men are accused of plotting with one another to block the certification of President Joe Biden's victory. One of the men \u2013 Russell Taylor \u2013 was taken into custody Thursday evening and was to be held overnight pending a scheduled court hearing Friday, a spokesman for the U.S. attorney's office in Los Angeles said. Using Telegram Messenger, Taylor helped bring people together in a chat and helped coordinate the group's travel to Washington ahead of Jan. 6. Taylor wrote the Telegram chat was being used to \"organize a group of fighters to have each other's backs.\" As the mob swarmed the Capitol, Taylor \u2014 who authorities say had a knife in a pocket \u2014 was part of the group trying to push through a line of officers on the lower West Terrace. European Football Championship kicks off\u00a0. The 2020 UEFA European Championship finally is here. Delayed a year by\u00a0the coronavirus pandemic, the ambitious continent-wide tournament\u00a0will take place in 11 countries separated by four time zones. While the tournament had been held in multiple\u00a0countries previously (2012 in Poland and Ukraine, 2008 in Austria and Switzerland and 2000 in Belgium and Netherlands), this massive event is a one-off before Germany becomes its sole host in 2024. The tournament will begin Friday and go through July 11.\u00a0Portugal, led by Cristiano Ronaldo, is the defending champion, but this time around,\u00a0France is the betting favorite. The event will be broadcast on ESPN and ABC, with games available to be streamed live on\u00a0ESPN+. Spanish-language broadcasts will be available on Univision and TUDN. Games also\u00a0 are available on\u00a0fuboTV. . . . Lin-Manuel Miranda's 'In the Heights' hits theaters, streams on HBO Max. Before there was \"Hamilton,\" there was \"In the Heights.\" Lin-Manuel Miranda\u2019s first Tony-winning musical portrays the bustling New York City neighborhood of Washington Heights. The movie version (in theaters Friday and streaming on HBO Max now) stars Anthony Ramos as a bodega owner who dreams of returning to the Dominican Republic.\u00a0USA TODAY movie\u00a0critic Brian Truitt writes: \"What makes 'In the Heights' so joyfully infectious . is marrying his songs with director Jon M. Chu's uncanny knack for pulling off massive production numbers.\". Contributing: The Associated Press . . .",
+    "title": "G-7 summit, new Chicago police policy, 'In the Heights': 5 things to know Friday",
+    "url": "http://rssfeeds.azcentral.com/~/654459132/0/phoenix/nation~G-summit-new-Chicago-police-policy-In-the-Heights-things-to-know-Friday/"
+}

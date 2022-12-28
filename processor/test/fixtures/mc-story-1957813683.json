@@ -1,0 +1,206 @@
+{
+    "collect_date": "2021-06-11 04:18:43.797552",
+    "description": "Janey to Give Public Safety Update After Declaring New Direction' for Boston Police NBC10 Boston",
+    "full_text_rss": false,
+    "guid": "https://www.nbcboston.com/news/local/janey-to-give-public-safety-update-after-declaring-new-direction-for-boston-police/2399156/",
+    "is_fully_extracted": true,
+    "language": "en",
+    "media_id": 658824,
+    "normalized_title_hash": "63c414b7-95eb-fc3b-53ce-1ecd42131956",
+    "publish_date": "2021-06-11 00:20:11",
+    "stories_id": 1957813683,
+    "story_tags": [
+        {
+            "stories_id": 1957813683,
+            "tag": "geonames_6252001",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 8878461
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "geonames_6254926",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 8878682
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "geonames_4930956",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 8878689
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "nyt_labeller_v1.0.0",
+            "tag_set": "nyt_labels_version",
+            "tag_sets_id": 1964,
+            "tags_id": 9360669
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "politics and government",
+            "tag_set": "nyt_labels",
+            "tag_sets_id": 1963,
+            "tags_id": 9360836
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "blacks",
+            "tag_set": "nyt_labels",
+            "tag_sets_id": 1963,
+            "tags_id": 9360863
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "police",
+            "tag_set": "nyt_labels",
+            "tag_sets_id": 1963,
+            "tags_id": 9360881
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "mayors",
+            "tag_set": "nyt_labels",
+            "tag_sets_id": 1963,
+            "tags_id": 9360964
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "blacks (in us)",
+            "tag_set": "nyt_labels",
+            "tag_sets_id": 1963,
+            "tags_id": 9361066
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "Boston Globe",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9365544
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "Nicholas Carter",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9379963
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "Marty Walsh",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9401716
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "Boston Police Department",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9463372
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "State House News Service",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9562557
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "Dennis White",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9620784
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "Michelle Wu",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9888272
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "Jim Braude",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 10443636
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "U.S. Labor",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 10714149
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "Kim Janey",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 10825153
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "Annissa Essaibi George",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 10827147
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "William Gross",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 11171514
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "Andrea Campbell",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 11793286
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "John Barros",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 16397114
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "Greg Long",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 28916979
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "Jon Santiago",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 31586647
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "readability-lxml-0.8.1",
+            "tag_set": "extractor_version",
+            "tag_sets_id": 1354,
+            "tags_id": 228516910
+        },
+        {
+            "stories_id": 1957813683,
+            "tag": "cliff_clavin_v2.6.1",
+            "tag_set": "geocoder_version",
+            "tag_sets_id": 1937,
+            "tags_id": 228516911
+        }
+    ],
+    "story_text": "Boston Police Commissioner Dennis White Fired, Mayor Janey Says Boston Mayor Kim Janey has terminated Dennis White as the city's police commissioner, she said Monday, announcing new policies for vetting candidates for leadership positions at the department. The announcement came after a protracted legal battle over whether she could remove White from the position after domestic violence allegations, which White denies, surfaced. \"Dennis White has repeatedly asserted that the domestic violence allegations against him are false, but he stated in his hearing and during the investigation that he has hit and pushed members of his household,\" Janey said during a briefing at City Hall. \"The allegations and evidence of his behavior raised serious questions about his fitness to lead the Boston Police Departmental and Dennis White's actions in recent weeks have done even more to erode public trust in his judgment and ability to lead.\"  . The city will open a national search for White's replacement, with Superintendent-in-Chief Greg Long continuing to act as commissioner in the interim, Janey said, and announced a series of reforms. . Dennis White's tenure as Boston's police commissioner ended Monday, Mayor Kim Janey announced, along with reforms for the police department. All candidates for leadership positions at the Boston Police Department will go through background checks and vetting, the mayor said, adding that city residents \"must have confidence that the officers charged with enforcing laws are themselves people of integrity.\" And the city will propose its first sexual assault policy for its police officers. White reacted to the announcement of his termination with deep disappointment, his attorney, Nicholas Carter, said in a statement saying the former police commissioner was falsely accused, investigated in a biased way and terminated without a fair hearing. Carter said that Janey \"got this one wrong and destroyed Dennis White in the process,\" adding that they plan to continue the legal battle and seek damages from the city \"to send a message that this kind of unlawful and harmful treatment must not be allowed to happen again to anyone.\"   . . Mayor Kim Janey says she will carefully consider whether to remove Boston Police Commissioner Dennis White after a disciplinary hearing over his domestic violence allegations. Janey had been eying a \"new direction\" for the Boston Police Department as the controversy unfolded. White was appointed quickly by then-mayor and now U.S. Labor Secretary Marty Walsh following the resignation of former Commissioner William Gross, but worked for two days in the position before Walsh suspended him after The Boston Globe inquired about past allegations of domestic violence contained in court records. Walsh has denied prior knowledge of the allegations, despite Gross and White asserting that Walsh would have been briefed on White's internal affairs file as part of any promotion process. White was accused in 1999 of hitting and threatening to shoot his then-wife, who was also a police officer. White has vehemently denied it and claimed he was the target of a campaign of false allegations. White had a disciplinary hearing over his domestic violence allegations last week behind closed doors, despite requests and appeals in court from White's attorney that the proceeding be public. . Former Mayor Marty Walsh could not have expected the controversy he would create as he swore in the new Boston Police Commissioner\n\t\t\t\t\t\t. Janey said Tuesday that her office was reviewing video submitted by White's family claiming he was the victim, not the aggressor, of domestic violence in his former marriage, but she'd suggested she still intended to \"move in a new direction\" after the hearing. The mayor repeatedly mentioned the \"blue wall of silence\" as something that needed to be broken down in the Boston Police Department. She also referenced the investigation's finding that White struck a 19-year-old woman in 1993 \"over a fight around $10.\". Boston Police Commissioner Controversy Coverage . . . She mentioned those again Monday: \"It is clear that Dennis White's return as police commissioner would send a chilling message to victims of domestic violence in our city and reinforce a culture of fear and a blue wall of silence in our police department.\". Janey suggested that the search for a permanent replacement could take months and may not be concluded before the city elects a new mayor in November. She is one of six major candidates seeking to replace Walsh on a full-time basis, along with City Councilors Michelle Wu, Andrea Campbell and Annissa Essaibi George, state Rep. Jon Santiago and the city's economic development chief John Barros. Last week, Janey sidestepped questions by host Jim Braude about whether she thought she had the authority as acting mayor to name a permanent police commissioner, or whether she could guarantee a search would stretch beyond the election. \"I would make sure that our search committee, if this is the route we're going, lays out a timeline and a process by which we will get there. But what I will say, and be very clear, is that we will not put forth a process that would be rushed and have a candidate or finalists who has not been fully vetted,\" Janey said. State House News Service contributed to this report. . . .",
+    "title": "Kim Janey Gives Update After Declaring New Direction for Boston Police  NBC Boston",
+    "url": "https://www.nbcboston.com/news/local/janey-to-give-public-safety-update-after-declaring-new-direction-for-boston-police/2399156/"
+}

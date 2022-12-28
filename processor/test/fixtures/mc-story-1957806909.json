@@ -1,0 +1,304 @@
+{
+    "collect_date": "2021-06-11 04:16:33.309789",
+    "description": "Philippine officials have allowed the reopening of gyms, skating rinks, racket courts and museums in metropolitan Manila and adjacent provinces as a coronavirus surge continues to ease",
+    "full_text_rss": false,
+    "guid": "marketbeatnews4755738",
+    "is_fully_extracted": true,
+    "language": "en",
+    "media_id": 660015,
+    "normalized_title_hash": "46ebb74d-2769-b33e-93bd-5db0e63434bf",
+    "publish_date": "2021-06-10 20:38:05",
+    "stories_id": 1957806909,
+    "story_tags": [
+        {
+            "stories_id": 1957806909,
+            "tag": "geonames_6252001",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 8878461
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "geonames_4896861",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 8878482
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "geonames_4887398",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 8878485
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "geonames_3646738",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 8878521
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "geonames_5332921",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 8878533
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "geonames_524901",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 8878648
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "geonames_1609350",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 8878911
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "geonames_2634715",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 8883890
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "geonames_3630297",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 8888305
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "geonames_5567477",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 9025632
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "nyt_labeller_v1.0.0",
+            "tag_set": "nyt_labels_version",
+            "tag_sets_id": 1964,
+            "tags_id": 9360669
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "medicine and health",
+            "tag_set": "nyt_labels",
+            "tag_sets_id": 1963,
+            "tags_id": 9360852
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "diseases and conditions",
+            "tag_set": "nyt_labels",
+            "tag_sets_id": 1963,
+            "tags_id": 9360942
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "AP",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9362920
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "Joe Biden",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9363134
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "Boris Johnson",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9363715
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "FDA",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9364674
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "CDC",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9364831
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "Johnson & Johnson",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9365058
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "Bharatiya Janata Party",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9369625
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "Gavin Newsom",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9372682
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "Pfizer",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9373934
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "Zemlianichenko",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9376104
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "United Airlines",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9389662
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "G-7",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9399067
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "Ramon Lopez",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9400894
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "Chris Sununu",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9408884
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "J&J",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9453380
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "Jared Polis",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9460032
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "Moritz",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9563978
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "NDR",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 9632144
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "J.B. Pritzker",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9642304
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "Mark Butler",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9764726
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "Matt Hancock",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 9769917
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "Photo/Ariana Cubillos",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 10847620
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "California Occupational Safety and Health Standards Board",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 29033348
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "Fraunhofer Heinrich Hertz Institute",
+            "tag_set": "cliff_organizations",
+            "tag_sets_id": 2388,
+            "tags_id": 29557914
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "Fahrettin Koca",
+            "tag_set": "cliff_people",
+            "tag_sets_id": 2389,
+            "tags_id": 68672586
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "geonames_3977309",
+            "tag_set": "mc-geocoder@media.mit.edu",
+            "tag_sets_id": 1011,
+            "tags_id": 188343497
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "readability-lxml-0.8.1",
+            "tag_set": "extractor_version",
+            "tag_sets_id": 1354,
+            "tags_id": 228516910
+        },
+        {
+            "stories_id": 1957806909,
+            "tag": "cliff_clavin_v2.6.1",
+            "tag_set": "geocoder_version",
+            "tag_sets_id": 1937,
+            "tags_id": 228516911
+        }
+    ],
+    "story_text": "The Latest: Philippines reopens gyms, museums as surge ebbs Health workers collect nasal swabs from local residents for the coronavirus testing at a market in Bangkok, Thailand, Friday, June 11, 2021. (AP Photo/Sakchai Lalit) . Local residents line up, waiting for the coronavirus testing at a market in Bangkok, Thailand, Friday, June 11, 2021. (AP Photo/Sakchai Lalit) . A volunteer carries containers with rice, chicken and salad to be given to residents at the San Antonio de Padua soup kitchen in the Petare neighborhood of Caracas, Venezuela, Thursday, June 10, 2021, amid the new coronavirus pandemic. (AP Photo/Ariana Cubillos) . A dummy simulating a breathing human being sits in the NDR's Great Broadcasting Hall before the start of a concert by the NDR Radiophilharmonie, in Hanover, Germany, Thursday, June 10, 2021. The concert serves as an experiment on the distribution of aerosols in space. Dummies from the Fraunhofer Heinrich Hertz Institute are in the hall to precisely measure the distribution of aerosols. (Moritz Frankenberg/dpa via AP) . Mounted police stand guard as pedestrians walk past in the Plaza de Armas, in Santiago, Chile, Thursday, June 10, 2021. The Chilean capitol will return to quarantine measures starting Saturday due to the increase in COVID-19 infections. (AP Photo/Esteban Felix) . Volunteers carries a pot of rice to be given to residents at the San Antonio de Padua soup kitchen in the Petare neighborhood of Caracas, Venezuela, Thursday, June 10, 2021, amid the new coronavirus pandemic. (AP Photo/Ariana Cubillos) . People wearing face mask to help curb the spread of the coronavirus ride a subway car in Moscow, Russia, Thursday, June 10, 2021. The Russian authorities reported a spike in coronavirus infections on Thursday, with new confirmed cases exceeding 11,000 for the first time since March. (AP Photo/Alexander Zemlianichenko) . People wearing face mask to help curb the spread of the coronavirus walk inside a subway in Moscow, Russia, Thursday, June 10, 2021. The Russian authorities reported a spike in coronavirus infections on Thursday, with new confirmed cases exceeding 11,000 for the first time since March. (AP Photo/Alexander Zemlianichenko) . MANILA, Philippines \u2014 Philippine officials have allowed the reopening of gyms, skating rinks, racket courts and museums in metropolitan Manila and adjacent provinces as a coronavirus surge continues to ease. Trade Secretary Ramon Lopez says Filipinos 65 years old and above who have been restricted to home can now travel within the densely populated capital region two weeks after having been fully vaccinated. He says gyms and similar indoor businesses with safety certificates can reopen up to 30% of their capacity. Lopez has called for the further reopening of the battered economy to address unemployment and hunger. Museums and historical sites also can reopen at 20% capacity but guided tours remain prohibited. The Philippines has reported the second highest number of COVID-19 infections in Southeast Asia at nearly 1.3 million with 22,312 dead. The government reimposed a lockdown in the capital region and four nearby provinces after infections surged in March. ___. MORE ON THE PANDEMIC:. \u2014 Celebrations (and questions) greet US vaccine donation plan. \u2014 New federal COVID-19 safety rules exempt most employers . \u2014 US extends expiration dates for J&J COVID vaccine by 6 weeks. \u2014 British Health Secretary Matt Hancock has defended his handling of the coronavirus pandemic following a series of damaging allegations from Prime Minister Boris Johnson\u2019s former top adviser. \u2014 Germany has started rolling out a digital vaccination pass that can be used across Europe as the continent gears up for the key summer travel season. ___. \u2014 Follow more of AP\u2019s pandemic coverage at https://apnews.com/hub/coronavirus-pandemic and https://apnews.com/hub/coronavirus-vaccine. ___. HERE\u2019S WHAT ELSE IS HAPPENING: . . NEW DELHI \u2014 The Indian state of Bihar has increased its COVID-19 death toll after the discovery of thousands of unreported cases, raising concerns that many more fatalities were not officially recorded. The health department in Bihar, one of the poorest states, on Thursday revised its COVID-19 fatality count to more than 9,429 from 5,424 \u2014 a jump of more than 70%. Officials said the 3,951 unreported fatalities had occurred in May and reflect \u201cdeaths reported at private hospitals, in transit to health facilities, under home isolation and those dying of post COVID-19 complications.\u201d. Health experts say many COVID-19 fatalities remain unrecorded in India, more so during the latest surge in April and May, when hospitals ran unbearably full and oxygen supplies were low. India\u2019s federal ministers from the ruling Bharatiya Janata Party have dismissed reports of undercounting as exaggerated and misleading. In the past, states like Maharashtra and Tamil Nadu have also recalibrated death numbers. Overall, India\u2019s cases and deaths have fallen steadily in the past weeks. The 91,702 cases added in the past 24 hours pushed India\u2019s total to more than 29.3 million on Friday, second only to the United States. The Health Ministry also reported 3,403 fatalities in the past 24 hours, raising the overall death toll to 363,079. ___. CHICAGO \u2014 Illinois is lifting all capacity limits on bars, restaurants, businesses and other venues Friday, nearly 15 months after the first stay-at-home order during the coronavirus pandemic. Businesses still can have their own rules for capacity, masks and social distancing. Masks are still required on public transportation and in airports, schools and hospitals. Gov. J.B. Pritzker said Thursday that \u201cas we take this next step forward, let\u2019s do so with a renewed commitment to empathy, to community, and to making each day together count.\u201d . State health officials say more than 68% of Illinois residents who are 18 or older have received at least one dose of vaccine against the coronavirus, and 51% of adults are fully vaccinated. ___. WASHINGTON \u2014 U.S. health officials are investigating what appear to be higher than expected reports of heart inflammation in male teens and young adults after they get a second dose of the Pfizer and Moderna vaccines. It\u2019s not clear if the inflammation is caused by the shots and the reports still are rare, the CDC says. It urges everyone 12 and older to get vaccinated. A CDC official said Thursday that as of May 31, the agency had 275 preliminary reports of such inflammation in 16- to 24-year-olds,.That\u2019s out of more than 12 million second-dose injections of the vaccines. The official says the cases seem to occur more often in men and in younger people, and most already have fully recovered. ___. DENVER\u2014Colorado Gov. Jared Polis has announced the first five winners of $50,000 scholarships in a program designed to encourage students to get vaccinated against COVID-19. The state is offering 25 student scholarships for students ages 12 to 17 who have received at least one vaccine dose. Winners selected in random drawings can use the scholarships at the post-secondary educational institutions of their choice. That includes colleges and technical, occupational and credential programs inside and outside Colorado. Five winners will be chosen each week through July 9. Colorado also is offering a $1 million lottery program for five adults who get at least one shot. ___. ATLANTA \u2014 Georgians receiving unemployment benefits will once again be required to look for work and will be able to earn less before unemployment payments drop beginning June 27. Labor Commissioner Mark Butler announced the changes Thursday, also saying that employers with many laid-off workers collecting benefits will face higher unemployment insurance taxes after that date. Georgia announced last month that beginning June 27 it would cut off federal programs that provide a $300-a-week pandemic boost to people on the jobless rolls as well as programs that pay federal money to people not usually eligible for state unemployment. Butler earlier signaled he would reinstate work-search requirements, a move underway in more than three-quarters of states. ___. CONCORD, N.H. \u2014 New Hampshire\u2019s nearly 15-month pandemic state of emergency will end Friday night, Gov. Chris Sununu said Thursday. Sununu first declared a state of emergency over the coronavirus on March 13, 2020. He renewed it every three weeks until two weeks ago, when he indicated he would let it expire at midnight June 11. In the governor\u2019s words: \u201cWe\u2019ve kind of checked all the boxes and we feel very confident that moving away from it tomorrow still keeps us in a very strong position.\u201d. Sununu thanked public health officials as well as citizens for volunteering during the pandemic, balancing safety with maintaining a strong economy and getting vaccinated. ___. ST. IVES, England \u2014 President Joe Biden is calling on global leaders to follow his lead in sharing coronavirus vaccines with struggling nations around the world. He promised the U.S. would donate 500 million doses to help speed the pandemic\u2019s end and bolster the strategic position of the world\u2019s wealthiest democracies. In Biden's words: \u201cIn times of trouble, Americans reach out to offer help.\". Speaking before the meeting of the Group of Seven, Biden announced the U.S. commitment to vaccine sharing, which comes on top of 80 million doses he has already pledged by the end of the month. He says the other G-7 nations will join the U.S. in outlining their vaccine donation commitments Friday. ___. WASHINGTON \u2014 Johnson & Johnson says U.S. health officials have extended the expiration date for millions of doses of its coronavirus vaccine by an extra six weeks. The drug maker says the FDA approved a longer shelf-life for the one-dose shots. State officials recently warned that many unused doses would reach their original three-month expiration by the end of June. The extension comes as the rate of new U.S. vaccinations continues to slip. The U.S. averaged about 800,000 injections per day last week. That\u2019s down from a high of nearly 2 million per day two months ago. President Joe Biden\u2019s goal is 70% of American adults partially vaccinated by July 4. The CDC says about 64% of Americans 18 and above have received at least one dose. ___. ANKARA, Turkey \u2014 Turkey is expanding its vaccination drive to include restaurant workers, barbers and hairdressers. Health Minister Fahrettin Koca announced on Twitter that food production and distribution sector workers as well as employees of cafes and restaurants will be included in the inoculation program starting Friday. Turkey is currently vaccinating those 45 and older as well as people in the health sector, police, teachers, journalists and tourism sector workers. Earlier this week, musicians, other performers and academics were added to the list of priority occupations. The country of 84 million has administered some 32 million shots since starting its vaccination campaign on Jan. 14. Some 13.5 million have received two doses. ___. CHICAGO \u2014 United Airlines says more than 830,000 people have entered the contest it started last month to encourage people to get vaccinated against COVID-19. People who upload pictures of their vaccination card to the airline have a slim shot at free flights. The airline says the largest bloc of contest entrants are people in their 50s, and about one in eight are between 18 and 28. ___. SACRAMENTO, Calif. \u2014 California\u2019s workplace regulators have withdrawn a controversial mask regulation. Their second such reversal in a week gives them time to consider a rule that more closely aligns with Gov. Gavin Newsom\u2019s promise that the state will fully reopen from the pandemic on Tuesday. But some business leaders on Wednesday kept up their pressure on Newsom to override the board. The California Occupational Safety and Health Standards Board\u2019s rule would have allowed workers to forego masks only if every employee in a room is fully vaccinated against the coronavirus. That contrasts with the state\u2019s broader plan to do away with nearly all masking requirements for vaccinated people. Featured Article: What is the Consumer Price Index (CPI)? . 7 Cyclical Stocks That Can Help You Play Defense A cyclical stock is one that produces returns that are influenced by macroeconomic or systematic changes in the broader economy. In strong economic times, these stocks show generally strong growth because they are influenced by discretionary consumer spending. Of course, that means the opposite is true as well. When the economy is weak, these stocks may pull back further than other stocks. Cyclical stocks cover many sectors, but travel and entertainment stocks come to mind. Airlines, hotels, and restaurants are all examples of cyclical sectors that do well during times of economic growth but are among the first to pull back in recessionary times. Why do cyclical stocks deserve a place in an investor\u2019s portfolio? Believe it or not, it\u2019s for the relative predictability that they provide. Investors may enjoy speculating in growth stocks, but these are prone to bubbles. This isn\u2019t to say that cyclical stocks are not volatile, but they offer price movement that is a bit more predictable. In this special presentation, we\u2019re looking at cyclical stocks that are looking strong as we come out of the pandemic. And some of these stocks held up well during the pandemic which means they\u2019re starting from a stronger base. View the \"7 Cyclical Stocks That Can Help You Play Defense \" . . . Companies Mentioned in This Article. Compare These Stocks Add These Stocks to My Watchlist . . .",
+    "title": "The Latest: Philippines reopens gyms, museums as surge ebbs",
+    "url": "https://www.marketbeat.com/articles/the-latest-philippines-reopens-gyms-museums-as-surge-ebbs-2021-06-11/"
+}
