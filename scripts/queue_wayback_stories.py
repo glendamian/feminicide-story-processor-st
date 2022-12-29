@@ -43,7 +43,7 @@ def _cached_domains_for_collection(cid: int) -> List[str]:
     filepath = os.path.join(tempdir, f'sources-in-{cid}.json')
     # fetch info if it isn't cached
     if not os.path.exists(filepath):
-        logger.info(f'Collection {cid}: sources not cached, fetching')
+        #logger.info(f'Collection {cid}: sources not cached, fetching')
         limit = 1000
         offset = 0
         sources = []
@@ -60,17 +60,23 @@ def _cached_domains_for_collection(cid: int) -> List[str]:
         # otherwise load up cache to reduce server queries and runtime overall
         with open(filepath, 'r') as f:
             sources = json.load(f)
-            logger.info(f'Collection {cid}: found sources cached {len(sources)}')
+            #logger.info(f'Collection {cid}: found sources cached {len(sources)}')
     return [s['name'] for s in sources if s['name'] is not None]
+
+
+def _domains_for_project(collection_ids: List[int]) -> List[str]:
+    all_domains = []
+    for cid in collection_ids:  # fetch all the domains in each collection
+        all_domains += _cached_domains_for_collection(cid)
+    return list(set(all_domains))  # make them unique
 
 
 @task(name='domains_for_project')
 def fetch_domains_for_projects(project: Dict) -> Dict:
+    domains = _domains_for_project(project['media_collections'])
+    logger.info(f"Project {project['id']}/{project['title']}: found {len(domains)} domains")
     updated_project = copy.copy(project)
-    all_domains = []
-    for cid in project['media_collections']:  # fetch all the domains in each collection
-        all_domains += _cached_domains_for_collection(cid)
-    updated_project['domains'] = set(all_domains)
+    updated_project['domains'] = domains
     return updated_project
 
 
@@ -101,7 +107,7 @@ def fetch_project_stories_task(project_list: Dict, data_source: str) -> List[Dic
         queries_too_big = len(full_project_query) > pow(2, 15)
         if queries_too_big:
             while queries_too_big:
-                chunked_domains = np.array_split(list(p['domains']), domain_divisor)
+                chunked_domains = np.array_split(p['domains'], domain_divisor)
                 project_queries = [_query_builder(p['search_terms'], p['language'], d) for d in chunked_domains]
                 queries_too_big = any(len(pq) > pow(2, 15) for pq in project_queries)
                 domain_divisor *= 2
