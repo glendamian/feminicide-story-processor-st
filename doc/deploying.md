@@ -51,8 +51,8 @@ Setup the fetcher
 
 1. scale it to get a fetcher (dokku doesn't add one by default): `dokku ps:scale story-processor fetcher=1` (this will run the script once)
 2. add a cron job something like this to fetch new stories every night
-  * `0 4 * * * dokku run story-processor-nc fetcher-nc /app/run-fetch-newscatcher.sh >> /var/tmp/story-processor-cron-nc.log 2>&1`
-  * `0 2 * * * dokku run story-processor-wm fetcher-wm /app/run-fetch-wayback.sh >> /var/tmp/story-processor-cron-wm.log 2>&1`
+  * `0 4 * * * dokku run story-processor-nc fetcher-nc >> /var/tmp/story-processor-cron-nc.log 2>&1`
+  * `0 2 * * * dokku run story-processor-wm fetcher-wm >> /var/tmp/story-processor-cron-wm.log 2>&1`
 
 Setup Database Backups
 ----------------------
