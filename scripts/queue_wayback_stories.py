@@ -39,7 +39,7 @@ def load_projects_task() -> List[Dict]:
     return projects_with_countries
 
 
-def _cached_domains_for_collection(cid: int):
+def _cached_domains_for_collection(cid: int) -> List[str]:
     filepath = os.path.join(tempdir, f'sources-in-{cid}.json')
     # fetch info if it isn't cached
     if not os.path.exists(filepath):
@@ -56,12 +56,12 @@ def _cached_domains_for_collection(cid: int):
             offset += limit
         with open(filepath, 'w') as f:
             json.dump(sources, f)
-        return sources  # just return here to be doubly safe about the tmp dir, which might be weird on prod container
-    # otherwise load up cache to reduce server queries and runtime overall
-    with open(filepath, 'r') as f:
-        sources = json.load(f)
-        logger.info(f'Collection {cid}: sources cached {len(sources)}')
-        return [s['name'] for s in sources if s['name'] is not None]
+    else:
+        # otherwise load up cache to reduce server queries and runtime overall
+        with open(filepath, 'r') as f:
+            sources = json.load(f)
+            logger.info(f'Collection {cid}: found sources cached {len(sources)}')
+    return [s['name'] for s in sources if s['name'] is not None]
 
 
 @task(name='domains_for_project')
