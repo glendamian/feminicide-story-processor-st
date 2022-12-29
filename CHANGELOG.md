@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v3.0.1
+
+* Split queries too long for Wayback Machine
+
 ### v3.0.0
 
 * First pass at discovering stories via the new Wayback Machine online news archive.
