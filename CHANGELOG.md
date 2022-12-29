@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v3.0.2
+
+* Cleanup work on Wayback Machine integration
+
 ### v3.0.1
 
 * Split queries too long for Wayback Machine
