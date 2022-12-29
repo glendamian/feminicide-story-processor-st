@@ -27,7 +27,6 @@ MAX_STORIES_PER_PROJECT = 10000
 DELAY_SECS = 1 / MAX_CALLS_PER_SEC
 
 wm_api = SearchApiClient("mediacloud")
-mc_api = processor.get_mc_client()
 tempdir = tempfile.gettempdir()
 
 
@@ -47,6 +46,7 @@ def _cached_domains_for_collection(cid: int):
         limit = 1000
         offset = 0
         sources = []
+        mc_api = processor.get_mc_client()
         while True:
             response = mc_api.source_list(collection_id=cid, limit=limit, offset=offset)
             sources += response['results']
