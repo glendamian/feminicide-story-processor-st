@@ -3,6 +3,7 @@ from typing import List, Dict, Optional
 import time
 import tempfile
 import copy
+import threading
 import numpy as np
 import os
 import json
@@ -39,10 +40,27 @@ def load_projects_task() -> List[Dict]:
     return projects_with_countries
 
 
+collection2sources_lock = threading.Lock()
+collection2sources = {}
+def _sources_are_cached(cid: int) -> bool:
+    collection2sources_lock.acquire()
+    is_cached = cid in collection2sources
+    collection2sources_lock.release()
+    return is_cached
+def _sources_set(cid: int, domains: List[Dict]):
+    collection2sources_lock.acquire()
+    collection2sources[cid] = domains.copy()
+    collection2sources_lock.release()
+def _sources_get(cid: int) -> List[Dict]:
+    collection2sources_lock.acquire()
+    domains = collection2sources[cid]
+    collection2sources_lock.release()
+    return domains
+
+
 def _cached_domains_for_collection(cid: int) -> List[str]:
-    filepath = os.path.join(tempdir, f'sources-in-{cid}.json')
     # fetch info if it isn't cached
-    if not os.path.exists(filepath):
+    if not _sources_are_cached(cid):
         #logger.info(f'Collection {cid}: sources not cached, fetching')
         limit = 1000
         offset = 0
@@ -54,13 +72,11 @@ def _cached_domains_for_collection(cid: int) -> List[str]:
             if response['next'] is None:
                 break
             offset += limit
-        with open(filepath, 'w') as f:
-            json.dump(sources, f)
+        _sources_set(cid, sources)
     else:
         # otherwise load up cache to reduce server queries and runtime overall
-        with open(filepath, 'r') as f:
-            sources = json.load(f)
-            #logger.info(f'Collection {cid}: found sources cached {len(sources)}')
+        sources = _sources_get(cid)
+        #logger.info(f'Collection {cid}: found sources cached {len(sources)}')
     return [s['name'] for s in sources if s['name'] is not None]
 
 
