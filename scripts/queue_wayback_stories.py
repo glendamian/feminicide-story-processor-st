@@ -3,6 +3,7 @@ from typing import List, Dict, Optional
 import time
 import tempfile
 import copy
+import numpy as np
 import os
 import json
 import mcmetadata.urls as urls
@@ -70,6 +71,10 @@ def fetch_domains_for_projects(project: Dict) -> Dict:
     return updated_project
 
 
+def _query_builder(terms: str, language: str, domains: list) -> str:
+    return "({}) AND (language:{}) AND ({})".format(terms, language, " OR ".join([f"domain:{d}" for d in domains]))
+
+
 @task(name='fetch_project_stories')
 def fetch_project_stories_task(project_list: Dict, data_source: str) -> List[Dict]:
     combined_stories = []
@@ -82,35 +87,47 @@ def fetch_project_stories_task(project_list: Dict, data_source: str) -> List[Dic
         # only search stories since the last search (if we've done one before)
         start_date = end_date - dt.timedelta(days=DEFAULT_DAY_OFFEST+DEFAULT_DAY_WINDOW)
         if history.last_publish_date is not None:
-            # make sure we don't accidently cut off a half day we haven't queried against yet
+            # make sure we don't accidentally cut off a half day we haven't queried against yet
             # this is OK because duplicates will get screened out later in the pipeline
             local_start_date = history.last_publish_date - dt.timedelta(days=1)
             start_date = min(local_start_date, start_date)
-        project_query = "{} AND language:{} AND domain:({})".format(p['search_terms'], p['language'], " OR ".join(
-            p['domains']))
-        total_hits = wm_api.count(project_query, start_date, end_date)
-        logger.info("Project {}/{} - {} total stories (since {})".format(p['id'], p['title'], total_hits, start_date))
-        for page in wm_api.all_articles(project_query, start_date, end_date):
-            logger.debug("  {} - page {}: {} stories".format(p['id'], page_number, len(page)))
-            for item in page:
-                media_url = item['domain'] if len(item['domain']) > 0 else urls.canonical_domain(item['url'])
-                info = dict(
-                    url=item['url'],
-                    source_publish_date=item['publication_date'],
-                    title=item['title'],
-                    source=data_source,
-                    project_id=p['id'],
-                    language=item['language'],
-                    authors=None,
-                    media_url=media_url,
-                    media_name=media_url,
-                    article_url=item['article_url']
-                )
-                project_stories.append(info)
-                valid_stories += 1
-            logger.info("  project {} - {} valid stories (after {})".format(p['id'], valid_stories,
-                                                                            history.last_publish_date))
-            combined_stories += project_stories
+        # if query is too big we need to split it up
+        full_project_query = _query_builder(p['search_terms'], p['language'], p['domains'])
+        project_queries = [full_project_query]
+        domain_divisor = 2
+        queries_too_big = len(full_project_query) > pow(2, 15)
+        if queries_too_big:
+            while queries_too_big:
+                chunked_domains = np.array_split(list(p['domains']), domain_divisor)
+                project_queries = [_query_builder(p['search_terms'], p['language'], d) for d in chunked_domains]
+                queries_too_big = any(len(pq) > pow(2, 15) for pq in project_queries)
+                domain_divisor *= 2
+            logger.info('Project {}/{}: split query into {} parts'.format(p['id'], p['title'], len(project_queries)))
+        # now run all queries
+        for project_query in project_queries:
+            total_hits = wm_api.count(project_query, start_date, end_date)
+            logger.info("Project {}/{} - {} total stories (since {})".format(p['id'], p['title'], total_hits, start_date))
+            for page in wm_api.all_articles(project_query, start_date, end_date):
+                logger.debug("  {} - page {}: {} stories".format(p['id'], page_number, len(page)))
+                for item in page:
+                    media_url = item['domain'] if len(item['domain']) > 0 else urls.canonical_domain(item['url'])
+                    info = dict(
+                        url=item['url'],
+                        source_publish_date=item['publication_date'],
+                        title=item['title'],
+                        source=data_source,
+                        project_id=p['id'],
+                        language=item['language'],
+                        authors=None,
+                        media_url=media_url,
+                        media_name=media_url,
+                        article_url=item['article_url']
+                    )
+                    project_stories.append(info)
+                    valid_stories += 1
+                logger.info("  project {} - {} valid stories (after {})".format(p['id'], valid_stories,
+                                                                                history.last_publish_date))
+                combined_stories += project_stories
     return combined_stories
 
 
