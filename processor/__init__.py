@@ -4,13 +4,14 @@ import sys
 from dotenv import load_dotenv
 import mediacloud.api
 from flask import Flask
-from sentry_sdk.integrations.flask import FlaskIntegration
-#from sentry_sdk.integrations.celery import CeleryIntegration
+#from sentry_sdk.integrations.flask import FlaskIntegration
+from sentry_sdk.integrations.celery import CeleryIntegration
+from sentry_sdk.integrations.logging import ignore_logger
 from sentry_sdk import init
 from typing import Dict
 from sqlalchemy import create_engine
 
-VERSION = "3.0.2"
+VERSION = "3.0.3"
 SOURCE_GOOGLE_ALERTS = "google-alerts"
 SOURCE_MEDIA_CLOUD = "media-cloud"
 SOURCE_NEWSCATCHER = "newscatcher"
@@ -43,8 +44,8 @@ logger.info("  Queue at {}".format(BROKER_URL))
 SENTRY_DSN = os.environ.get('SENTRY_DSN', None)  # optional
 if SENTRY_DSN:
     init(dsn=SENTRY_DSN, release=VERSION,
-         #integrations=[FlaskIntegration(), CeleryIntegration()])
-         integrations=[FlaskIntegration()])
+         integrations=[CeleryIntegration()])
+    ignore_logger('trafilatura.utils')
     logger.info("  SENTRY_DSN: {}".format(SENTRY_DSN))
 else:
     logger.info("  Not logging errors to Sentry")

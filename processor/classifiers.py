@@ -181,19 +181,24 @@ def update_model_list():
     return model_list
 
 
-def download_models():
+def download_models() -> bool:
     """
     Models are stored centrally on the server. We need to retrieve and store them here.
+    Returns success or failure bool - if False you probably want to suspend what you were doing and bail out
     """
-    model_list = update_model_list()
-    logger.info("Downloading models:")
-    for m in model_list:
-        logger.info("  {} - {}".format(m['id'], m['name']))
-        for u in m['model_1_files']:
-            _download_file(u, MODEL_DIR, m['filename_prefix']+"_1")
-        for u in m['model_2_files']:
-            _download_file(u, MODEL_DIR, m['filename_prefix']+"_2")
-
+    try:
+        model_list = update_model_list()
+        logger.info("Downloading models:")
+        for m in model_list:
+            logger.info("  {} - {}".format(m['id'], m['name']))
+            for u in m['model_1_files']:
+                _download_file(u, MODEL_DIR, m['filename_prefix']+"_1")
+            for u in m['model_2_files']:
+                _download_file(u, MODEL_DIR, m['filename_prefix']+"_2")
+        return True
+    except Exception as e:
+        logger.error(f"Couldn't get the models - bailing out cowardly {e}")
+    return False
 
 def _download_file(url: str, dest_dir: str, prefix: str):
     """

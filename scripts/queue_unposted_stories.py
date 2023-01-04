@@ -2,7 +2,7 @@ import logging
 from typing import List, Dict
 from prefect import Flow, Parameter, task, unmapped
 from prefect.executors import LocalDaskExecutor
-
+import sys
 import processor.database.stories_db as stories_db
 from processor.classifiers import download_models
 from processor import get_mc_client, get_email_config, is_email_configured, base_dir
@@ -98,7 +98,10 @@ if __name__ == '__main__':
 
     # important to do because there might new models on the server!
     logger.info("  Checking for any new models we need")
-    download_models()
+    models_downloaded = download_models()
+    logger.info(f"    models downloaded: {models_downloaded}")
+    if not models_downloaded:
+        sys.exit(1)
 
     with Flow("story-processor") as flow:
         flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=6)  # execute `map` calls in parallel

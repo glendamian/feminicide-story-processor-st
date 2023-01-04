@@ -1,8 +1,7 @@
 import logging
 from typing import List, Dict, Optional
 import time
-import json
-import os
+import sys
 import copy
 import threading
 import numpy as np
@@ -164,8 +163,8 @@ def fetch_archived_text_task(story: Dict) -> Optional[Dict]:
         updated_story['story_text'] = story_details['snippet']
         return updated_story
     except Exception as e:
-        logger.error(f"Skipping story - failed to fetch due to {e} - from {story['article_url']}")
-        logger.exception(e)
+        # this just happens occasionally so it is a normal case
+        logger.warning(f"Skipping story - failed to fetch due to {e} - from {story['article_url']}")
 
 
 if __name__ == '__main__':
@@ -174,7 +173,10 @@ if __name__ == '__main__':
 
     # important to do because there might be new models on the server!
     logger.info("  Checking for any new models we need")
-    download_models()
+    models_downloaded = download_models()
+    logger.info(f"    models downloaded: {models_downloaded}")
+    if not models_downloaded:
+        sys.exit(1)
 
     with Flow("story-processor") as flow:
         if WORKER_COUNT > 1:

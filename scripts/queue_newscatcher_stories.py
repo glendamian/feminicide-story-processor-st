@@ -2,6 +2,7 @@ import logging
 import math
 from typing import List, Dict
 import time
+import sys
 import mcmetadata.urls as urls
 import datetime as dt
 from prefect import Flow, task, Parameter
@@ -122,7 +123,10 @@ if __name__ == '__main__':
 
     # important to do because there might be new models on the server!
     logger.info("  Checking for any new models we need")
-    download_models()
+    models_downloaded = download_models()
+    logger.info(f"    models downloaded: {models_downloaded}")
+    if not models_downloaded:
+        sys.exit(1)
 
     with Flow("story-processor") as flow:
         if WORKER_COUNT > 1:

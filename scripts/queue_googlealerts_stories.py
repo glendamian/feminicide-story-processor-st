@@ -1,4 +1,5 @@
 import logging
+import sys
 from typing import List, Dict
 import feedparser
 import time
@@ -76,7 +77,10 @@ if __name__ == '__main__':
 
     # important to do because there might be new models on the server!
     logger.info("  Checking for any new models we need")
-    download_models()
+    models_downloaded = download_models()
+    logger.info(f"    models downloaded: {models_downloaded}")
+    if not models_downloaded:
+        sys.exit(1)
 
     with Flow("story-processor") as flow:
         if WORKER_COUNT > 1:
