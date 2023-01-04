@@ -3,6 +3,12 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v3.0.3
+
+* Ignore some exceptions creating noise on Sentry
+* Switch to Celery Sentry integration, which is more useful than Flask for this application
+* Stop everything if the models are not loaded correctly
+
 ### v3.0.2
 
 * Cleanup work on Wayback Machine integration
