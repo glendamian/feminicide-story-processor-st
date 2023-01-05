@@ -24,5 +24,6 @@ def get_language_models_list() -> Dict:
 
 def _get_json(path: str) -> Dict:
     params = dict(apikey=FEMINICIDE_API_KEY)
-    r = requests.get(path, params)
+    r = requests.get(path, params,
+                     timeout=(3.05*20)*10)  # docs say set it to slightly larger than a multiple of 3, so 10ish minutes
     return r.json()
