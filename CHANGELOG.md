@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v3.0.8
+
+* Fix serialization in `queue_unprocessed` script
+
 ### v3.0.7
 
 * Update script that can post classified-but-unposted stories

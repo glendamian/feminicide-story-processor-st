@@ -74,7 +74,7 @@ def process_project_task(project: Dict, page_size: int) -> Dict:
                             language=metadata['language'],
                             media_url=metadata['canonical_domain'],
                             media_name=metadata['canonical_domain'],
-                            publish_date=metadata['publication_date'],
+                            publish_date=str(metadata['publication_date']),
                             title=metadata['article_title'],
                             url=metadata['url'],  # resolved
                             log_db_id=s['stories_id'],
