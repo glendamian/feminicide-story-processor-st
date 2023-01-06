@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v3.0.5
+
+* Skip WM project story fetch if query syntax error, but keep going 
+
 ### v3.0.4
 
 * Set timeout on request to main server to try and avoid project-list-download failures (they're taking a long time)
