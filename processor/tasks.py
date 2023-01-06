@@ -34,7 +34,7 @@ def _add_confidence_to_stories(project: Dict, stories: List[Dict]) -> List[Dict]
     return stories
 
 
-def _add_entities_to_stories(stories: List[Dict]):
+def add_entities_to_stories(stories: List[Dict]):
     for s in stories:
         story_entities = None
         if entities.server_address_set():
@@ -85,7 +85,7 @@ def classify_and_post_worker(self, project: Dict, stories: List[Dict]):
         stories_above_threshold = projects.remove_low_confidence_stories(project.get('min_confidence', 0),
                                                                          stories_with_confidence)
         # pull out entities, if there is an env-var to a server set (only do this on above-threshold stories)
-        stories_with_entities = _add_entities_to_stories(stories_above_threshold)
+        stories_with_entities = add_entities_to_stories(stories_above_threshold)
         # remove data we aren't going to send to the server (and log)
         stories_to_send = projects.prep_stories_for_posting(project, stories_with_entities)
         if projects.LOG_LAST_POST_TO_FILE:  # helpful for debugging (the last project post will be written to a file)

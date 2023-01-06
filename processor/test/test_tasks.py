@@ -56,7 +56,7 @@ class TestTasks(unittest.TestCase):
                 s = json.load(f)
                 s['source'] = SOURCE_MEDIA_CLOUD
                 stories_with_text.append(s)
-        stories_with_entities = tasks._add_entities_to_stories(stories_with_text)
+        stories_with_entities = tasks.add_entities_to_stories(stories_with_text)
         for s in stories_with_entities:
             assert 'entities' in s
 
