@@ -92,7 +92,8 @@ def fetch_domains_for_projects(project: Dict) -> Dict:
 
 
 def _query_builder(terms: str, language: str, domains: list) -> str:
-    return "({}) AND (language:{}) AND ({})".format(terms, language, " OR ".join([f"domain:{d}" for d in domains]))
+    terms_no_curlies = terms.replace('“', '"').replace('”', '"')
+    return "({}) AND (language:{}) AND ({})".format(terms_no_curlies, language, " OR ".join([f"domain:{d}" for d in domains]))
 
 
 @task(name='fetch_project_stories')

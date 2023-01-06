@@ -37,8 +37,9 @@ def load_projects_task() -> List[Dict]:
 
 def _fetch_results(project: Dict, start_date: dt.datetime, end_date: dt.datetime, page: int = 1) -> Dict:
     try:
+        terms_no_curlies = project['search_terms'].replace('“', '"').replace('”', '"')
         results = newscatcherapi.get_search(
-            q=project['search_terms'],
+            q=terms_no_curlies,
             lang=project['language'],
             countries=[p.strip() for p in project['country'].split(",")],
             page_size=PAGE_SIZE,
