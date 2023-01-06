@@ -25,6 +25,7 @@ path_to_log_dir = os.path.join(base_dir, 'logs')
 
 # set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(levelname)s | %(name)s | %(message)s')
+logging.getLogger('trafilatura.core').setLevel(logging.WARNING)  # supress annoying "not enough comments" and "using custom extraction" notes
 logger = logging.getLogger(__name__)
 logger.info("------------------------------------------------------------------------")
 logger.info("Starting up Feminicide Story Processor v{}".format(VERSION))
