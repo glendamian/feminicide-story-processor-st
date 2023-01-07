@@ -84,7 +84,7 @@ def process_project_task(project: Dict, page_size: int) -> Dict:
                         )
                         source_stories += [story]
                 except Exception as e:
-                    logger.warning(f"Skipping {s['url']}")
+                    logger.warning(f"Skipping {s['url']} due to {e}")
             # add in entities
             source_stories = add_entities_to_stories(source_stories)
             # add in the scores from the logging db
