@@ -39,7 +39,7 @@ def add_entities_to_stories(stories: List[Dict]):
         story_entities = None
         if entities.server_address_set():
             try:
-                response = entities.from_content(s['title'] + " " + s['story_text'], s['language'], s['url'])
+                response = entities.from_content(f"{s['title']} {s['story_text']}", s['language'], s['url'])
                 story_entities = [item['text'].lower() for item in response['results']['entities']
                                   if item['type'] in ACCEPTED_ENTITY_TYPES]
             except JSONDecodeError:
