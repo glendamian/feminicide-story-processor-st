@@ -25,10 +25,13 @@ path_to_log_dir = os.path.join(base_dir, 'logs')
 
 # set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(levelname)s | %(name)s | %(message)s')
-logging.getLogger('trafilatura.core').setLevel(logging.WARNING)  # supress annoying "not enough comments" and "using custom extraction" notes
 logger = logging.getLogger(__name__)
 logger.info("------------------------------------------------------------------------")
 logger.info("Starting up Feminicide Story Processor v{}".format(VERSION))
+# supress annoying "not enough comments" and "using custom extraction" notes# logger = logging.getLogger(__name__)
+loggers_to_skip = ['trafilatura.core', 'trafilatura.metadata', 'readability.readability']
+for item in loggers_to_skip:
+    logging.getLogger(item).setLevel(logging.WARNING)
 
 # read in environment variables
 MC_API_TOKEN = os.environ.get('MC_API_TOKEN', None)  # sensitive, so don't log it
