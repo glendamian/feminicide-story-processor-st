@@ -112,6 +112,15 @@ class TestClassifierResults(unittest.TestCase):
         model_result = classifier.classify([story])['model_scores']
         assert round(model_result[0], 5) == 0.00789
 
+    def test_classify_pt(self):
+        with open(os.path.join(test_fixture_dir, "mc-story-2529994630.json"), 'r') as f:
+            story = json.load(f)
+        project = TEST_EN_PROJECT.copy()
+        project['language_model_id'] = 15
+        classifier = classifiers.for_project(project)
+        model_result = classifier.classify([story])['model_scores']
+        assert round(model_result[0], 5) == 0.02196
+
     def test_stories_against_all_classifiers(self):
         results_by_model_id = self._classify_one_from(6, "more_sample_stories.json")
         assert round(results_by_model_id[0], 5) == 0.30392
