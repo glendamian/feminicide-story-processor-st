@@ -154,11 +154,13 @@ def for_project(project: Dict) -> Classifier:
         matching_models = [m for m in model_list if int(m['id']) == int(project['language_model_id'])]
         model_config = matching_models[0]
         logger.debug("Project {} - model {}".format(project['id'], model_config['id']))
-    except:
-        logger.exception("Can't find model for project {}, language_model_id {}".format(
-            project['id'], project['language_model_id']
+    except Exception as e:
+        logger.exception("Can't find model for project {}, language_model_id {} ({})".format(
+            project['id'], project['language_model_id'], e
         ))
-        raise RuntimeError("Can't find model for oproec")
+        raise RuntimeError("Can't find model for project {}, language_model_id {} ({})".format(
+            project['id'], project['language_model_id'], e
+        ))
     return Classifier(model_config, project)
 
 
