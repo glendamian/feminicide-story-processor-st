@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v3.0.11
+
+* Update dependencies to fix title parsing bugs
+
 ### v3.0.10
 
 * More logging when a model isn't found
