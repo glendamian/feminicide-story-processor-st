@@ -110,7 +110,7 @@ def project_model_scores(project_id_str):
 def a_project(project_id_str):
     project_id = int(project_id_str)
     # pull out the project info
-    project = [p for p in load_project_list() if p['id'] == project_id][0]
+    project = [p for p in load_project_list(download_if_missing=True) if p['id'] == project_id][0]
 
     # show overall ingest over last two weeks
     data_for_graph = _prep_for_stacked_graph([stories_db.stories_by_published_day(platform=p, project_id=project_id, limit=30)

@@ -23,25 +23,27 @@ def _path_to_config_file() -> str:
     return os.path.join(classifiers.CONFIG_DIR, 'projects.json')
 
 
-def load_project_list(force_reload: bool = False, overwrite_last_story=False) -> List[Dict]:
+def load_project_list(force_reload: bool = False, overwrite_last_story=False, download_if_missing: bool = False) -> List[Dict]:
     """
     Treats config like a singleton that is lazy-loaded once the first time this is called.
     :param force_reload: Override the default behaviour and load the config from file system again.
     :param overwrite_last_story: Update the last processed story to the latest from the server (useful for reprocessing
                                  stories and other debugging)
+    :param download_if_missing: If the file is missing try to download it as a backup plan
     :return: list of configurations for projects to query about
     """
     global _all_projects
     if _all_projects and not force_reload:
         return _all_projects
     try:
-        if force_reload:  # grab the latest config file from the main server
+        file_exists = os.path.exists(_path_to_config_file())
+        if force_reload or (download_if_missing and not file_exists):  # grab the latest config file from main server
             projects_list = apiclient.get_projects_list()
             with open(_path_to_config_file(), 'w') as f:
                 json.dump(projects_list, f)
             logger.info("  updated config file from main server")
         # load and return the (perhaps updated) locally cached file
-        if os.path.exists(_path_to_config_file()):
+        if file_exists:
             with open(_path_to_config_file(), "r") as f:
                 _all_projects = json.load(f)
         else:
