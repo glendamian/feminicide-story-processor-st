@@ -13,7 +13,7 @@ from processor import get_email_config, is_email_configured, SOURCE_WAYBACK_MACH
 import processor.projects as projects
 import processor.notifications as notifications
 from processor.tasks import add_entities_to_stories
-from processor.util import chunks
+import processor.util as util
 
 DEFAULT_STORIES_PER_PAGE = 100  # I found this performs poorly if set higher than 100
 WORKER_COUNT = 8
@@ -38,7 +38,7 @@ def process_project_task(project: Dict, page_size: int) -> Dict:
     wm_api = SearchApiClient("mediacloud")
     if needing_posting_count > 0:
         db_stories = stories_db.unposted_stories(project['id'])
-        for db_stories_page in chunks(db_stories, page_size):
+        for db_stories_page in util.chunks(db_stories, page_size):
             # find the matching story from the source
             source_stories = []
             for s in db_stories_page:
