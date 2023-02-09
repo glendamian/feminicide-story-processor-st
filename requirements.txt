@@ -6,7 +6,7 @@ mediacloud==4.0.*
 gunicorn==20.1.*
 dateparser==1.1.*
 scikit-learn==1.0.1  # freeze this here for model serialization compatability
-sentry-sdk[flask]==1.14.*
+sentry-sdk[flask]==1.15.*
 tensorflow-hub==0.12.*
 tensorflow==2.10.*  # freeze here due to cross-platform install challenges
 psycopg2==2.9.*
