@@ -11,6 +11,7 @@ from processor import path_to_log_dir
 from processor.celery import app
 import processor.projects as projects
 import processor.entities as entities
+import processor.util as util
 
 logger = logging.getLogger(__name__)  # get_task_logger(__name__)
 logFormatter = logging.Formatter("[%(levelname)s %(threadName)s] - %(asctime)s - %(name)s - : %(message)s")
@@ -95,14 +96,15 @@ def classify_and_post_worker(self, project: Dict, stories: List[Dict]):
                 json.dump(stories_to_send, f, ensure_ascii=False, indent=4)
         # mark the stories in the local DB that we intend to send
         stories_db.update_stories_above_threshold(stories_to_send)
-        # now actually post them
+        # now actually post them (in chunks just to make sure no single page is too big and causes a HTTP 413 error)
         logger.info('{}: {} stories to post'.format(project['id'], len(stories_to_send)))
-        projects.post_results(project, stories_to_send)
-        for s in stories_to_send:  # for auditing, keep a log in the container of the results posted to main server
-            logger.debug("  post: {}/{} - {} - {}".format(s['project_id'], s['language_model_id'],
-                                                          s['stories_id'], s['confidence']))
-        # and track that we posted the stories that we did in our local debug DB
-        stories_db.update_stories_posted_date(stories_to_send)
+        for page_to_send in util.chunks(stories_to_send, 100):
+            projects.post_results(project, page_to_send)
+            for s in page_to_send:  # for auditing, keep a log in the container of the results posted to main server
+                logger.debug("  post: {}/{} - {} - {}".format(s['project_id'], s['language_model_id'],
+                                                              s['stories_id'], s['confidence']))
+            # and track that we posted the stories that we did in our local debug DB
+            stories_db.update_stories_posted_date(page_to_send)
     except requests.exceptions.HTTPError as err:
         # on failure requeue to try again
         logger.warning("{}: Failed to post {} results".format(project['id'], len(stories)))
