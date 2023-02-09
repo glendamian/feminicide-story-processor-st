@@ -30,7 +30,7 @@ def home():
 def processed_by_day():
     # show overall ingest over last month
     data_for_graph = _prep_for_stacked_graph(
-        [stories_db.stories_by_published_day(platform=p, limit=30) for p in PLATFORMS],
+        [stories_db.stories_by_processed_day(platform=p, limit=30) for p in PLATFORMS],
         PLATFORMS)
     return jsonify(data_for_graph)
 
@@ -39,8 +39,8 @@ def processed_by_day():
 def posted_by_day():
     # show stories above threshold over last month
     data = _prep_for_stacked_graph(
-        [stories_db.stories_by_published_day(above_threshold=True),
-         stories_db.stories_by_published_day(above_threshold=False)],
+        [stories_db.stories_by_processed_day(above_threshold=True),
+         stories_db.stories_by_processed_day(above_threshold=False)],
         ['above threshold', 'below threshold']
     )
     return jsonify(data)
@@ -70,8 +70,8 @@ def _prep_for_stacked_graph(counts: List[List], names: List[str]) -> List[Dict]:
 def project_processed_by_day(project_id_str):
     project_id = int(project_id_str)
     data = _prep_for_stacked_graph(
-        [stories_db.stories_by_processed_day(project_id, True, None),
-         stories_db.stories_by_processed_day(project_id, False, None)],
+        [stories_db.stories_by_processed_day(project_id, above_threshold=True),
+         stories_db.stories_by_processed_day(project_id, above_threshold=False)],
         ['above threshold', 'below threshold']
     )
     return jsonify(data)
@@ -92,8 +92,8 @@ def project_published_by_day(project_id_str):
 def project_posted_by_day(project_id_str):
     project_id = int(project_id_str)
     data = _prep_for_stacked_graph(
-        [stories_db.stories_by_processed_day(project_id, True, True),
-         stories_db.stories_by_processed_day(project_id, True, False)],
+        [stories_db.stories_by_processed_day(project_id, above_threshold=True, is_posted=True),
+         stories_db.stories_by_processed_day(project_id, above_threshold=True, is_posted=False)],
         ['sent to main server', 'not sent to main server']
     )
     return jsonify(data)

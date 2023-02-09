@@ -32,7 +32,7 @@ def load_projects_task() -> List[Dict]:
     projects_with_countries = [p for p in project_list if (p['country'] is not None) and len(p['country']) == 2]
     logger.info("  Found {} projects, checking {} with countries set".format(len(project_list),
                                                                              len(projects_with_countries)))
-    return projects_with_countries
+    return [p for p in projects_with_countries if p['id'] == 166]
 
 
 def _fetch_results(project: Dict, start_date: dt.datetime, end_date: dt.datetime, page: int = 1) -> Dict:
@@ -128,7 +128,6 @@ if __name__ == '__main__':
     logger.info(f"    models downloaded: {models_downloaded}")
     if not models_downloaded:
         sys.exit(1)
-
     with Flow("story-processor") as flow:
         if WORKER_COUNT > 1:
             flow.executor = LocalDaskExecutor(scheduler="threads", num_workers=WORKER_COUNT)
