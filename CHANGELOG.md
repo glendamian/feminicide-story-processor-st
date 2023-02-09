@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v3.0.13
+
+* Fix homepage dashboard queries to support debugging better
+
 ### v3.0.12
 
 * Chunk posting results to main server to avoid 413 errors
