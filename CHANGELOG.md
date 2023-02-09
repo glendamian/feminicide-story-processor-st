@@ -3,6 +3,12 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v3.0.12
+
+* Chunk posting results to main server to avoid 413 errors
+* Upgrade dependencies
+* Reduce errors on web dashboard after redeployment
+
 ### v3.0.11
 
 * Update dependencies to fix title parsing bugs
