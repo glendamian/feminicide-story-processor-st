@@ -13,6 +13,7 @@ from processor import get_email_config, is_email_configured, SOURCE_WAYBACK_MACH
 import processor.projects as projects
 import processor.notifications as notifications
 from processor.tasks import add_entities_to_stories
+from processor.util import chunks
 
 DEFAULT_STORIES_PER_PAGE = 100  # I found this performs poorly if set higher than 100
 WORKER_COUNT = 8
@@ -23,15 +24,6 @@ def load_projects_task() -> List[Dict]:
     project_list = projects.load_project_list(force_reload=True, overwrite_last_story=False)
     logger.info("  Checking {} projects".format(len(project_list)))
     return project_list
-
-
-def chunks(lst, n):
-    """
-    Yield successive n-sized chunks from lst.
-    https://stackoverflow.com/questions/312443/how-do-you-split-a-list-into-evenly-sized-chunks
-    """
-    for i in range(0, len(lst), n):
-        yield lst[i:i + n]
 
 
 @task(name='process_project')
