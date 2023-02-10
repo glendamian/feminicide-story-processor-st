@@ -115,12 +115,12 @@ def send_email_task(project_details: List[Dict]):
     logger.info("Done with {} projects".format(len(project_details)))
     logger.info("  {} stories over {} pages".format(total_new_stories, total_pages))
     email_message += "Done - pulled {} stories over {} pages total.\n\n" \
-                     "(An automated email from your friendly neighborhood Media Cloud story processor)" \
+                     "(An automated email from your friendly neighborhood story processor)" \
         .format(total_new_stories, total_pages)
     if is_email_configured():
         email_config = get_email_config()
         notifications.send_email(email_config['notify_emails'],
-                                 "Feminicide Media Cloud Catchup: {} stories".format(total_new_stories),
+                                 "Feminicide Catchup: {} stories".format(total_new_stories),
                                  email_message)
     else:
         logger.info("Not sending any email updates")
