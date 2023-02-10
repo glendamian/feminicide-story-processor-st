@@ -5,9 +5,9 @@
 <div class="row">
     <div class="col-12">
         <div class="jumbotron">
-            <h1 class="display-4">Media Cloud Story Processor v{{version}}</h1>
+            <h1 class="display-4">Story Processor v{{version}}</h1>
             <p class="lead">
-            Grab stories from Media Cloud, run them against trained classifiers, post results to another server.
+            Grab news stories from various sources, run them against trained classifiers, post results to another server.
             </p>
         </div>
     </div>
@@ -17,9 +17,16 @@
 
 <div class="row">
     <div class="col-12">
+        <h2>Above Threshold Stories (by date sent to main server)</h2>
+        <div id="posted-platform-history"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
         <h2>History (by discovery date)</h2>
-        <div id="discovery-history"></div>
-        <div id="posted-history"></div>
+        <div id="processed-platform-history"></div>
+        <div id="processed-result-history"></div>
     </div>
 </div>
 
@@ -58,9 +65,11 @@
 
 {% block page_scripts %}
 
-renderStacked("/processed-by-day", '#discovery-history', 'Discovered Stories by Platform');
+renderStacked("/posted-platform-history", '#posted-platform-history', 'Platform Stories by Posted Day');
 
-renderStacked("/posted-by-day", '#posted-history', 'Above Threshold Stories by Day');
+renderStacked("/processed-platform-history", '#processed-platform-history', 'Platform Stories by Discovery Day');
+
+renderStacked("/processed-result-history", '#processed-result-history', 'Story Results by Discovery Day');
 
 $("#update").click(function(){
     // show feedback while fetching results

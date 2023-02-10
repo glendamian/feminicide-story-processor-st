@@ -26,17 +26,26 @@ def home():
     return render_template('home.html', projects=projects, version=VERSION)
 
 
-@app.route("/processed-by-day", methods=['GET'])
-def processed_by_day():
+@app.route("/posted-plarform-history", methods=['GET'])
+def posted_plarform_history():
     # show overall ingest over last month
     data_for_graph = _prep_for_stacked_graph(
-        [stories_db.stories_by_processed_day(platform=p, limit=30) for p in PLATFORMS],
+        [stories_db.stories_by_posted_day(platform=p) for p in PLATFORMS],
         PLATFORMS)
     return jsonify(data_for_graph)
 
 
-@app.route("/posted-by-day", methods=['GET'])
-def posted_by_day():
+@app.route("/processed-platform-history", methods=['GET'])
+def processed_platform_history():
+    # show overall ingest over last month
+    data_for_graph = _prep_for_stacked_graph(
+        [stories_db.stories_by_processed_day(platform=p) for p in PLATFORMS],
+        PLATFORMS)
+    return jsonify(data_for_graph)
+
+
+@app.route("/processed-result-history", methods=['GET'])
+def processed_result_history():
     # show stories above threshold over last month
     data = _prep_for_stacked_graph(
         [stories_db.stories_by_processed_day(above_threshold=True),

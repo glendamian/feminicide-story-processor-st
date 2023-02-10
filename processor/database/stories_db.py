@@ -118,17 +118,8 @@ def recent_stories(project_id: int, above_threshold: bool, limit: int = 5) -> Li
     return stories
 
 
-def stories_by_processed_day(project_id: int = None, platform: str = None, above_threshold: bool = None,
-                             is_posted: bool = None, limit: int = 30) -> List:
-    """
-    Ui: chart of how many stories we processed each day.
-    :param project_id:
-    :param platform:
-    :param above_threshold:
-    :param is_posted:
-    :param limit:
-    :return:
-    """
+def _stories_by_date_col(column_name: str, project_id: int = None, platform: str = None, above_threshold: bool = None,
+                         is_posted: bool = None, limit: int = 30) -> List:
     earliest_date = dt.date.today() - dt.timedelta(days=limit)
     clauses = []
     if project_id is not None:
@@ -139,34 +130,25 @@ def stories_by_processed_day(project_id: int = None, platform: str = None, above
         clauses.append("(above_threshold is {})".format('True' if above_threshold else 'False'))
     if is_posted is not None:
         clauses.append("(posted_date {} Null)".format("is not" if is_posted else "is"))
-    query = "select processed_date::date as day, count(1) as stories from stories " \
-            "where (processed_date is not Null) and (processed_date >= '{}'::DATE) AND {} " \
+    query = "select "+column_name+"::date as day, count(1) as stories from stories " \
+            "where ("+column_name+" is not Null) and ("+column_name+" >= '{}'::DATE) AND {} " \
             "group by 1 order by 1 DESC".format(earliest_date, " AND ".join(clauses))
     return _run_query(query)
+
+
+def stories_by_posted_day(project_id: int = None, platform: str = None, above_threshold: bool = True,
+                          is_posted: bool = None, limit: int = 45) -> List:
+    return _stories_by_date_col('processed_date', project_id, platform, above_threshold, is_posted, limit)
+
+
+def stories_by_processed_day(project_id: int = None, platform: str = None, above_threshold: bool = None,
+                             is_posted: bool = None, limit: int = 45) -> List:
+    return _stories_by_date_col('processed_date', project_id, platform, above_threshold, is_posted, limit)
 
 
 def stories_by_published_day(project_id: int = None, platform: str = None, above_threshold: bool = None,
-                             limit: int = 30) -> List:
-    """
-    UI: chart of stories we processed by date of publication
-    :param project_id:
-    :param platform:
-    :param above_threshold:
-    :param limit:
-    :return:
-    """
-    earliest_date = dt.date.today() - dt.timedelta(days=limit)
-    clauses = []
-    if project_id is not None:
-        clauses.append("(project_id={})".format(project_id))
-    if platform is not None:
-        clauses.append("(source='{}')".format(platform))
-    if above_threshold is not None:
-        clauses.append("(above_threshold is {})".format('True' if above_threshold else 'False'))
-    query = "select published_date::date as day, count(1) as stories from stories " \
-            "where (published_date is not Null) and (published_date >= '{}'::DATE) and {} " \
-            "group by 1 order by 1 DESC".format(earliest_date, " AND ".join(clauses))
-    return _run_query(query)
+                             is_posted: bool = None, limit: int = 30) -> List:
+    return _stories_by_date_col('published_date', project_id, platform, above_threshold, is_posted, limit)
 
 
 def _run_query(query: str) -> List:
