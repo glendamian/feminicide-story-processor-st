@@ -26,8 +26,8 @@ def home():
     return render_template('home.html', projects=projects, version=VERSION)
 
 
-@app.route("/posted-plarform-history", methods=['GET'])
-def posted_plarform_history():
+@app.route("/posted-platform-history", methods=['GET'])
+def posted_platform_history():
     # show overall ingest over last month
     data_for_graph = _prep_for_stacked_graph(
         [stories_db.stories_by_posted_day(platform=p) for p in PLATFORMS],
