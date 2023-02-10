@@ -17,6 +17,7 @@ import processor.util as util
 
 DEFAULT_STORIES_PER_PAGE = 100  # I found this performs poorly if set higher than 100
 WORKER_COUNT = 8
+DATE_LIMIT = 30
 
 
 @task(name='load_projects')
@@ -30,14 +31,14 @@ def load_projects_task() -> List[Dict]:
 def process_project_task(project: Dict, page_size: int) -> Dict:
     project_email_message = ""
     project_email_message += "Project {} - {}:\n".format(project['id'], project['title'])
-    needing_posting_count = stories_db.unposted_above_story_count(project['id'])
+    needing_posting_count = stories_db.unposted_above_story_count(project['id'], DATE_LIMIT)
     logger.info("Project {} - {} unposted above threshold stories to process".format(
         project['id'], needing_posting_count))
     story_count = 0
     page_count = 0
     wm_api = SearchApiClient("mediacloud")
     if needing_posting_count > 0:
-        db_stories = stories_db.unposted_stories(project['id'])
+        db_stories = stories_db.unposted_stories(project['id'], DATE_LIMIT)
         for db_stories_page in util.chunks(db_stories, page_size):
             # find the matching story from the source
             source_stories = []
@@ -96,7 +97,7 @@ def process_project_task(project: Dict, page_size: int) -> Dict:
             page_count += 1
     logger.info("  sent {} stories for project {} total (of {})".format(story_count, project['id'], needing_posting_count))
     #  add a summary to the email we are generating
-    project_email_message += "    posted {} stories from db {}\n\n".format(story_count, page_count)
+    project_email_message += "    posted {} stories from db ({} pages)\n\n".format(story_count, page_count)
     return dict(
         email_text=project_email_message,
         stories=story_count,

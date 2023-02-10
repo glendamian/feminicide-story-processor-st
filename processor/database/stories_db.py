@@ -165,14 +165,16 @@ def _run_count_query(query: str) -> int:
     return data[0]['count']
 
 
-def unposted_above_story_count(project_id: int) -> int:
+def unposted_above_story_count(project_id: int, limit: int = None) -> int:
     """
     UI: How many stories about threshold have *not* been sent to main server (should be zero!).
-    :param project_id:
-    :return:
     """
-    query = "select count(1) from stories where project_id={} and posted_date is Null and above_threshold is True".\
-        format(project_id)
+    date_clause = "(posted_date is not Null)"
+    if limit:
+        earliest_date = dt.date.today() - dt.timedelta(days=limit)
+        date_clause+= " AND (posted_date >= '{}'::DATE)".format(earliest_date)
+    query = "select count(1) from stories where project_id={} and above_threshold is True and {}".\
+        format(project_id, date_clause)
     return _run_count_query(query)
 
 
@@ -199,14 +201,15 @@ def below_story_count(project_id: int) -> int:
     return _run_count_query(query)
 
 
-def unposted_stories(project_id: int):
+def unposted_stories(project_id: int, limit: int):
     """
     How many stories were not posted to hte main server (should be same as below_story_count)
-    :param project_id:
     :return:
     """
+    earliest_date = dt.date.today() - dt.timedelta(days=limit)
     query = "select * from stories " \
-            "where project_id={} and posted_date is Null and above_threshold is True".format(project_id)
+            "where project_id={} and posted_date is Null and (posted_date >= '{}'::DATE) and above_threshold is True".\
+        format(project_id, earliest_date)
     """
     session = Session()
     q = session.query(Story). \
