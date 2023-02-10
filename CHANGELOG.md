@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v3.0.14
+
+* Add new chart showing posting volume by day to homepage
+
 ### v3.0.13
 
 * Fix homepage dashboard queries to support debugging better
