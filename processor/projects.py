@@ -41,7 +41,9 @@ def load_project_list(force_reload: bool = False, overwrite_last_story=False, do
             projects_list = apiclient.get_projects_list()
             with open(_path_to_config_file(), 'w') as f:
                 json.dump(projects_list, f)
-            logger.info("  updated config file from main server")
+            logger.info("  updated config file from main server - {} projects".format(len(projects_list)))
+            if len(projects_list) == 0:
+                raise RuntimeError("Fetched empty project list was empty - bailing unhappily")
         # load and return the (perhaps updated) locally cached file
         if file_exists:
             with open(_path_to_config_file(), "r") as f:

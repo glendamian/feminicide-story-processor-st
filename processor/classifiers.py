@@ -178,6 +178,8 @@ def update_model_list():
     Fetch and save list of models from the central server.
     """
     model_list = apiclient.get_language_models_list()
+    if len(model_list) == 0:
+        raise RuntimeError("Fetched empty model list was empty - bailing unhappily")
     with open(os.path.join(CONFIG_DIR, 'language-models.json'), 'w') as f:
         json.dump(model_list, f)
     return model_list
