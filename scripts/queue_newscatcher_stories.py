@@ -30,6 +30,8 @@ newscatcherapi = NewsCatcherApiClient(x_api_key=processor.NEWSCATCHER_API_KEY)
 def load_projects_task() -> List[Dict]:
     project_list = projects.load_project_list(force_reload=True, overwrite_last_story=False)
     projects_with_countries = [p for p in project_list if (p['country'] is not None) and len(p['country']) == 2]
+    if len(projects_with_countries) == 0:
+        raise RuntimeError("No projects with countries ({} projects total) - bailing".format(len(project_list)))
     logger.info("  Found {} projects, checking {} with countries set".format(len(project_list),
                                                                              len(projects_with_countries)))
     #return [p for p in projects_with_countries if p['id'] == 166]
