@@ -10,7 +10,7 @@ from sentry_sdk import init
 from typing import Dict
 from sqlalchemy import create_engine
 
-VERSION = "3.0.15"
+VERSION = "3.0.16"
 SOURCE_GOOGLE_ALERTS = "google-alerts"
 SOURCE_MEDIA_CLOUD = "media-cloud"
 SOURCE_NEWSCATCHER = "newscatcher"
