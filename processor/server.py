@@ -62,7 +62,7 @@ def update_config():
 
 
 def _prep_for_stacked_graph(counts: List[List], names: List[str]) -> List[Dict]:
-    cleaned_data = [{r['day'].strftime("%Y-%m-%d"): r['stories'] for r in series} for series in counts]
+    cleaned_data = [{r['day'].strftime("%Y-%m-%dT00:00:00"): r['stories'] for r in series} for series in counts]
     dates = set(chain(*[series.keys() for series in cleaned_data]))
     stories_by_day_data = []
     for d in dates:  # need to make sure there is a pair of entries for each date
