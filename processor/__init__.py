@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 import mediacloud.api
 from flask import Flask
 #from sentry_sdk.integrations.flask import FlaskIntegration
-from sentry_sdk.integrations.celery import CeleryIntegration
 from sentry_sdk.integrations.logging import ignore_logger
 from sentry_sdk import init
 from typing import Dict
@@ -47,6 +46,7 @@ logger.info("  Queue at {}".format(BROKER_URL))
 
 SENTRY_DSN = os.environ.get('SENTRY_DSN', None)  # optional
 if SENTRY_DSN:
+    from sentry_sdk.integrations.celery import CeleryIntegration
     init(dsn=SENTRY_DSN, release=VERSION,
          integrations=[CeleryIntegration()])
     ignore_logger('trafilatura.utils')
