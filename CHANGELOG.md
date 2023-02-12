@@ -3,6 +3,11 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v3.0.15
+
+* Tweak URLs
+* Add in debugging messages
+
 ### v3.0.14
 
 * Add new chart showing posting volume by day to homepage
