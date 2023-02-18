@@ -65,18 +65,18 @@
 
 {% block page_scripts %}
 
-renderStacked("/posted-platform-history", '#posted-platform-history', 'Platform Stories by Posted Day');
+renderStacked("/api/posted-platform-history", '#posted-platform-history', 'Platform Stories by Posted Day');
 
-renderStacked("/processed-platform-history", '#processed-platform-history', 'Platform Stories by Discovery Day');
+renderStacked("/api/processed-platform-history", '#processed-platform-history', 'Platform Stories by Discovery Day');
 
-renderStacked("/processed-result-history", '#processed-result-history', 'Story Results by Discovery Day');
+renderStacked("/api/processed-result-history", '#processed-result-history', 'Story Results by Discovery Day');
 
 $("#update").click(function(){
     // show feedback while fetching results
     showSpinner('#results');
     // ask server to update config
     $.post({
-      url: "/update-config",
+      url: "/api/update-config",
     }).done(function(response){
       // if server responds well then display JSON
       console.info(response);

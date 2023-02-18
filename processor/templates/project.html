@@ -25,20 +25,17 @@
 <hr/>
 
 <div class="row">
-    <div class="col-lg-12">
-        <h2>Recent Story Volume (by published_date)</h2>
-        <div id="discovery-history"></div>
-        <div id="published-over-time"></div>
+    <div class="col-12">
+        <h2>Above Threshold Stories (by date sent to main server)</h2>
+        <div id="posted-platform-history"></div>
     </div>
 </div>
 
-<hr />
-
 <div class="row">
-    <div class="col-lg-12">
-        <h2>Recent Story Volume (by processed_date)</h2>
-        <div id="processed-over-time"></div>
-        <div id="posted-over-time"></div>
+    <div class="col-12">
+        <h2>History (by discovery date)</h2>
+        <div id="processed-platform-history"></div>
+        <div id="processed-result-history"></div>
     </div>
 </div>
 
@@ -70,9 +67,15 @@
 {% endblock %}
 
 {% block page_scripts %}
-renderStacked('/projects/{{ project['id'] }}/processed-by-day', '#processed-over-time', 'Story Classification Results by Date Processed');
-// renderStacked('/projects/{{ project['id'] }}/posted-by-day', '#posted-over-time', 'Above Threshold Stories by Status and Date Processed');
-renderStacked('/projects/{{ project['id'] }}/published-by-day', '#published-over-time', 'Story Classification Results by Detected Date of Publication');
-renderStacked({{ ingest_data | safe }}, '#discovery-history', 'Discovered Stories by Platform');
-renderHistogram('/projects/{{ project['id'] }}/binned-model-scores', '#binned-model-scores', 'Model Score Histogram');
+
+renderStacked({{ ingest_data | safe }}, '#discovery-history', 'Discovered Stories Source by Published Date');
+
+renderHistogram('/api/projects/{{ project['id'] }}/binned-model-scores', '#binned-model-scores', 'Model Score Histogram');
+
+renderStacked("/api/projects/{{ project['id'] }}/posted-platform-history", '#posted-platform-history', 'Platform Stories by Posted Day');
+
+renderStacked("/api/projects/{{ project['id'] }}/processed-platform-history", '#processed-platform-history', 'Platform Stories by Discovery Day');
+
+renderStacked("/api/projects/{{ project['id'] }}/processed-result-history", '#processed-result-history', 'Story Results by Discovery Day');
+
 {% endblock %}
