@@ -67,9 +67,9 @@ def a_project(project_id_str: int):
 
 def _platform_history(date_type: str, project_id: int = None) -> List[Dict]:
     if date_type == "processed":
-        func = stories_db.stories_by_posted_day
-    elif date_type == "posted":
         func = stories_db.stories_by_processed_day
+    elif date_type == "posted":
+        func = stories_db.stories_by_posted_day
     elif date_type == "published":
         func = stories_db.stories_by_published_day
     else:

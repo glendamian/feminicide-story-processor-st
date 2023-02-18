@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v3.1.2
+
+* Fix chart query problem 
+
 ### v3.1.1
 
 * Add published date chart back in to homepage and project page 
