@@ -3,6 +3,11 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+
+### v3.1.0
+
+* Fixes to project history charts (so they match new-ish homepage ones more)
+
 ### v3.0.16
 
 * More debugging
