@@ -65,28 +65,24 @@ def a_project(project_id_str: int):
                            )
 
 
-def _posted_platform_history(project_id: int = None) -> List[Dict]:
+def _platform_history(date_type: str, project_id: int = None) -> List[Dict]:
+    if date_type == "processed":
+        func = stories_db.stories_by_posted_day
+    elif date_type == "posted":
+        func = stories_db.stories_by_processed_day
+    elif date_type == "published":
+        func = stories_db.stories_by_published_day
+    else:
+        raise RuntimeError("invalid `date_type` of '{}'".format(date_type))
     return _prep_for_stacked_graph(
-        [stories_db.stories_by_posted_day(project_id=project_id, platform=p) for p in PLATFORMS],
+        [func(project_id=project_id, platform=p) for p in PLATFORMS],
         PLATFORMS)
-@app.route("/api/posted-platform-history", methods=['GET'])
-def posted_platform_history():
-    return jsonify(_posted_platform_history())
-@app.route("/api/projects/<project_id_str>/posted-platform-history", methods=['GET'])
-def project_posted_platform_history(project_id_str: str):
-    return jsonify(_posted_platform_history(int(project_id_str)))
-
-
-def _processed_platform_history(project_id: int = None) -> List[Dict]:
-    return _prep_for_stacked_graph(
-        [stories_db.stories_by_processed_day(project_id=project_id, platform=p) for p in PLATFORMS],
-        PLATFORMS)
-@app.route("/api/processed-platform-history", methods=['GET'])
-def processed_platform_history():
-    return jsonify(_processed_platform_history())
-@app.route("/api/projects/<project_id_str>/processed-platform-history", methods=['GET'])
-def project_processed_platform_history(project_id_str: str):
-    return jsonify(_processed_platform_history(int(int(project_id_str))))
+@app.route("/api/platform-history/<date_type>", methods=['GET'])
+def platform_history(date_type: str):
+    return jsonify(_platform_history(date_type))
+@app.route("/api/projects/<project_id_str>/platform-history/<date_type>", methods=['GET'])
+def project_platform_history(project_id_str: str, date_type: str):
+    return jsonify(_platform_history(date_type, int(project_id_str)))
 
 
 def _processed_result_history(project_id: int = None) -> List[Dict]:

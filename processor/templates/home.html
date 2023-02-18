@@ -25,6 +25,7 @@
 <div class="row">
     <div class="col-12">
         <h2>History (by discovery date)</h2>
+        <div id="published-platform-history"></div>
         <div id="processed-platform-history"></div>
         <div id="processed-result-history"></div>
     </div>
@@ -65,9 +66,11 @@
 
 {% block page_scripts %}
 
-renderStacked("/api/posted-platform-history", '#posted-platform-history', 'Platform Stories by Posted Day');
+renderStacked("/api/platform-history/posted", '#posted-platform-history', 'Platform Stories by Posted Day');
 
-renderStacked("/api/processed-platform-history", '#processed-platform-history', 'Platform Stories by Discovery Day');
+renderStacked("/api/platform-history/processed", '#processed-platform-history', 'Platform Stories by Discovery Day');
+
+renderStacked("/api/platform-history/published", '#published-platform-history', 'Platform Stories by Published Day');
 
 renderStacked("/api/processed-result-history", '#processed-result-history', 'Story Results by Discovery Day');
 

@@ -26,14 +26,15 @@
 
 <div class="row">
     <div class="col-12">
-        <h2>Above Threshold Stories (by date sent to main server)</h2>
+        <h2>Above Threshold Stories</h2>
         <div id="posted-platform-history"></div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-12">
-        <h2>History (by discovery date)</h2>
+        <h2>History</h2>
+        <div id="published-platform-history"></div>
         <div id="processed-platform-history"></div>
         <div id="processed-result-history"></div>
     </div>
@@ -72,9 +73,11 @@ renderStacked({{ ingest_data | safe }}, '#discovery-history', 'Discovered Storie
 
 renderHistogram('/api/projects/{{ project['id'] }}/binned-model-scores', '#binned-model-scores', 'Model Score Histogram');
 
-renderStacked("/api/projects/{{ project['id'] }}/posted-platform-history", '#posted-platform-history', 'Platform Stories by Posted Day');
+renderStacked("/api/projects/{{ project['id'] }}/platform-history/posted", '#posted-platform-history', 'Platform Stories by Posted Day');
 
-renderStacked("/api/projects/{{ project['id'] }}/processed-platform-history", '#processed-platform-history', 'Platform Stories by Discovery Day');
+renderStacked("/api/projects/{{ project['id'] }}/platform-history/published", '#published-platform-history', 'Platform Stories by Published Day');
+
+renderStacked("/api/projects/{{ project['id'] }}/platform-history/processed", '#processed-platform-history', 'Platform Stories by Discovery Day');
 
 renderStacked("/api/projects/{{ project['id'] }}/processed-result-history", '#processed-result-history', 'Story Results by Discovery Day');
 
