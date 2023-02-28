@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v3.1.3
+
+* Use new `newscatcher_country` field 
+
 ### v3.1.2
 
 * Fix chart query problem 
