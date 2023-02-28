@@ -29,7 +29,7 @@ newscatcherapi = NewsCatcherApiClient(x_api_key=processor.NEWSCATCHER_API_KEY)
 @task(name='load_projects')
 def load_projects_task() -> List[Dict]:
     project_list = projects.load_project_list(force_reload=True, overwrite_last_story=False)
-    projects_with_countries = [p for p in project_list if (p['country'] is not None) and len(p['country']) == 2]
+    projects_with_countries = projects.with_countries(project_list)
     if len(projects_with_countries) == 0:
         raise RuntimeError("No projects with countries ({} projects total) - bailing".format(len(project_list)))
     logger.info("  Found {} projects, checking {} with countries set".format(len(project_list),
@@ -44,7 +44,7 @@ def _fetch_results(project: Dict, start_date: dt.datetime, end_date: dt.datetime
         results = newscatcherapi.get_search(
             q=terms_no_curlies,
             lang=project['language'],
-            countries=[p.strip() for p in project['country'].split(",")],
+            countries=[p.strip() for p in project['newscatcher_country'].split(",")],
             page_size=PAGE_SIZE,
             from_=start_date.strftime("%Y-%m-%d"),
             to_=end_date.strftime("%Y-%m-%d"),
@@ -70,7 +70,7 @@ def fetch_project_stories_task(project_list: Dict, data_source: str) -> List[Dic
         # only search stories since the last search (if we've done one before)
         start_date = end_date - dt.timedelta(days=DEFAULT_DAY_WINDOW)
         if history.last_publish_date is not None:
-            # make sure we don't accidently cut off a half day we haven't queried against yet
+            # make sure we don't accidentally cut off a half day we haven't queried against yet
             # this is OK because duplicates will get screened out later in the pipeline
             local_start_date = history.last_publish_date - dt.timedelta(days=1)
             start_date = min(local_start_date, start_date)

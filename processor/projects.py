@@ -23,6 +23,11 @@ def _path_to_config_file() -> str:
     return os.path.join(classifiers.CONFIG_DIR, 'projects.json')
 
 
+def with_countries(all_projects: List[Dict]) -> List[Dict]:
+    return [p for p in all_projects
+            if (p['newscatcher_country'] is not None) and len(p['newscatcher_country']) == 2]
+
+
 def load_project_list(force_reload: bool = False, overwrite_last_story=False, download_if_missing: bool = False) -> List[Dict]:
     """
     Treats config like a singleton that is lazy-loaded once the first time this is called.

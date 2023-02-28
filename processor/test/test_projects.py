@@ -31,6 +31,14 @@ class TestProjects(unittest.TestCase):
         assert round(feminicide_probs[1], 5) == 0.32298
         assert round(feminicide_probs[2], 5) == 0.33297
 
+    def test_newscatcher_countries(self):
+        project_list = projects.load_project_list(True)
+        assert len(project_list) > 0
+        for p in project_list:
+            assert 'newscatcher_country' in p
+        projects_with_countries = projects.with_countries(project_list)
+        assert len(projects_with_countries) > 0
+
     def test_remove_low_confidence_stories(self):
         project = TEST_EN_PROJECT.copy()
         project['min_confidence'] = 0.5

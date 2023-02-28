@@ -204,6 +204,7 @@ def download_models() -> bool:
         logger.error(f"Couldn't get the models - bailing out cowardly {e}")
     return False
 
+
 def _download_file(url: str, dest_dir: str, prefix: str):
     """
     This expects the files to either end with "_model.p" or "_vectorizer.p". It renames them here so that
