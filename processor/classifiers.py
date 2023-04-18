@@ -28,7 +28,9 @@ VECTORIZER_TYPES = [VECTORIZER_TF_IDF, VECTORIZER_EMBEDDINGS]
 
 DEFAULT_MODEL_NAME = 'usa'
 
-TFHUB_MODEL_PATH = '/tmp/models/'
+LANGUAGE_EN = 'en'
+TFHUB_MODEL_PATH_EN = '/tmp/models/en/'
+TFHUB_MODEL_PATH_KO = '/tmp/models/ko/'
 
 
 class Classifier:
@@ -57,11 +59,14 @@ class Classifier:
                 self._vectorizer_1 = pickle.load(v)
         elif self.config['vectorizer_type_1'] == VECTORIZER_EMBEDDINGS:
             try:
-                self._vectorizer_1 = hub.load(TFHUB_MODEL_PATH)  # this will cache to a local dir
+                if self.project['language'] == LANGUAGE_EN:
+                    self._vectorizer_1 = hub.load(TFHUB_MODEL_PATH_EN)  # this will cache to a local dir
+                else:
+                    self._vectorizer_1 = hub.load(TFHUB_MODEL_PATH_KO)
             except OSError:
                 # probably the cached SavedModel doesn't exist anymore
                 logger.error("Can't load _vectorizer_1 from {} - did you run /scripts/download-models.sh?".format(
-                    TFHUB_MODEL_PATH))
+                    TFHUB_MODEL_PATH_EN))
         else:
             raise RuntimeError("Unknown vectorizer 1 type '{}' for project {}".format(self.config['vectorizer_type_1'],
                                                                                       self.project['id']))
@@ -74,11 +79,14 @@ class Classifier:
                     self._vectorizer_2 = pickle.load(v)
             elif self.config['vectorizer_type_2'] == VECTORIZER_EMBEDDINGS:
                 try:
-                    self._vectorizer_2 = hub.load(TFHUB_MODEL_PATH)  # this will cache to a local dir
+                    if self.project['language'] == LANGUAGE_EN:
+                        self._vectorizer_1 = hub.load(TFHUB_MODEL_PATH_EN)  # this will cache to a local dir
+                    else:
+                        self._vectorizer_1 = hub.load(TFHUB_MODEL_PATH_KO)
                 except OSError:
                     # probably the cached SavedModel doesn't exist anymore
                     logger.error("Can't load _vectorizer_2 from {} - did you run /scripts/download-models.sh?".format(
-                        TFHUB_MODEL_PATH))
+                        TFHUB_MODEL_PATH_EN))
             else:
                 raise RuntimeError("Unknown vectorizer 2 type '{}' for project {}".format(
                     self.config['vectorizer_type_2'], self.project['id']))
