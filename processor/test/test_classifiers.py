@@ -121,6 +121,16 @@ class TestClassifierResults(unittest.TestCase):
         model_result = classifier.classify([story])['model_scores']
         assert round(model_result[0], 5) == 0.02196
 
+    def test_classify_ko(self):
+        project = TEST_EN_PROJECT.copy()  # important to copy before editing, otherwise subsequent tests get messed up
+        project['language_model_id'] = 17
+        classifier = classifiers.for_project(project)
+        with open(os.path.join(test_fixture_dir, "ko_sample_stories.json")) as f:
+            sample_texts = json.load(f)
+        sample_texts = [dict(story_text=t) for t in sample_texts]
+        results = classifier.classify(sample_texts)['model_scores']
+        assert round(results[0], 5) == 0.16034
+
     def test_stories_against_all_classifiers(self):
         results_by_model_id = self._classify_one_from(6, "more_sample_stories.json")
         assert round(results_by_model_id[0], 5) == 0.30392

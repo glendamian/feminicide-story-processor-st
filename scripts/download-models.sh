@@ -2,6 +2,8 @@
 
 python -m scripts.download_models
 
+mkdir /tmp/models/
+
 # English language LR model
 mkdir /tmp/models/en
 cd /tmp/models/en || exit
