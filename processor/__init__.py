@@ -3,6 +3,7 @@ import logging
 import sys
 from dotenv import load_dotenv
 import mediacloud.api
+import mediacloud_legacy.api
 from flask import Flask
 #from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.logging import ignore_logger
@@ -37,6 +38,10 @@ MC_API_TOKEN = os.environ.get('MC_API_TOKEN', None)  # sensitive, so don't log i
 if MC_API_TOKEN is None:
     logger.error("  No MC_API_TOKEN env var specified. Pathetically refusing to start!")
     sys.exit(1)
+
+MC_LEGACY_API_KEY = os.environ.get('MC_LEGACY_API_KEY', None)
+if MC_LEGACY_API_KEY is None:
+    logger.error("  No MC_LEGACY_API_KEY env var specified. Will continue without support for that.")
 
 BROKER_URL = os.environ.get('BROKER_URL', None)
 if BROKER_URL is None:
@@ -86,9 +91,17 @@ if NEWSCATCHER_API_KEY is None:
 def get_mc_client() -> mediacloud.api.DirectoryApi:
     """
     A central place to get the Media Cloud client
-    :return: an admin media cloud client with the API key from the environment variable
+    :return: an media cloud client with the API key from the environment variable
     """
     return mediacloud.api.DirectoryApi(MC_API_TOKEN)
+
+
+def get_mc_legacy_client() -> mediacloud_legacy.api.AdminMediaCloud:
+    """
+    A central place to get the Media Cloud legacy client
+    :return: an admin media cloud client with the API key from the environment variable
+    """
+    return mediacloud_legacy.api.AdminMediaCloud(MC_LEGACY_API_KEY)
 
 
 def create_flask_app() -> Flask:
