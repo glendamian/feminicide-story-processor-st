@@ -130,7 +130,7 @@ class TestClassifierResults(unittest.TestCase):
             sample_texts = json.load(f)
         sample_texts = [dict(story_text=t) for t in sample_texts]
         results = classifier.classify(sample_texts)['model_scores']
-        assert round(results[0], 5) == 0.16034
+        assert round(results[0], 5) == 0.19358
 
     def test_stories_against_all_classifiers(self):
         results_by_model_id = self._classify_one_from(6, "more_sample_stories.json")

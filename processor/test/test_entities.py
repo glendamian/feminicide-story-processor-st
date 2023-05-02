@@ -19,6 +19,14 @@ class TestEntities(unittest.TestCase):
                 assert 'entities' in response['results']
                 assert len(response['results']['entities']) > 0
 
+    def test_unsupported_langauge(self):
+        with open(os.path.join(test_fixture_dir, "ko_sample_stories.json")) as f:
+            samples = json.load(f)
+        for s in samples:
+            response = entities.from_content(s, 'ko', 'http://www.shinmoongo.net/159703')
+            assert 'status' in response
+            assert response['status'] == 'error'
+
     def test_entities_from_content(self):
         with open(os.path.join(test_fixture_dir, "aapf_samples.json")) as f:
             samples = json.load(f)

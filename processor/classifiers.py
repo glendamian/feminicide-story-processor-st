@@ -2,6 +2,7 @@ import os
 import logging
 import pickle
 from typing import Dict, List
+import tensorflow_text
 import tensorflow_hub as hub
 import requests
 import json

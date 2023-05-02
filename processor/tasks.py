@@ -47,8 +47,8 @@ def add_entities_to_stories(stories: List[Dict]):
                 # the entity extractor failed, so don't return any entities
                 story_entities = None
             except Exception as e:
-                # something else happened, so log it but also continue
-                logger.error(e)
+                # something else happened (maybe unsupported language?), so log it but also continue
+                logger.warning(e)
                 story_entities = None
         s['entities'] = story_entities
     return stories
