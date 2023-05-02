@@ -3,6 +3,10 @@ Change Log
 
 Here is a history of what was changed in each version. 
 
+### v3.2.0
+
+* Added support for KO language model, based on different embeddings vectorizer  
+
 ### v3.1.3
 
 * Use new `newscatcher_country` field 

@@ -12,6 +12,10 @@ You'll need to setup an instance of rabbitmq to connect to (on MacOS do `brew in
 Then `cp .env.template .env` and fill in the appropriate info for each setting in that file.
 Create a database called "mc-story-processor" in Postgres, then run `alembic upgrade head`.
 
+Note that we use tensorflow_text, which is hard to install on MacOS. If you are on MacOS, you'll need to download and 
+install the appropriate [`tensorflow_text-2.10.0-cp310-cp310-macosx_11_0_arm64.whl`](https://github.com/sun1638650145/Libraries-and-Extensions-for-TensorFlow-for-Apple-Silicon/releases/download/v2.10/tensorflow_text-2.10.0-cp310-cp310-macosx_11_0_arm64.whl)
+from the helpful repo of [prebuilt tensorflow wheels for Apple Silicon](https://github.com/sun1638650145/Libraries-and-Extensions-for-TensorFlow-for-Apple-Silicon/releases/). 
+
 Running
 -------
 
