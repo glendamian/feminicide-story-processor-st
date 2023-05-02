@@ -30,6 +30,7 @@ DEFAULT_MODEL_NAME = 'usa'
 
 LANGUAGE_EN = 'en'
 TFHUB_MODEL_PATH_EN = '/tmp/models/en/'
+LANGUAGE_KO = 'ko'
 TFHUB_MODEL_PATH_KO = '/tmp/models/ko/'
 
 
@@ -59,14 +60,19 @@ class Classifier:
                 self._vectorizer_1 = pickle.load(v)
         elif self.config['vectorizer_type_1'] == VECTORIZER_EMBEDDINGS:
             try:
-                if self.project['language'] == LANGUAGE_EN:
-                    self._vectorizer_1 = hub.load(TFHUB_MODEL_PATH_EN)  # this will cache to a local dir
+                model_path = TFHUB_MODEL_PATH_EN if self.project['language'] == LANGUAGE_EN else TFHUB_MODEL_PATH_KO
+                if self.project['language'].lower() == LANGUAGE_EN:
+                    self._vectorizer_1 = hub.load(model_path)
+                elif self.project['language'].lower() == LANGUAGE_KO:
+                    self._vectorizer_1 = hub.load(model_path)
                 else:
-                    self._vectorizer_1 = hub.load(TFHUB_MODEL_PATH_KO)
-            except OSError:
+                    raise RuntimeError("Unsupported embeddings language '{}' for project {}".format(
+                        self.project['language'], self.project['id']))
+            except OSError as ose:
                 # probably the cached SavedModel doesn't exist anymore
-                logger.error("Can't load _vectorizer_1 from {} - did you run /scripts/download-models.sh?".format(
-                    TFHUB_MODEL_PATH_EN))
+                logger.error(ose)
+                raise RuntimeError("Project {} - model {} - can't load _vectorizer_1 from {} - did you run /scripts/download-models.sh?".format(
+                        self.project['id'], self.project['language_model_id'], model_path))
         else:
             raise RuntimeError("Unknown vectorizer 1 type '{}' for project {}".format(self.config['vectorizer_type_1'],
                                                                                       self.project['id']))
@@ -79,14 +85,18 @@ class Classifier:
                     self._vectorizer_2 = pickle.load(v)
             elif self.config['vectorizer_type_2'] == VECTORIZER_EMBEDDINGS:
                 try:
-                    if self.project['language'] == LANGUAGE_EN:
-                        self._vectorizer_1 = hub.load(TFHUB_MODEL_PATH_EN)  # this will cache to a local dir
+                    model_path = TFHUB_MODEL_PATH_EN if self.project['language'] == LANGUAGE_EN else TFHUB_MODEL_PATH_KO
+                    if self.project['language'].lower() == LANGUAGE_EN:
+                        self._vectorizer_2 = hub.load(model_path)
+                    elif self.project['language'].lower() == LANGUAGE_KO:
+                        self._vectorizer_2 = hub.load(model_path)
                     else:
-                        self._vectorizer_1 = hub.load(TFHUB_MODEL_PATH_KO)
+                        raise RuntimeError("Unsupported embeddings language '{}' for project {}".format(
+                            self.project['language'], self.project['id']))
                 except OSError:
                     # probably the cached SavedModel doesn't exist anymore
-                    logger.error("Can't load _vectorizer_2 from {} - did you run /scripts/download-models.sh?".format(
-                        TFHUB_MODEL_PATH_EN))
+                    raise RuntimeError("Project {} - model {} - can't load _vectorizer_2 from {} - did you run /scripts/download-models.sh?".format(
+                            self.project['id'], self.project['language_model_id'], model_path))
             else:
                 raise RuntimeError("Unknown vectorizer 2 type '{}' for project {}".format(
                     self.config['vectorizer_type_2'], self.project['id']))
@@ -101,16 +111,20 @@ class Classifier:
                 * `model_scores`: list of single, or combined model scores
         """
         story_texts = [s['story_text'] for s in stories]
-        # Classifier 1 always exists
+        # Classifier 1 always exists (but only chained models have classifier_2
         # vectorize first (turn words/sentences into vectors)
-        if self.config['vectorizer_type_1'] == VECTORIZER_TF_IDF:
-            vectorized_data_1 = self._vectorizer_1.transform(story_texts)
-        elif self.config['vectorizer_type_1'] == VECTORIZER_EMBEDDINGS:
-            vectorized_data_1 = self._vectorizer_1(story_texts)
-        else:
-            raise RuntimeError("Unknonwn vectorizer1 type of {} on project {}".format(
-                self.config['vectorizer_type_1'], self.project['id']
-            ))
+        try:
+            if self.config['vectorizer_type_1'] == VECTORIZER_TF_IDF:
+                vectorized_data_1 = self._vectorizer_1.transform(story_texts)
+            elif self.config['vectorizer_type_1'] == VECTORIZER_EMBEDDINGS:
+                vectorized_data_1 = self._vectorizer_1(story_texts)
+            else:
+                raise RuntimeError("Unknown vectorizer1 type of {} on project {}".format(
+                    self.config['vectorizer_type_1'], self.project['id']))
+        except AttributeError as ae:
+            logger.error(ae)
+            raise RuntimeError("Project {} model missing vectorizer".format(self.project['id']))
+
         # now run model against vectors (turn vectors into probabilities)
         try:
             predictions_1 = self._model_1.predict_proba(vectorized_data_1)

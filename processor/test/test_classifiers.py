@@ -124,6 +124,7 @@ class TestClassifierResults(unittest.TestCase):
     def test_classify_ko(self):
         project = TEST_EN_PROJECT.copy()  # important to copy before editing, otherwise subsequent tests get messed up
         project['language_model_id'] = 17
+        project['language'] = classifiers.LANGUAGE_KO
         classifier = classifiers.for_project(project)
         with open(os.path.join(test_fixture_dir, "ko_sample_stories.json")) as f:
             sample_texts = json.load(f)
