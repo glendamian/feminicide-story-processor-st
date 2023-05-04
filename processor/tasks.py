@@ -19,7 +19,11 @@ fileHandler = logging.FileHandler(os.path.join(path_to_log_dir, "tasks-{}.log".f
 fileHandler.setFormatter(logFormatter)
 logger.addHandler(fileHandler)
 
-ACCEPTED_ENTITY_TYPES = ["PERSON", "PER", "GPE", "LOC", "FAC", "DATE", "TIME", "C_DATE", "C_AGE"]
+# central email alert server just uses a list of all the entities, so important to filter here to ones we care about
+# ie. people, places, dates/times
+ACCEPTED_ENTITY_TYPES = ["PERSON", "PER", "GPE", "LOC", "FAC", "DATE", "TIME", # TODO: figure out which models there are from and comment
+                         "C_DATE", "C_AGE",  # our custom extracted types
+                         "PS", "DT", "TI", "LC"]  # korean types
 
 
 def _add_confidence_to_stories(project: Dict, stories: List[Dict]) -> List[Dict]:
