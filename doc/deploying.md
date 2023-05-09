@@ -1,5 +1,5 @@
-Deploying
-=========
+Deploying to Dokku
+==================
 
 This is built to deploy via [dokku](http://dokku.viewdocs.io/dokku/). This takes a few rounds of configuration to set up
 correctly. There are a few components:
