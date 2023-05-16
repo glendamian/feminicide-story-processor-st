@@ -8,6 +8,14 @@ on:
 permissions:
   contents: read
 
+env:
+  ENTITY_SERVER_URL: ${{ secrets.ENTITY_SERVER_URL }}
+  FEMINICIDE_API_KEY: ${{ secrets.FEMINICIDE_API_KEY }}
+  FEMINICIDE_API_URL: ${{ secrets.FEMINICIDE_API_URL }}
+  MC_API_TOKEN: ${{ secrets.MC_API_TOKEN }}
+  MC_LEGACY_API_KEY: ${{ secrets.MC_LEGACY_API_KEY }}
+  NEWSCATCHER_API_KEY: ${{ secrets.NEWSCATCHER_API_KEY }}
+
 jobs:
   build:
 
@@ -25,12 +33,4 @@ jobs:
           ./scripts/download-models.sh
 
       - name: Test with pytest
-        env:
-          ENTITY_SERVER_URL: ${{ secrets.ENTITY_SERVER_URL }}
-          FEMINICIDE_API_KEY: ${{ secrets.FEMINICIDE_API_KEY }}
-          FEMINICIDE_API_URL: ${{ secrets.FEMINICIDE_API_URL }}
-          MC_API_TOKEN: ${{ secrets.MC_API_TOKEN }}
-          MC_LEGACY_API_KEY: ${{ secrets.MC_LEGACY_API_KEY }}
-          NEWSCATCHER_API_KEY: ${{ secrets.NEWSCATCHER_API_KEY }}
-
         run: pytest
