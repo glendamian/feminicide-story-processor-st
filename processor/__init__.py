@@ -36,17 +36,17 @@ for item in loggers_to_skip:
 # read in environment variables
 MC_API_TOKEN = os.environ.get('MC_API_TOKEN', None)  # sensitive, so don't log it
 if MC_API_TOKEN is None:
-    logger.error("  No MC_API_TOKEN env var specified. Pathetically refusing to start!")
+    logger.error("  ❌ No MC_API_TOKEN env var specified. Pathetically refusing to start!")
     sys.exit(1)
 
 MC_LEGACY_API_KEY = os.environ.get('MC_LEGACY_API_KEY', None)
 if MC_LEGACY_API_KEY is None:
-    logger.error("  No MC_LEGACY_API_KEY env var specified. Will continue without support for that.")
+    logger.warning("  ⚠️ No MC_LEGACY_API_KEY env var specified. Will continue without support for that.")
 
 BROKER_URL = os.environ.get('BROKER_URL', None)
 if BROKER_URL is None:
-    logger.error("No BROKER_URL env var specified. Pathetically refusing to start!")
-    sys.exit(1)
+    logger.warning("  ⚠️ No BROKER_URL env var specified. Using sqlite, which will perform poorly")
+    BROKER_URL = "db+sqlite:///results.sqlite"
 logger.info("  Queue at {}".format(BROKER_URL))
 
 SENTRY_DSN = os.environ.get('SENTRY_DSN', None)  # optional
@@ -61,31 +61,33 @@ else:
 
 FEMINICIDE_API_URL = os.environ.get('FEMINICIDE_API_URL', None)
 if FEMINICIDE_API_URL is None:
-    logger.error("  No FEMINICIDE_API_URL is specified. Bailing because we can't list projects to run!")
+    logger.error("  ❌ No FEMINICIDE_API_URL is specified. Bailing because we can't list projects to run!")
     sys.exit(1)
 else:
     logger.info("  Config server at at {}".format(FEMINICIDE_API_URL))
 
 FEMINICIDE_API_KEY = os.environ.get('FEMINICIDE_API_KEY', None)
 if FEMINICIDE_API_KEY is None:
-    logger.error("  No FEMINICIDE_API_KEY is specified. Bailing because we can't send things to the main server without one")
+    logger.error("  ❌ No FEMINICIDE_API_KEY is specified. Bailing because we can't send things to the main server without one")
     sys.exit(1)
 
-SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', None)
 if SQLALCHEMY_DATABASE_URI is None:
-    logger.error("  No SQLALCHEMY_DATABASE_URI is specified. Bailing because we can't save things to a DB for tracking")
-    sys.exit(1)
-engine = create_engine(SQLALCHEMY_DATABASE_URI, pool_size=20, max_overflow=20) # bumped pool size up for parallel tasks
+    logger.warning("  ⚠️ ️No SQLALCHEMY_DATABASE_URI is specified. Using sqlite which will perform poorly")
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///data.db'
+    engine = create_engine(SQLALCHEMY_DATABASE_URI)  # use defaults (probably in test mode)
+else:
+    engine = create_engine(SQLALCHEMY_DATABASE_URI, pool_size=20, max_overflow=20)  # bumped pool size up for parallel tasks
 
 
 ENTITY_SERVER_URL = os.environ['ENTITY_SERVER_URL']
 if ENTITY_SERVER_URL is None:
-    logger.info("  No ENTITY_SERVER_URL is specified. You won't get entities in the stories sent to the  main server.")
+    logger.warning("  ⚠️ No ENTITY_SERVER_URL is specified. You won't get entities in the stories sent to the  main server.")
 
 
 NEWSCATCHER_API_KEY = os.environ['NEWSCATCHER_API_KEY']
 if NEWSCATCHER_API_KEY is None:
-    logger.info("  No NEWSCATCHER_API_KEY is specified. We won't be fetching from Newscatcher.")
+    logger.warning("  ⚠️ No NEWSCATCHER_API_KEY is specified. We won't be fetching from Newscatcher.")
 
 
 def get_mc_client() -> mediacloud.api.DirectoryApi:
