@@ -2,7 +2,7 @@ import os
 import logging
 import pickle
 from typing import Dict, List
-import tensorflow_text
+import tensorflow_text   # loaded here because the non-english embeddings model needs it
 import tensorflow_hub as hub
 import requests
 import json
@@ -30,9 +30,9 @@ VECTORIZER_TYPES = [VECTORIZER_TF_IDF, VECTORIZER_EMBEDDINGS]
 DEFAULT_MODEL_NAME = 'usa'
 
 LANGUAGE_EN = 'en'
-TFHUB_MODEL_PATH_EN = '/tmp/models/en/'
+TFHUB_MODEL_PATH_EN = os.path.join(MODEL_DIR, 'embeddings-en')
 LANGUAGE_KO = 'ko'
-TFHUB_MODEL_PATH_KO = '/tmp/models/ko/'
+TFHUB_MODEL_PATH_MULTI = os.path.join(MODEL_DIR, 'embeddings-multi')
 
 
 class Classifier:
@@ -61,7 +61,7 @@ class Classifier:
                 self._vectorizer_1 = pickle.load(v)
         elif self.config['vectorizer_type_1'] == VECTORIZER_EMBEDDINGS:
             try:
-                model_path = TFHUB_MODEL_PATH_EN if self.project['language'] == LANGUAGE_EN else TFHUB_MODEL_PATH_KO
+                model_path = TFHUB_MODEL_PATH_EN if self.project['language'] == LANGUAGE_EN else TFHUB_MODEL_PATH_MULTI
                 if self.project['language'].lower() == LANGUAGE_EN:
                     self._vectorizer_1 = hub.load(model_path)
                 elif self.project['language'].lower() == LANGUAGE_KO:
@@ -86,7 +86,7 @@ class Classifier:
                     self._vectorizer_2 = pickle.load(v)
             elif self.config['vectorizer_type_2'] == VECTORIZER_EMBEDDINGS:
                 try:
-                    model_path = TFHUB_MODEL_PATH_EN if self.project['language'] == LANGUAGE_EN else TFHUB_MODEL_PATH_KO
+                    model_path = TFHUB_MODEL_PATH_EN if self.project['language'] == LANGUAGE_EN else TFHUB_MODEL_PATH_MULTI
                     if self.project['language'].lower() == LANGUAGE_EN:
                         self._vectorizer_2 = hub.load(model_path)
                     elif self.project['language'].lower() == LANGUAGE_KO:

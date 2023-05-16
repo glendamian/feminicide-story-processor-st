@@ -115,7 +115,10 @@ config/project-history.json
 config/language-models.json
 data.json
 files/models/*.p
+files/models/embeddings-en/*
+files/models/embeddings-multi/*
 logs/*.json
 *.db
 *.tgz
 .DS_Store
+*.tar.gz
