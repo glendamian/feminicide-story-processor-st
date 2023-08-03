@@ -1,4 +1,5 @@
 import datetime as dt
+import streamlit as st
 from typing import List, Dict
 import logging
 import copy
@@ -119,7 +120,7 @@ def recent_stories(project_id: int, above_threshold: bool, limit: int = 5) -> Li
 
 
 def _stories_by_date_col(column_name: str, project_id: int = None, platform: str = None, above_threshold: bool = None,
-                         is_posted: bool = None, limit: int = 30) -> List:
+                         is_posted: bool = None, limit: int = 30, streamlit: bool = False) -> List:
     earliest_date = dt.date.today() - dt.timedelta(days=limit)
     clauses = []
     if project_id is not None:
@@ -133,22 +134,26 @@ def _stories_by_date_col(column_name: str, project_id: int = None, platform: str
     query = "select "+column_name+"::date as day, count(1) as stories from stories " \
             "where ("+column_name+" is not Null) and ("+column_name+" >= '{}'::DATE) AND {} " \
             "group by 1 order by 1 DESC".format(earliest_date, " AND ".join(clauses))
+    if streamlit is True:
+        conn = st.experimental_connection('mc-story-processor', type='sql')
+        data = conn.query(query)
+        return data
     return _run_query(query)
 
 
 def stories_by_posted_day(project_id: int = None, platform: str = None, above_threshold: bool = True,
-                          is_posted: bool = None, limit: int = 45) -> List:
-    return _stories_by_date_col('processed_date', project_id, platform, above_threshold, is_posted, limit)
+                          is_posted: bool = None, limit: int = 45, streamlit: bool = False) -> List:
+    return _stories_by_date_col('processed_date', project_id, platform, above_threshold, is_posted, limit, streamlit)
 
 
 def stories_by_processed_day(project_id: int = None, platform: str = None, above_threshold: bool = None,
-                             is_posted: bool = None, limit: int = 45) -> List:
-    return _stories_by_date_col('processed_date', project_id, platform, above_threshold, is_posted, limit)
+                             is_posted: bool = None, limit: int = 45, streamlit: bool = False) -> List:
+    return _stories_by_date_col('processed_date', project_id, platform, above_threshold, is_posted, limit, streamlit)
 
 
 def stories_by_published_day(project_id: int = None, platform: str = None, above_threshold: bool = None,
-                             is_posted: bool = None, limit: int = 30) -> List:
-    return _stories_by_date_col('published_date', project_id, platform, above_threshold, is_posted, limit)
+                             is_posted: bool = None, limit: int = 30, streamlit: bool = False) -> List:
+    return _stories_by_date_col('published_date', project_id, platform, above_threshold, is_posted, limit, streamlit)
 
 
 def _run_query(query: str) -> List:

@@ -126,3 +126,6 @@ logs/*.json
 *.tgz
 .DS_Store
 *.tar.gz
+
+# streamlit
+*.streamlit
