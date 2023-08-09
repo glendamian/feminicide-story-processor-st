@@ -4,8 +4,8 @@ import sys
 import json
 import logging
 
-from processor import CONFIG_DIR
-import processor.apiclient as apiclient
+from dashboard import CONFIG_DIR
+import dashboard.apiclient as apiclient
 
 logger = logging.getLogger(__name__)
 

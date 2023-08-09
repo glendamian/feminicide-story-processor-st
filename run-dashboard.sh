@@ -1,2 +1,2 @@
 #!/bin/sh
-streamlit run dashboard.py
+streamlit run server.py --server.port 8000

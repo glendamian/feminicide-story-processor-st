@@ -5,7 +5,7 @@ import streamlit as st
 import psycopg2
 import psycopg2.extras
 
-from processor import PROCESSOR_DB_URI
+from dashboard import PROCESSOR_DB_URI
 
 logger = logging.getLogger(__name__)
 

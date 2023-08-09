@@ -1,1 +1,1 @@
-web: streamlit run dashboard.py
+web: streamlit run server.py --server.port 8000

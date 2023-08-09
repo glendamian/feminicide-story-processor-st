@@ -1,9 +1,9 @@
 import altair
 import streamlit as st
 import pandas as pd
-from processor import PLATFORMS
-import processor.projects as projects
-import processor.database.processor_db as processor_db
+from dashboard import PLATFORMS
+import dashboard.projects as projects
+import dashboard.database.processor_db as processor_db
 
 
 def draw_graph(func, project_id=None):
