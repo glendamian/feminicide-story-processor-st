@@ -45,3 +45,10 @@ PROCESSOR_DB_URI = os.environ.get('PROCESSOR_DB_URI', None)
 if PROCESSOR_DB_URI is None:
     logger.warning("  ❌ ️No PROCESSOR_DB_URI is specified")
     sys.exit(1)
+
+"""
+ALERTS_DB_URI = os.environ.get('ALERTS_DB_URI', None)
+if ALERTS_DB_URI is None:
+    logger.warning("  ❌ ️No ALERTS_DB_URI is specified")
+    sys.exit(1)
+"""
