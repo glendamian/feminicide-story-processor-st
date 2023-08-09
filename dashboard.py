@@ -3,11 +3,14 @@ import streamlit as st
 import pandas as pd
 from processor import PLATFORMS
 import processor.projects as projects
-import processor.database.stories_db as stories_db
+import processor.database.processor_db as processor_db
+
+
 def draw_graph(func, project_id=None):
     df_list = []
     for p in PLATFORMS:
-        df = func(project_id=project_id, platform=p, above_threshold=False, streamlit=True)
+        results = func(project_id=project_id, platform=p, above_threshold=False)
+        df = pd.DataFrame(results)
         df['platform'] = p
         df_list.append(df)
 
@@ -23,7 +26,7 @@ def draw_graph(func, project_id=None):
 
 
 def draw_model_scores(project_id):
-    scores = [entry.values() for entry in stories_db.project_binned_model_scores(project_id)]
+    scores = [entry.values() for entry in processor_db.project_binned_model_scores(project_id)]
     chart = pd.DataFrame(scores, columns=["scores", "number of projects"])
     chart["scores"] *= 10
     bar_chart = altair.Chart(chart).mark_bar().encode(
@@ -36,10 +39,12 @@ def draw_model_scores(project_id):
 
 
 def story_results_graph(project_id=None):
-    a = stories_db.stories_by_processed_day(project_id=project_id, above_threshold=True, streamlit=True)
-    b = stories_db.stories_by_processed_day(project_id=project_id, above_threshold=False, streamlit=True)
+    a = processor_db.stories_by_processed_day(project_id=project_id, above_threshold=True)
+    b = processor_db.stories_by_processed_day(project_id=project_id, above_threshold=False)
     df_list = []
+    a = pd.DataFrame(a)
     a['platform'] = 'above'
+    b = pd.DataFrame(b)
     b['platform'] = 'below'
     df_list.append(a)
     df_list.append(b)
@@ -68,34 +73,30 @@ def latest_stories(stories):
     return
 
 
-
-st.title('Media Cloud Story Processor')
-st.markdown('Grab news stories from various sources, run them against trained classifiers, post results to another '
-            'server.')
+st.title('Feminicides Story Dashboard')
+st.markdown('Investigate stories moving through the feminicides detection pipeline')
 st.divider()
 
 st.subheader('Above Threshold Stories (by date sent to main server)')
 # by posted day
 st.caption("Platform Stories by Posted Day")
-draw_graph(stories_db.stories_by_posted_day)
+draw_graph(processor_db.stories_by_posted_day)
 st.divider()
 # History (by discovery date)
 st.subheader("History (by discovery date)")
 st.caption("Platform Stories by Published Day")
-draw_graph(stories_db.stories_by_published_day)
+draw_graph(processor_db.stories_by_published_day)
 st.caption("Platform Stories by Discovery Day")
-draw_graph(stories_db.stories_by_processed_day)
+draw_graph(processor_db.stories_by_processed_day)
 st.caption("Platform Stories by Discovery Day")
 story_results_graph()
 st.divider()
 
 # Projects
 st.title("Projects")
-list_of_projects = projects.load_project_list()
+list_of_projects = projects.load_project_list(force_reload=True, download_if_missing=True)
 titles = [""] + [p['title'] for p in list_of_projects]
-option = st.selectbox(
-    'Select project',
-    (titles))
+option = st.selectbox('Select project', (titles))
 
 if option != "":
     selected = [p for p in list_of_projects if p['title'] == option][0]
@@ -113,16 +114,14 @@ if option != "":
     st.caption("Project Attributes")
     col1, col2, col3 = st.columns(3)
     col1.metric("ID", str(selected['id']))
-    col2.metric("Latest", str(selected['latest_processed_stories_id']))
-    col3.metric("Local", str(selected['local_processed_stories_id']))
     st.markdown('Title : ' + str(selected['title']))
     st.markdown("Model : " + str(selected['language_model']))
     st.divider()
 
     # Project Statistics
-    unposted_above_story_count = stories_db.unposted_above_story_count(selected['id'])
-    posted_above_story_count = stories_db.posted_above_story_count(selected['id'])
-    below_story_count = stories_db.below_story_count(selected['id'])
+    unposted_above_story_count = processor_db.unposted_above_story_count(selected['id'])
+    posted_above_story_count = processor_db.posted_above_story_count(selected['id'])
+    below_story_count = processor_db.below_story_count(selected['id'])
     try:
         above_threshold_pct = 100 * (unposted_above_story_count + posted_above_story_count) / below_story_count
     except ZeroDivisionError:
@@ -155,14 +154,14 @@ if option != "":
     st.subheader('Above Threshold Stories')
     # by posted day
     st.caption("Platform Stories by Posted Day")
-    draw_graph(stories_db.stories_by_posted_day, selected['id'])
+    draw_graph(processor_db.stories_by_posted_day, selected['id'])
     st.divider()
     # History (by discovery date)
     st.subheader("History")
     st.caption("Platform Stories by Published Day")
-    draw_graph(stories_db.stories_by_published_day, selected['id'])
+    draw_graph(processor_db.stories_by_published_day, selected['id'])
     st.caption("Platform Stories by Discovery Day")
-    draw_graph(stories_db.stories_by_processed_day, selected['id'])
+    draw_graph(processor_db.stories_by_processed_day, selected['id'])
     st.caption("Platform Stories by Discovery Day")
     story_results_graph(selected['id'])
     st.divider()
@@ -170,7 +169,7 @@ if option != "":
     # Latest Stories
     st.subheader("Latest Stories")
     st.caption("Above threshold")
-    stories_above = stories_db.recent_stories(selected['id'], True)
+    stories_above = processor_db.recent_stories(selected['id'], True)
     latest_stories(stories_above)
     for s in stories_above:
         st.markdown('ID : ' + str(s.stories_id))
@@ -181,7 +180,7 @@ if option != "":
     st.divider()
 
     st.caption("Below threshold")
-    stories_below = stories_db.recent_stories(selected['id'], False)
+    stories_below = processor_db.recent_stories(selected['id'], False)
     latest_stories(stories_below)
     for s in stories_below:
         st.markdown('ID : ' + str(s.stories_id))
