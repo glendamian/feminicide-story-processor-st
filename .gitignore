@@ -111,17 +111,6 @@ __MACOSX
 
 # app-specific files
 config/projects.json
-config/project-history.json
-config/language-models.json
-data.json
-files/models/*.p
-files/models/embeddings-en/*.pb
-files/models/embeddings-en/variables
-files/models/embeddings-en/assets
-files/models/embeddings-multi/variables
-files/models/embeddings-multi/assets
-files/models/embeddings-multi/*.pb
-logs/*.json
 *.db
 *.tgz
 .DS_Store
